@@ -1,2 +1,2 @@
-# promanage-mobile
-Repositório reservado aos conteúdos do projeto relacionados conteúdo de Mobile.
+# pro-manager-mobile
+Repositório reservado aos conteúdos do projeto relacionados ao conteúdo de Mobile.
