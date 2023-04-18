@@ -1,58 +1,48 @@
 import React, { useState } from "react";
-import styles from "./styled.js";
+import styles from "./styled.tsx";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { Text, View } from "react-native";
+import SignInInput from "../../components/SignInput.tsx";
+import Button from "../../components/ButtonSignIn.tsx";
 
-//import EmailIcon from "../../assets/email.svg";
-//import LockIcon from "../../assets/lock.svg";
-//import SignInput from "../../components/SignInput";
-//import {Container,TextLogo,InputArea,TextLogin,CustomButton,CustomButtonText,SignMessageButton,SignMessageButtonTextBold} from "./styles";
-
-//import Api from "../../Api";
 
 export default () => {
+
   const navigation = useNavigation();
 
-  const handleSignClick = async () => {
-  };
 
-  const [emailField, setEmailField] = useState("");
-  const [passwordField, setPasswordField] = useState("");
+  function handleButtonPress(): void {
+
+    ///fubção para confirmar dados e navegar para outra tela
+
+    throw new Error("Function not implemented.");
+  }
 
   return (
-    <View>
-      <Text>ok</Text>
-      
-    </View>
-
-    
-    // <Container>
-    //   
-    //   <InputArea>
-    //     <TextLogin>Bem vindo ao Money</TextLogin>
-
-    //     <SignInput
-    //       IconSvg={EmailIcon}
-    //       placeholder="Email"
-    //       value={emailField}
-    //       onChangeText={(t) => setEmailField(t)}
-    //     />
-    //     <SignInput
-    //       IconSvg={LockIcon}
-    //       placeholder="Senha"
-    //       value={passwordField}
-    //       onChangeText={(t) => setPasswordField(t)}
-    //       password={true}
-    //     />
-
-    //     <CustomButton onPress={handleSignClick}>
-    //       <CustomButtonText>Logar</CustomButtonText>
-    //     </CustomButton>
-    //     <SignMessageButton>
-    //       <SignMessageButtonTextBold>Cadastre-se</SignMessageButtonTextBold>
-    //     </SignMessageButton>
-    //   </InputArea>
-    // </Container>
+    <>
+      <View style={styles.Container}>
+        <Text style={styles.TextLogin}>Olá,</Text>
+        <Text style={styles.TextLogin}>Bem Vindo</Text>
+        <View style={{ marginTop: 70 }}>
+          <SignInInput
+            placeholder="E-mail"
+            value={"E-mail"}
+            onChangeText={function (text: string): void {
+              throw new Error("Function not implemented.");
+            }}
+          />
+          <SignInInput
+            placeholder="Senha"
+            value={"Senha"}
+            onChangeText={function (text: string): void {
+              throw new Error("Function not implemented.");
+            }}
+          />
+          <Text style={{ color: "#00688C", marginLeft: 'auto' }}>Esqueceu a Senha?</Text>
+        </View>
+        <Button title="Entrar" onPress={handleButtonPress} />
+      </View>
+    </>
   );
 };
