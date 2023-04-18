@@ -4,16 +4,78 @@ import Home from "../Screens/Home";
 import PartnerRegister from "../Screens/PartnerRegister";
 import Profile from "../Screens/Profile";
 
+import { House, UserCirclePlus, User } from 'phosphor-react-native';
+import { Text } from "react-native";
+
 const Tab = createBottomTabNavigator();
 
-export default class Tabs extends React.Component {
-  render() {
+export default function ShowBottomTabs(){
     return (
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="PartnerRegister" component={PartnerRegister} />
-        <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Navigator
+      screenOptions={{
+        unmountOnBlur: true,
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          height: 60,
+        },
+      }}
+      >
+        <Tab.Screen 
+          name="Home" 
+          component={Home}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <>
+                <House size={25} color={focused ? '#00688C' : '#29292e'} />
+                <Text
+                  allowFontScaling={false}
+                  style={{
+                    color: focused ? '#00688C' : '#29292e',
+                    fontSize: 11,
+                    textAlign: 'center',
+                    fontWeight: focused ? 'bold' : 'normal',
+                  }}
+                >Ínicio</Text>
+              </>
+            )
+          }}
+        />
+        <Tab.Screen name="PartnerRegister" component={PartnerRegister} 
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <>
+              <UserCirclePlus  size={25} color={focused ? '#00688C' : '#29292e'} />
+              <Text
+                allowFontScaling={false}
+                style={{
+                  color: focused ? '#00688C' : '#29292e',
+                  fontSize: 11,
+                  textAlign: 'center',
+                  fontWeight: focused ? 'bold' : 'normal',
+                }}
+              >Ínicio</Text>
+            </>
+          )
+        }}
+        />
+        <Tab.Screen name="Profile" component={Profile} 
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <>
+              <User size={25} color={focused ? '#F292A9' : '#29292e'} />
+              <Text
+                allowFontScaling={false}
+                style={{
+                  color: focused ? '#F292A9' : '#29292e',
+                  fontSize: 11,
+                  textAlign: 'center',
+                  fontWeight: focused ? 'bold' : 'normal',
+                }}
+              >Perfil</Text>
+            </>
+          )
+        }}
+        />
       </Tab.Navigator>
     );
-  }
 }

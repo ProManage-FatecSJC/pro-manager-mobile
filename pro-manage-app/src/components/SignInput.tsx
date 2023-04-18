@@ -4,7 +4,7 @@ import { StyleSheet, TextInput } from "react-native";
 interface Props {
   placeholder: string;
   onChangeText: (text: string) => void;
-  value: string;
+  value?: string;
  
 }
 
@@ -14,7 +14,6 @@ const SignInInput: React.FC<Props> = ({ placeholder, value }) => {
       style={styles.textInput}
       placeholder={placeholder}
       value={value}
-      
     />
   );
 };
@@ -23,9 +22,10 @@ const styles = StyleSheet.create({
   textInput: {
     borderWidth: 1,
     borderColor: "#E2E8F0",
-    padding: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 16,
     borderRadius: 4,
-    marginBottom: 10,
+    marginBottom: 32,
   },
 });
 
