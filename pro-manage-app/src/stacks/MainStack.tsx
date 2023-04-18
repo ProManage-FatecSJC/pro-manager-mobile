@@ -16,9 +16,8 @@ export default class Navegador extends React.Component {
           headerShown: false,
         }}
       >
-        {/* <Stack.Screen name="Preload" component={Preload} /> 
-            <Stack.Screen name="SignIn" component={SignIn}/>*/}
-
+        {/* <Stack.Screen name="Preload" component={Preload} />  */}
+        {/* <Stack.Screen name="SignIn" component={SignIn}/> */}
         <Stack.Screen name="MainTab" component={MainTab} />
       </Stack.Navigator>
     );
