@@ -14,6 +14,7 @@ export default function ShowBottomTabs(){
     return (
       <Tab.Navigator
       screenOptions={{
+        headerShown: false,
         unmountOnBlur: true,
         tabBarShowLabel: false,
         tabBarStyle: {
