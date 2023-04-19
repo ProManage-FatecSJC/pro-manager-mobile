@@ -2,16 +2,16 @@ import React from "react";
 import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 
 interface Props {
-  status: string;
+    partnerOrMember: string;
   totalPartners: string;
   onPress?: () => void;
 }
 
-const Button: React.FC<Props> = ({ status, totalPartners, onPress }) => {
+const Button: React.FC<Props> = ({ partnerOrMember, totalPartners, onPress }) => {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
       <View style={styles.textCardWrapperWithMargin}>
-        <Text style={styles.buttonText1}>{status}</Text>
+        <Text style={styles.buttonText1}>Total de {partnerOrMember} cadastrados</Text>
       </View>
       
       <View style={styles.textCardWrapper}>

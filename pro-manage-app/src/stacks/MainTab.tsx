@@ -55,7 +55,7 @@ export default function ShowBottomTabs(){
                   textAlign: 'center',
                   fontWeight: focused ? 'bold' : 'normal',
                 }}
-              >Ínicio</Text>
+              >Cadastro</Text>
             </>
           )
         }}
@@ -64,11 +64,11 @@ export default function ShowBottomTabs(){
         options={{
           tabBarIcon: ({ focused }) => (
             <>
-              <User size={25} color={focused ? '#F292A9' : '#29292e'} />
+              <User size={25} color={focused ? '#00688C' : '#29292e'} />
               <Text
                 allowFontScaling={false}
                 style={{
-                  color: focused ? '#F292A9' : '#29292e',
+                  color: focused ? '#00688C' : '#29292e',
                   fontSize: 11,
                   textAlign: 'center',
                   fontWeight: focused ? 'bold' : 'normal',

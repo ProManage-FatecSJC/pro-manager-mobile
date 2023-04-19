@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import styles from "./styled.tsx";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 
 export default () => {
 
   return (
     <View style={styles.Container}>
-      <Text>Partner</Text>
+      <Image source={require('../../assets/construction.png')} style={{width: '100%', height: '30%'}}/>
+      <Text>Em breve!</Text>
     </View>
   );
 };
