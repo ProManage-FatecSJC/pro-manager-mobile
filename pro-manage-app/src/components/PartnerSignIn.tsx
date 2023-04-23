@@ -7,12 +7,14 @@ interface Props {
   value?: string;
 }
 
-const PartnerSignIn: React.FC<Props> = ({ placeholder, value }) => {
+const PartnerSignIn: React.FC<Props> = ({ placeholder, value, onChangeText }) => {
+
   return (
     <TextInput
       style={styles.textInput}
       placeholder={placeholder}
       value={value}
+      onChangeText={onChangeText}
     />
   );
 };

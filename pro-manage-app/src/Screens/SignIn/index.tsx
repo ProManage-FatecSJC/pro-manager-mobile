@@ -5,16 +5,36 @@ import { useNavigation } from "@react-navigation/native";
 import { Text, View, TextInput } from "react-native";
 import SignInInput from "../../components/SignInput.tsx";
 import Button from "../../components/ButtonSignIn.tsx";
+import { URI } from "../../api/uri.ts";
+import api from "../../api/api.ts";
+import { SessionController } from "../../session/SessionController.ts";
 
 
-export default () => {
-  const navigation = useNavigation();
+export default ({navigation}: any) => {
 
-  function handleButtonPress(): void {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const sessionController = new SessionController()
 
-    ///fubção para confirmar dados e navegar para outra tela
+  async function handleButtonPress() {
 
-    throw new Error("Function not implemented.");
+    console.log(login)
+    try {
+      await api.post(URI.LOGIN, login).then(
+        async response => {
+          await sessionController.setToken(response.data)
+          navigation.navigate('MainTab')
+        }
+      )
+    } catch (error: any) {
+      console.log(error.message)
+    }
+    
+  }
+
+  const login = {
+    email: email,
+    password: password
   }
 
   return (
@@ -34,6 +54,7 @@ export default () => {
             <TextInput
               style={styles.Input}
               placeholder="E-mail"
+              onChangeText={setEmail}
             />
           </View>
 
@@ -43,6 +64,7 @@ export default () => {
             <TextInput
               style={styles.Input}
               placeholder="Senha"
+              onChangeText={setPassword}
             />
           </View>
 
