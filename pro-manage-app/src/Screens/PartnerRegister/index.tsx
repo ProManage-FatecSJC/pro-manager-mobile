@@ -7,6 +7,29 @@ import Button from "../../components/ButtonAddPartner.tsx";
 
 export default () => {
 
+  const optionsType = ["Unico", "Multiplo"];
+
+  const optionsStatus = [
+    "Em Prospecção",
+    "Primeiro Contato feito",
+    "Primeira Reunião marcada/realizada",
+    "Documentação enviada/em analise(Parceiro)",
+    "Documetação devolvida (Em análise Academy)",
+    "Documetação devolvida (Em análise Legal)",
+    "Documetação analisada devolvida (Parceiro)",
+    "Em preparação de Executive Sumary (Academy)",
+    "ES em Análise (Legal)",
+    "ES em Análise (Academy Global)",
+    "Pronto para Assinatura",
+    "Parceria Firmada"
+  ];
+
+  const options = ["Público", "Privado"];
+
+  const handleSelect = (selectedOption: string) => {
+    console.log(`Opção Selecionada: ${selectedOption}`);
+  };
+
   return (
     <View style={styles.Container}>
       <Text style={styles.Text1}>Adicionar um parceiro</Text>
@@ -21,9 +44,9 @@ export default () => {
           }}
         />
         <Text>Tipo de Parceiro</Text>
-        <SignInServeral/>
+        <SignInServeral options={options} onSelect={handleSelect} />
         <Text>Status</Text>
-        <SignInServeral  />
+        <SignInServeral options={optionsStatus} onSelect={handleSelect} />
         <Text>Responsável</Text>
         <PartnerSignIn
           placeholder={""}
@@ -32,8 +55,7 @@ export default () => {
           }}
         />
         <Text>Público ou Privado</Text>
-        <SignInServeral 
-        />
+        <SignInServeral options={options} onSelect={handleSelect} />
         <Text>Quantidade de Membros</Text>
         <PartnerSignIn
           placeholder={""}
@@ -49,9 +71,12 @@ export default () => {
           }}
         />
 
-        <Button title={"Adicionar"} onPress={function (): void {
-          throw new Error("Function not implemented.");
-        } }/>
+        <Button
+          title={"Adicionar"}
+          onPress={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
       </ScrollView>
     </View>
   );
