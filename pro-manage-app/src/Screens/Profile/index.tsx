@@ -1,8 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styled.tsx";
 import { View, Text, Image, SafeAreaView, TextInput } from "react-native";
+import { SessionController } from "../../session/SessionController.ts";
 
 export default () => {
+
+  const [userName, setUserName] = useState('')
+  const sessionController = new SessionController()
+
+  const getName = async () => {
+    let token = await sessionController.getName() as string
+    
+    setUserName(token)
+  }
+
+  useEffect(() => {
+    getName()
+  })
+
 
   return (
     <View style={styles.Container}>
@@ -12,7 +27,7 @@ export default () => {
           style={styles.UserImage}
         />
         <Text style={styles.UserName}>
-          Fulano da Silva
+         {userName}
         </Text>
       <View style={styles.Divider}></View>
       </View>
