@@ -15,7 +15,7 @@ As seguintes tecnologias e ferramentas foram utilizadas neste projeto: `Typescri
 $ git clone https://github.com/ProManage-FatecSJC/pro-manager-mobile.git
 
 # Acesse a pasta do projeto
-$ cd 
+$ cd pro-manage-app
 
 # Instale as dependências
 $ yarn install
