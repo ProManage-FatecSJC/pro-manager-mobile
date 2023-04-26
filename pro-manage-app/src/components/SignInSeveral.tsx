@@ -2,8 +2,8 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 interface CustomDropdownProps {
-  options: string[];
-  onSelect: (selectedOption: string) => void;
+  options: any[];
+  onSelect: (selectedOption: any) => void;
 }
 
 const SignInServeral: React.FC<CustomDropdownProps> = ({
@@ -13,7 +13,7 @@ const SignInServeral: React.FC<CustomDropdownProps> = ({
   const [selectedOption, setSelectedOption] = React.useState("");
   const [showOptions, setShowOptions] = React.useState(false);
 
-  const handleSelect = (option: string) => {
+  const handleSelect = (option: any) => {
     setSelectedOption(option);
     onSelect(option);
     setShowOptions(false);
@@ -53,10 +53,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#E2E8F0",
     paddingHorizontal: 8,
-    paddingVertical: 13,
+    paddingVertical: 16,
     borderRadius: 4,
-    marginBottom: 20,
-    padding: 10
+    marginBottom: 10
   },
   selectedOptionText: {
     fontSize: 12,
@@ -64,8 +63,10 @@ const styles = StyleSheet.create({
   optionsContainer: {
     borderWidth: 1,
     borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
+    padding: 5,
+    marginTop: -10
   },
   optionText: {
     fontSize: 16,

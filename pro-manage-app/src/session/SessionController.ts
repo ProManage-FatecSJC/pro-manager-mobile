@@ -30,4 +30,12 @@ export class SessionController {
             console.log(error)
         }
     }
+
+    public async clearSession(){
+        try {
+            await AsyncStorage.clear()
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }

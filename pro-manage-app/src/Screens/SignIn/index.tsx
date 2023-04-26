@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styled.tsx";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
@@ -27,6 +27,7 @@ export default ({navigation}: any) => {
         }
       )
     } catch (error: any) {
+      ///alert("Email e/ou senha incorretos!");
       console.log(error.message)
     }
     
@@ -40,16 +41,12 @@ export default ({navigation}: any) => {
   return (
     <>
       <View style={styles.Container}>
-        <View
-          style={styles.containerTitle}
-        >
+        <View style={styles.containerTitle}>
           <Text style={styles.TextLogin}>Olá,</Text>
           <Text style={styles.TextLogin}>Bem Vindo</Text>
         </View>
 
-        <View
-          style={styles.containerInputs}
-        >
+        <View style={styles.containerInputs}>
           <View>
             <TextInput
               style={styles.Input}
@@ -58,20 +55,22 @@ export default ({navigation}: any) => {
             />
           </View>
 
-          <View
-            style={styles.inputMargin}
-          >
+          <View style={styles.inputMargin}>
             <TextInput
               style={styles.Input}
               placeholder="Senha"
               onChangeText={setPassword}
+              secureTextEntry={true}
             />
           </View>
 
-          <Text style={{ color: "#00688C", marginLeft: 'auto' }}>Esqueceu a Senha?</Text>
-        <Button title="Entrar" onPress={handleButtonPress} />
+          <Text style={{ color: "#00688C", marginLeft: "auto" }}>
+            Esqueceu a Senha?
+          </Text>
+          <Button title="Entrar" onPress={handleButtonPress} />
         </View>
       </View>
     </>
   );
 };
+

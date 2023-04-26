@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 24,
   },
+  Text:{
+    marginTop: 10,
+    marginBottom: 10,
+  },
   Text1: {
     fontWeight: "bold",
     fontSize: 24,

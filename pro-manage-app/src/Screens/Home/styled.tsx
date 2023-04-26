@@ -11,12 +11,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  Divider:{
+  Divider: {
     marginTop: 16,
     marginBottom: 32,
     width: "100%",
     height: 1,
-    backgroundColor: "#e0e0e0"
+    backgroundColor: "#e0e0e0",
   },
   Button: {
     width: "45%",
@@ -32,6 +32,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: "auto",
     fontSize: 12,
+  },
+  Text: {
+    width: "100%",
+    marginTop: 64,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 });
 

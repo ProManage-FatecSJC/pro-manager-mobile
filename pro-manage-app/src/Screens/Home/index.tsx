@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Button } from "react-native";
 
 import styles from "./styled.tsx";
 
@@ -8,13 +8,15 @@ import CardPartner from '../../components/CardPartner.tsx'
 import { SessionController } from "../../session/SessionController.ts";
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
+import { SignOut } from "phosphor-react-native";
 
 
-export default () => {
+export default ({navigation} : any) => {
   const [buttonPressed, setButtonPressed] = useState<'status' | 'partner'>('status');
   const [pressedStatus, setPressedStatus] = useState(true);
   const [pressedPartner, setPressedPartner] = useState(false);
   const [userName, setUserName] = useState('')
+  const [count, setCount] = useState(0)
 
   const [partner, setPartner] = useState([])
   const [partnerCount, setPartnerCount] = useState(0)
@@ -101,9 +103,13 @@ export default () => {
   }
 
   useEffect(() => {
-    handlePartners()
-    handleMembers()
-  })
+    if (count < 10) {
+
+      handlePartners()
+      handleMembers()
+      setCount(count + 1)
+    }
+  }, [partner])
 
   useEffect(() => {
     getName()
@@ -120,44 +126,52 @@ export default () => {
     }
   }
 
+  async function handleLogoffClick() {
+    await sessionController.clearSession()
+    navigation.navigate('SignIn')
+  }
+
   return (
     <View style={styles.Container}>
-      <Text style={{ fontSize: 24, marginTop: 64 }}>
-        Bem vindo,
-        <Text style={{ fontWeight: "bold" }}> {userName}</Text>
-      </Text>
+      <View style={styles.Text}>
+        <Text style={{fontSize: 24}}> Bem vindo, <Text style={{ fontWeight: "bold" }}> {userName}</Text></Text>
+        <TouchableOpacity onPress={handleLogoffClick}>
+          <SignOut size={32} />
+        </TouchableOpacity>
+        
+      </View>
       <View style={styles.buttonWrapper}>
         <TouchableOpacity
-          style={
-            [
-              styles.Button,
-              {
-                backgroundColor: pressedStatus ? "#4C825C" : "transparent",
-                borderWidth: pressedStatus ? 0 : 1,
-              },
-            ]
-          }
+          style={[
+            styles.Button,
+            {
+              backgroundColor: pressedStatus ? "#4C825C" : "transparent",
+              borderWidth: pressedStatus ? 0 : 1,
+            },
+          ]}
           onPress={handleButtonPressStatus}
         >
-          <Text style={[
-            styles.buttonText,
-            {
-              color: pressedStatus ? "#f8f8f8" : "#00688C",
-              fontWeight: pressedStatus ? "bold" : "normal",
-            },
-          ]}>Status dos Parceiros</Text>
+          <Text
+            style={[
+              styles.buttonText,
+              {
+                color: pressedStatus ? "#f8f8f8" : "#00688C",
+                fontWeight: pressedStatus ? "bold" : "normal",
+              },
+            ]}
+          >
+            Status dos Parceiros
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={
-            [
-              styles.Button,
-              {
-                backgroundColor: pressedPartner ? "#4C825C" : "transparent",
-                borderWidth: pressedPartner ? 0 : 1,
-              },
-            ]
-          }
+          style={[
+            styles.Button,
+            {
+              backgroundColor: pressedPartner ? "#4C825C" : "transparent",
+              borderWidth: pressedPartner ? 0 : 1,
+            },
+          ]}
           onPress={handleButtonPressPartner}
         >
           <Text
@@ -168,13 +182,15 @@ export default () => {
                 fontWeight: pressedPartner ? "bold" : "normal",
               },
             ]}
-          >Parceiros/Membros</Text>
+          >
+            Parceiros/Membros
+          </Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.Divider}></View>
 
-      {buttonPressed === 'status' ? (
+      {buttonPressed === "status" ? (
         <ScrollView>
           <View>
             <CardStatus

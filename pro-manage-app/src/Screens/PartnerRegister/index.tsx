@@ -70,6 +70,14 @@ export default ({navigation}: any) => {
 
   const options = ["Público", "Privado"];
 
+  const optionsState = [
+    "Acre", "Alagoas", "Amapá", "Amazonas", "Bahia",
+    "Ceará", "Espírito Santos", "Goiás", "Maranhão", "Mato Grosso",
+    "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná",
+    "Pernambuco", "Piaui", "Rio de Janeiro", "Rio Grande do Norte",
+    "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", 
+    "São Paulo", "Sergipe", "Tocantins"]
+
   const handleSelect = (selectedOption: string) => {
     console.log(`Opção Selecionada: ${selectedOption}`);
   };
@@ -80,32 +88,22 @@ export default ({navigation}: any) => {
       <Text style={styles.Text2}>Coloque os dados do seu parceiro</Text>
       <View style={styles.Divider}></View>
       <ScrollView>
-        <Text>Nome do Parceiro</Text>
-        <PartnerSignIn
-          placeholder={""}
-          onChangeText={setPartnerName}
-        />
-        <Text>Tipo de Parceiro</Text>
-        <SignInServeral options={options} onSelect={handleSelect} />
-        <Text>Status</Text>
+        <Text style={styles.Text}>Nome do Parceiro</Text>
+        <PartnerSignIn placeholder={""} onChangeText={setPartnerName} />
+        <Text style={styles.Text}>Tipo de Parceiro</Text>
+        <SignInServeral options={optionsType} onSelect={handleSelect} />
+        <Text style={styles.Text}>Status</Text>
         <SignInServeral options={optionsStatus} onSelect={handleSelect} />
-        <Text>Responsável</Text>
-        <PartnerSignIn
-          placeholder={""}
-          onChangeText={setPartnerResponsible}
-        />
-        <Text>Público ou Privado</Text>
+        <Text style={styles.Text}>Responsável</Text>
+        <PartnerSignIn placeholder={""} onChangeText={setPartnerResponsible} />
+        <Text style={styles.Text}>Público ou Privado</Text>
         <SignInServeral options={options} onSelect={handleSelect} />
-        <Text>Quantidade de Membros</Text>
-        <PartnerSignIn
-          placeholder={""}
-          onChangeText={setPartnerAmount}
-        />
-        <Text>Numero de Contato</Text>
-        <PartnerSignIn
-          placeholder={""}
-          onChangeText={setPartnerContact}
-        />
+        <Text style={styles.Text}>Quantidade de Membros</Text>
+        <PartnerSignIn placeholder={""} onChangeText={setPartnerAmount} />
+        <Text style={styles.Text}>Numero de Contato</Text>
+        <PartnerSignIn placeholder={""} onChangeText={setPartnerContact} />
+        <Text style={styles.Text}>Estado</Text>
+        <SignInServeral options={optionsState} onSelect={handleSelect} />
 
         <Button
           title={"Adicionar"}
