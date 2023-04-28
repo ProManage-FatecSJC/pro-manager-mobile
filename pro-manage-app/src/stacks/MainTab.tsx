@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "../Screens/Home";
 import PartnerRegister from "../Screens/PartnerRegister";
 import Profile from "../Screens/Profile";
+import Detail from "../Screens/Detail";
 //import CustomTabBar from '../components/CustomTabBar'
 
 import { House, UserCirclePlus, User } from 'phosphor-react-native';
@@ -78,6 +79,7 @@ export default function ShowBottomTabs(){
           )
         }}
         />
+        
       </Tab.Navigator>
     );
 }

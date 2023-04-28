@@ -131,14 +131,20 @@ export default ({navigation} : any) => {
     navigation.navigate('SignIn')
   }
 
+  function handleClickDetails(): void {
+    navigation.navigate("Detail");
+  }
+
   return (
     <View style={styles.Container}>
       <View style={styles.Text}>
-        <Text style={{fontSize: 24}}> Bem vindo, <Text style={{ fontWeight: "bold" }}> {userName}</Text></Text>
+        <Text style={{ fontSize: 24 }}>
+          {" "}
+          Bem vindo, <Text style={{ fontWeight: "bold" }}> {userName}</Text>
+        </Text>
         <TouchableOpacity onPress={handleLogoffClick}>
           <SignOut size={32} />
         </TouchableOpacity>
-        
       </View>
       <View style={styles.buttonWrapper}>
         <TouchableOpacity
@@ -196,60 +202,72 @@ export default ({navigation} : any) => {
             <CardStatus
               status={"Em Prospecção"}
               totalPartners={partnersEmProspec.toString()}
+              onPress={handleClickDetails}
             />
             <CardStatus
               status={"Primeiro contato feito"}
               totalPartners={partnersPrimeiroContato.toString()}
+              onPress={handleClickDetails}
             />
 
             <CardStatus
               status={"Primeira reunião marcada/realizada"}
               totalPartners={partnersPrimeiraReuniao.toString()}
+              onPress={handleClickDetails}
             />
 
             <CardStatus
               status={"Documentação enviada/em análise (parceiro)"}
               totalPartners={partners4.toString()}
+              onPress={handleClickDetails}
             />
 
             <CardStatus
               status={"Documentação devolvida (Em análise Academy)"}
               totalPartners={partners5.toString()}
+              onPress={handleClickDetails}
             />
 
             <CardStatus
               status={"Documentação devolvida (Em análise legal)"}
               totalPartners={partners6.toString()}
+              onPress={handleClickDetails}
             />
 
             <CardStatus
               status={"Documentação análisada devolvida (Parceiro)"}
               totalPartners={partners7.toString()}
+              onPress={handleClickDetails}
             />
 
             <CardStatus
               status={"Em preparação de Executive Sumary (Academy)"}
               totalPartners={partners8.toString()}
+              onPress={handleClickDetails}
             />
 
             <CardStatus
               status={"ES em análise (Legal)"}
               totalPartners={partners9.toString()}
+              onPress={handleClickDetails}
             />
 
             <CardStatus
               status={"ES em análise (Academy Global)"}
               totalPartners={partners10.toString()}
+              onPress={handleClickDetails}
             />
 
             <CardStatus
               status={"Pronto para assinatura"}
               totalPartners={partners11.toString()}
+              onPress={handleClickDetails}
             />
 
             <CardStatus
               status={"Parceria Firmada"}
               totalPartners={partners12.toString()}
+              onPress={handleClickDetails}
             />
           </View>
         </ScrollView>
@@ -259,10 +277,12 @@ export default ({navigation} : any) => {
             <CardPartner
               partnerOrMember={"parceiros"}
               totalPartners={partnerCount.toString()}
+              onPress={handleClickDetails}
             />
             <CardPartner
               partnerOrMember={"membros"}
               totalPartners={memberCount.toString()}
+              onPress={handleClickDetails}
             />
           </View>
         </ScrollView>
