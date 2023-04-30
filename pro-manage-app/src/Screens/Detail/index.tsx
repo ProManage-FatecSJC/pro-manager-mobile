@@ -1,11 +1,16 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { GestureResponderEvent, Text, TouchableOpacity, View } from 'react-native';
 import styles from './styled.tsx';
 
-export default () => {
-    return (
-        <View style={styles.Container}>
-            <Text>Detail</Text>
-        </View>
-    )
-}
+export default ({ navigation }: any) => {
+
+  function handleLogoffClick(event: GestureResponderEvent): void {
+    navigation.navigate("MemberRegister");
+  }
+
+  return (
+    <TouchableOpacity style={styles.Container} onPress={handleLogoffClick}>
+        <Text>Detail</Text>
+    </TouchableOpacity>
+  );
+};

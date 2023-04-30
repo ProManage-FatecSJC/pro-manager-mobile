@@ -5,6 +5,7 @@ import SignIn from "../Screens/SignIn";
 import { StackRouter } from "@react-navigation/native";
 import ShowBottomTabs from "./MainTab";
 import Detail from "../Screens/Detail";
+import MemberRegister from "../Screens/MemberRegister";
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ export default class Navegador extends React.Component {
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="MainTab" component={ShowBottomTabs} />
         <Stack.Screen name="Detail" component={Detail} />
+        <Stack.Screen name="MemberRegister" component={MemberRegister} />
       </Stack.Navigator>
     );
   }
