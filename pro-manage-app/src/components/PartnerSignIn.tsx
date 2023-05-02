@@ -5,9 +5,10 @@ interface Props {
   placeholder: string;
   onChangeText: (text: string) => void;
   value?: string;
+  editable?: boolean;
 }
 
-const PartnerSignIn: React.FC<Props> = ({ placeholder, value, onChangeText }) => {
+const PartnerSignIn: React.FC<Props> = ({ placeholder, value, onChangeText, editable }) => {
 
   return (
     <TextInput
@@ -15,6 +16,7 @@ const PartnerSignIn: React.FC<Props> = ({ placeholder, value, onChangeText }) =>
       placeholder={placeholder}
       value={value}
       onChangeText={onChangeText}
+      editable={editable}
     />
   );
 };

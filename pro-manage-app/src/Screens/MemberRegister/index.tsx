@@ -9,6 +9,7 @@ import CEPSignIn from "../../components/SignInCEP.tsx";
 import { SessionController } from "../../session/SessionController.ts";
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
+import SignInServeral from "../../components/SignInSeveral.tsx";
 
 const sessionController = new SessionController();
 
@@ -25,14 +26,14 @@ interface Location {
   uf: string;
 }
 
-async function searchCep(cep: string): Promise<Location | null> {
+async function searchCep(cep: string): Promise<Location | null | undefined> {
   try {
     const url = `http://www.viacep.com.br/ws/${cep}/json/`;
     const response = await axios.get(url);
     if (response.status === 200) {
       const endereco: Location = response.data;
       return endereco;
-    } else {
+    } else if (response.status === 400) {
       return null;
     }
   } catch (error) {
@@ -58,6 +59,8 @@ export default ({navigation}: any) => {
   const [district, setDistrict] = useState("");
   const [city, setCity] = useState("");
   const [uf, setUf] = useState("");
+
+  const [editableAdress, setEditableAdress] = useState(true);
 
   let member = {
     name: memberName,
@@ -110,10 +113,27 @@ export default ({navigation}: any) => {
       setDistrict(endereco.bairro);
       setCity(endereco.localidade);
       setUf(endereco.uf);
-      console.log(endereco);
-    }
+
+      if (endereco.logradouro != null) {
+        setEditableAdress(false);
+      } else {
+        setEditableAdress(true);
+      }
+    } 
     
   }
+
+  const optionsState = [
+    "Acre", "Alagoas", "Amapá", "Amazonas", "Bahia",
+    "Ceará", "Espírito Santos", "Goiás", "Maranhão", "Mato Grosso",
+    "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná",
+    "Pernambuco", "Piaui", "Rio de Janeiro", "Rio Grande do Norte",
+    "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", 
+    "São Paulo", "Sergipe", "Tocantins"]
+
+  const handleSelect = (selectedOption: string) => {
+    console.log(`Opção Selecionada: ${selectedOption}`);
+  };
 
 
   return (
@@ -137,19 +157,36 @@ export default ({navigation}: any) => {
           onEndEditing={handleSearchCep}
         />
         <Text style={styles.Text}>Logradouro</Text>
-        <PartnerSignIn placeholder={street} onChangeText={setStreet} />
+        <PartnerSignIn
+          placeholder={street}
+          onChangeText={setStreet}
+          value={street}
+          editable={editableAdress}
+        />
         <Text style={styles.Text}>Número</Text>
         <PartnerSignIn placeholder={""} onChangeText={setNumber} />
         <Text style={styles.Text}>Complemento</Text>
         <PartnerSignIn placeholder={""} onChangeText={setComplement} />
         <Text style={styles.Text}>Bairro</Text>
-        <PartnerSignIn placeholder={district} onChangeText={setDistrict} />
+        <PartnerSignIn
+          placeholder={district}
+          onChangeText={setDistrict}
+          value={district}
+          editable={editableAdress}
+        />
         <Text style={styles.Text}>Cidade</Text>
-        <PartnerSignIn placeholder={city} onChangeText={setCity} />
-        <Text style={styles.Text}>Estado</Text>
-        <PartnerSignIn placeholder={uf} onChangeText={setUf} />
+        <PartnerSignIn
+          placeholder={city}
+          onChangeText={setCity}
+          value={city}
+          editable={editableAdress}
+        />
+            <Text style={styles.Text}>Estado</Text>
+            <SignInServeral options={optionsState} onSelect={handleSelect} value={uf} disabled={!editableAdress}/>
+          
+
         <ButtonBlue title={"Salvar"} onPress={handleNewMember} />
-        <ButtonRed title={"Cancerlar"} onPress={handleCancelMember} />
+        <ButtonRed title={"Cancelar"} onPress={handleCancelMember} />
       </ScrollView>
     </View>
   );
