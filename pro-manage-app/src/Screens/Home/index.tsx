@@ -10,9 +10,6 @@ import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 import { SignOut } from "phosphor-react-native";
 
-var data
-
-
 
 export default ({navigation} : any) => {
   const [buttonPressed, setButtonPressed] = useState<'status' | 'partner'>('status');
@@ -204,16 +201,18 @@ export default ({navigation} : any) => {
               status={"Em Prospecção"}
               totalPartners={partnersEmProspec.toString()}
               onPress={() => {
-                navigation.navigate("Detail");
-                data = partner.filter((x: any) => x.status == 0);
-                console.log(data);
+                navigation.navigate("Detail", {
+                  statusProp: partner.filter((x: any) => x.status == 0),
+                })
               }}
             />
             <CardStatus
               status={"Primeiro contato feito"}
               totalPartners={partnersPrimeiroContato.toString()}
               onPress={() => {
-                console.log(partner.filter((x: any) => x.status == 1));
+                navigation.navigate("Detail", {
+                  statusProp: partner.filter((x: any) => x.status == 1),
+                });
               }}
             />
 
@@ -221,7 +220,9 @@ export default ({navigation} : any) => {
               status={"Primeira reunião marcada/realizada"}
               totalPartners={partnersPrimeiraReuniao.toString()}
               onPress={() => {
-                console.log(partner.filter((x: any) => x.status == 2));
+                navigation.navigate("Detail", {
+                  statusProp: partner.filter((x: any) => x.status == 2),
+                });
               }}
             />
 
@@ -229,7 +230,9 @@ export default ({navigation} : any) => {
               status={"Documentação enviada/em análise (parceiro)"}
               totalPartners={partners4.toString()}
               onPress={() => {
-                console.log(partner.filter((x: any) => x.status == 3));
+                navigation.navigate("Detail", {
+                  statusProp: partner.filter((x: any) => x.status == 3),
+                });
               }}
             />
 
@@ -237,7 +240,9 @@ export default ({navigation} : any) => {
               status={"Documentação devolvida (Em análise Academy)"}
               totalPartners={partners5.toString()}
               onPress={() => {
-                console.log(partner.filter((x: any) => x.status == 4));
+                navigation.navigate("Detail", {
+                  statusProp: partner.filter((x: any) => x.status == 4),
+                });
               }}
             />
 
@@ -245,7 +250,9 @@ export default ({navigation} : any) => {
               status={"Documentação devolvida (Em análise legal)"}
               totalPartners={partners6.toString()}
               onPress={() => {
-                console.log(partner.filter((x: any) => x.status == 5));
+                navigation.navigate("Detail", {
+                  statusProp: partner.filter((x: any) => x.status == 5),
+                });
               }}
             />
 
@@ -253,7 +260,9 @@ export default ({navigation} : any) => {
               status={"Documentação análisada devolvida (Parceiro)"}
               totalPartners={partners7.toString()}
               onPress={() => {
-                console.log(partner.filter((x: any) => x.status == 6));
+                navigation.navigate("Detail", {
+                  statusProp: partner.filter((x: any) => x.status == 6),
+                });
               }}
             />
 
@@ -261,7 +270,9 @@ export default ({navigation} : any) => {
               status={"Em preparação de Executive Sumary (Academy)"}
               totalPartners={partners8.toString()}
               onPress={() => {
-                console.log(partner.filter((x: any) => x.status == 7));
+                navigation.navigate("Detail", {
+                  statusProp: partner.filter((x: any) => x.status == 7),
+                });
               }}
             />
 
@@ -269,7 +280,9 @@ export default ({navigation} : any) => {
               status={"ES em análise (Legal)"}
               totalPartners={partners9.toString()}
               onPress={() => {
-                console.log(partner.filter((x: any) => x.status == 8));
+                navigation.navigate("Detail", {
+                  statusProp: partner.filter((x: any) => x.status == 8),
+                });
               }}
             />
 
@@ -277,8 +290,9 @@ export default ({navigation} : any) => {
               status={"ES em análise (Academy Global)"}
               totalPartners={partners10.toString()}
               onPress={() => {
-                navigation.navigate("Detail")
-                console.log(partner.filter((x: any) => x.status == 9));
+                navigation.navigate("Detail", {
+                  statusProp: partner.filter((x: any) => x.status == 9),
+                });
               }}
             />
 
@@ -286,7 +300,9 @@ export default ({navigation} : any) => {
               status={"Pronto para assinatura"}
               totalPartners={partners11.toString()}
               onPress={() => {
-                console.log(partner.filter((x: any) => x.status == 10));
+                navigation.navigate("Detail", {
+                  statusProp: partner.filter((x: any) => x.status == 10),
+                });
               }}
             />
 
@@ -294,7 +310,9 @@ export default ({navigation} : any) => {
               status={"Parceria Firmada"}
               totalPartners={partners12.toString()}
               onPress={() => {
-                console.log(partner.filter((x: any) => x.status == 11));
+                navigation.navigate("Detail", {
+                  statusProp: partner.filter((x: any) => x.status == 11),
+                });
               }}
             />
           </View>

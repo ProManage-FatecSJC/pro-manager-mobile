@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
   Text: {
     alignSelf: "flex-start",
     fontSize: 16,
+    maxWidth: 200
   },
   UserImage: {
     width: 82,
