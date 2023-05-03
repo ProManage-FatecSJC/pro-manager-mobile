@@ -6,6 +6,7 @@ import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 import { SessionController } from "../../session/SessionController.ts";
 import CardDetail from "../../components/CardDetail.tsx";
+import SearchBar from "../../components/SearchBar.tsx";
 
 export default ({ navigation, route }: any) => {
   const { statusProp } = route.params;
@@ -23,26 +24,41 @@ export default ({ navigation, route }: any) => {
   
 
   const optionsStatus = [
-    "Em Prospecção",
-    "Primeiro Contato feito",
-    "Primeira Reunião marcada/realizada",
-    "Documentação enviada/em analise(Parceiro)",
-    "Documetação devolvida (Em análise Academy)",
-    "Documetação devolvida (Em análise Legal)",
-    "Documetação analisada devolvida (Parceiro)",
-    "Em preparação de Executive Sumary (Academy)",
+    "em Prospecção",
+    "com primeiro Contato feito",
+    "com primeira Reunião marcada/realizada",
+    "com documentação enviada/em analise(Parceiro)",
+    "com ocumetação devolvida (Em análise Academy)",
+    "com documetação devolvida (Em análise Legal)",
+    "com documetação analisada devolvida (Parceiro)",
+    "em preparação de Executive Sumary (Academy)",
     "ES em Análise (Legal)",
     "ES em Análise (Academy Global)",
-    "Pronto para Assinatura",
-    "Parceria Firmada",
+    "pronto para Assinatura",
+    "com Parceria Firmada",
   ];
 
+  const title = `${optionsStatus[statusProp[0].status]}`;
+
+  const handleSearch = (text: string): void => {
+    if (!text) {
+      setPartners(statusProp);
+      return;
+    }
+
+    const filteredPartners = statusProp.filter((partner: any) => {
+      const name = partner.name.toLowerCase();
+      const searchTerm = text.toLowerCase();
+      return name.includes(searchTerm);
+    });
+
+    setPartners(filteredPartners);
+  };
 
   return (
     <View style={styles.Container}>
-      <Text>Detail</Text>
-      <Text> </Text>
-      <Text> </Text>
+      <Text style={styles.Text1}> Parceiros {title} </Text>
+      <SearchBar placeholder={"Pesquisar"} onChangeText={handleSearch}  />
       <ScrollView>
         <View>
           {statusProp.map((item: any) => (

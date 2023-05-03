@@ -5,7 +5,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     justifyContent: "center",
-    padding: 24,
+    padding: 20,
+  },
+  Text1: {
+    fontWeight: "bold",
+    fontSize: 24,
+    marginTop: 20,
   },
 });
 
