@@ -42,7 +42,7 @@ Basta ter o aplicativo Expo, para rodar o aplicativo em seu celular.
 
 </br>
 
-## [Documentação oficial do projeto](https://github.com/Conveccao/conveccao-documentacao)
+## [Documentação oficial do projeto](https://github.com/ProManage-FatecSJC/pro-manager-documentation)
 
 <br>
 
