@@ -1,24 +1,15 @@
 import React, { useState } from "react";
-import { StyleSheet, TextInput, View, Keyboard, Button } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
- 
-interface Props {
-  placeholder: string;
-  onChangeText: (text: string) => void;
-  value?: string;
-}
 
-const [searchValue, setSearchValue] = useState("");
-
-const SearchBar: React.FC<Props> = ({ placeholder }) => {
+const SearchBar = ({ placeholder, onChangeText }: any) => {
   return (
     <View style={styles.container}>
       <View style={styles.searchBar}>
         <TextInput
           style={styles.input}
           placeholder={placeholder}
-          value={searchValue}
-          onChangeText={(text) => setSearchValue(text)}
+          onChangeText={(text) => onChangeText(text)}
         />
         <Feather
           name="search"

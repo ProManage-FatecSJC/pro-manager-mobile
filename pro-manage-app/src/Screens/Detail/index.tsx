@@ -13,13 +13,7 @@ export default ({ navigation, route }: any) => {
 
   const sessionController = new SessionController();
 
-  const [userName, setUserName] = useState("");
-
-  const [partner, setPartner] = useState([]);
   const [partners, setPartners] = useState(statusProp);
-  const [name, setName] = useState();
-  const [status, setStatus] = useState();
-  const [responsible, setResponsible] = useState();
 
   
 
@@ -40,7 +34,7 @@ export default ({ navigation, route }: any) => {
 
   const title = `${optionsStatus[statusProp[0].status]}`;
 
-  const handleSearch = (text: string): void => {
+  const handleSearch = (text : any) => {
     if (!text) {
       setPartners(statusProp);
       return;
@@ -52,16 +46,18 @@ export default ({ navigation, route }: any) => {
       return name.includes(searchTerm);
     });
 
+    console.log('PARCEIROS FILTRADOS: ', filteredPartners)
+    
     setPartners(filteredPartners);
   };
 
   return (
     <View style={styles.Container}>
       <Text style={styles.Text1}> Parceiros {title} </Text>
-      <SearchBar placeholder={"Pesquisar"} onChangeText={handleSearch}  />
+      <SearchBar placeholder={"Pesquisa"} onChangeText={handleSearch}/>
       <ScrollView>
         <View>
-          {statusProp.map((item: any) => (
+          {partners.map((item: any) => (
             <CardDetail
               key={item.id}
               name={item.name}
