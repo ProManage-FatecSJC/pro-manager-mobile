@@ -323,12 +323,22 @@ export default ({navigation} : any) => {
             <CardPartner
               partnerOrMember={"parceiros"}
               totalPartners={partnerCount.toString()}
-              onPress={() => {}}
+              onPress={() => {
+                navigation.navigate("Detail", { 
+                  statusProp: partner
+                })
+
+              }}
             />
             <CardPartner
               partnerOrMember={"membros"}
               totalPartners={memberCount.toString()}
-              onPress={() => {}}
+              onPress={() => {
+                navigation.navigate("Detail", {
+                  statusProp: member
+                })
+
+              }}
             />
           </View>
         </ScrollView>
