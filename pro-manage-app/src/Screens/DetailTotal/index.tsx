@@ -18,18 +18,18 @@ export default ({ navigation, route }: any) => {
   
 
   const optionsStatus = [
-    "em Prospecção",
-    "com primeiro Contato feito",
-    "com primeira Reunião marcada/realizada",
-    "com documentação enviada/em analise(Parceiro)",
-    "com ocumetação devolvida (Em análise Academy)",
-    "com documetação devolvida (Em análise Legal)",
-    "com documetação analisada devolvida (Parceiro)",
-    "em preparação de Executive Sumary (Academy)",
-    "ES em Análise (Legal)",
-    "ES em Análise (Academy Global)",
-    "pronto para Assinatura",
-    "com Parceria Firmada",
+    "Parceiros em Prospecção",
+    "Parceiros com primeiro Contato feito",
+    "Parceiros com primeira Reunião marcada/realizada",
+    "Parceiros com documentação enviada/em analise(Parceiro)",
+    "Parceiros com ocumetação devolvida (Em análise Academy)",
+    "Parceiros com documetação devolvida (Em análise Legal)",
+    "Parceiros com documetação analisada devolvida (Parceiro)",
+    "Parceiros em preparação de Executive Sumary (Academy)",
+    "Parceiros com ES em Análise (Legal)",
+    "Parceiros com ES em Análise (Academy Global)",
+    "Parceiros prontos para Assinatura",
+    "Parceiros com Parceria Firmada",
   ];
 
   const title = `${optionsStatus[statusProp[0].status]}`;
@@ -48,13 +48,14 @@ export default ({ navigation, route }: any) => {
 
     console.log('PARCEIROS FILTRADOS: ', filteredPartners)
     
+    
     setPartners(filteredPartners);
   };
 
   return (
     <View style={styles.Container}>
-      <Text style={styles.Text1}> Parceiros {title} </Text>
-      <SearchBar placeholder={"Pesquisa"} onChangeText={handleSearch}/>
+      <Text style={styles.Text1}> Total de Parceiros </Text>
+      <SearchBar placeholder={"Pesquisa"} onChangeText={handleSearch} />
       <ScrollView>
         <View>
           {partners.map((item: any) => (
@@ -63,6 +64,7 @@ export default ({ navigation, route }: any) => {
               name={item.name}
               status={optionsStatus[item.status]}
               responsible={item.intermediateResponsible}
+              onPress={navigation.navigate("InfPartner")}
             />
           ))}
         </View>

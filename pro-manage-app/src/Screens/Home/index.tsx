@@ -187,7 +187,7 @@ export default ({navigation} : any) => {
               },
             ]}
           >
-            Parceiros/Membros
+            Parceiros
           </Text>
         </TouchableOpacity>
       </View>
@@ -201,7 +201,7 @@ export default ({navigation} : any) => {
               status={"Em Prospecção"}
               totalPartners={partnersEmProspec.toString()}
               onPress={() => {
-                navigation.navigate("Detail", {
+                navigation.navigate("DetailStatus", {
                   statusProp: partner.filter((x: any) => x.status == 0),
                 })
               }}
@@ -210,7 +210,7 @@ export default ({navigation} : any) => {
               status={"Primeiro contato feito"}
               totalPartners={partnersPrimeiroContato.toString()}
               onPress={() => {
-                navigation.navigate("Detail", {
+                navigation.navigate("DetailStatus", {
                   statusProp: partner.filter((x: any) => x.status == 1),
                 });
               }}
@@ -220,7 +220,7 @@ export default ({navigation} : any) => {
               status={"Primeira reunião marcada/realizada"}
               totalPartners={partnersPrimeiraReuniao.toString()}
               onPress={() => {
-                navigation.navigate("Detail", {
+                navigation.navigate("DetailStatus", {
                   statusProp: partner.filter((x: any) => x.status == 2),
                 });
               }}
@@ -230,7 +230,7 @@ export default ({navigation} : any) => {
               status={"Documentação enviada/em análise (parceiro)"}
               totalPartners={partners4.toString()}
               onPress={() => {
-                navigation.navigate("Detail", {
+                navigation.navigate("DetailStatus", {
                   statusProp: partner.filter((x: any) => x.status == 3),
                 });
               }}
@@ -240,7 +240,7 @@ export default ({navigation} : any) => {
               status={"Documentação devolvida (Em análise Academy)"}
               totalPartners={partners5.toString()}
               onPress={() => {
-                navigation.navigate("Detail", {
+                navigation.navigate("DetailStatus", {
                   statusProp: partner.filter((x: any) => x.status == 4),
                 });
               }}
@@ -250,7 +250,7 @@ export default ({navigation} : any) => {
               status={"Documentação devolvida (Em análise legal)"}
               totalPartners={partners6.toString()}
               onPress={() => {
-                navigation.navigate("Detail", {
+                navigation.navigate("DetailStatus", {
                   statusProp: partner.filter((x: any) => x.status == 5),
                 });
               }}
@@ -260,7 +260,7 @@ export default ({navigation} : any) => {
               status={"Documentação análisada devolvida (Parceiro)"}
               totalPartners={partners7.toString()}
               onPress={() => {
-                navigation.navigate("Detail", {
+                navigation.navigate("DetailStatus", {
                   statusProp: partner.filter((x: any) => x.status == 6),
                 });
               }}
@@ -270,7 +270,7 @@ export default ({navigation} : any) => {
               status={"Em preparação de Executive Sumary (Academy)"}
               totalPartners={partners8.toString()}
               onPress={() => {
-                navigation.navigate("Detail", {
+                navigation.navigate("DetailStatus", {
                   statusProp: partner.filter((x: any) => x.status == 7),
                 });
               }}
@@ -280,7 +280,7 @@ export default ({navigation} : any) => {
               status={"ES em análise (Legal)"}
               totalPartners={partners9.toString()}
               onPress={() => {
-                navigation.navigate("Detail", {
+                navigation.navigate("DetailStatus", {
                   statusProp: partner.filter((x: any) => x.status == 8),
                 });
               }}
@@ -290,7 +290,7 @@ export default ({navigation} : any) => {
               status={"ES em análise (Academy Global)"}
               totalPartners={partners10.toString()}
               onPress={() => {
-                navigation.navigate("Detail", {
+                navigation.navigate("DetailStatus", {
                   statusProp: partner.filter((x: any) => x.status == 9),
                 });
               }}
@@ -300,7 +300,7 @@ export default ({navigation} : any) => {
               status={"Pronto para assinatura"}
               totalPartners={partners11.toString()}
               onPress={() => {
-                navigation.navigate("Detail", {
+                navigation.navigate("DetailStatus", {
                   statusProp: partner.filter((x: any) => x.status == 10),
                 });
               }}
@@ -310,7 +310,7 @@ export default ({navigation} : any) => {
               status={"Parceria Firmada"}
               totalPartners={partners12.toString()}
               onPress={() => {
-                navigation.navigate("Detail", {
+                navigation.navigate("DetailStatus", {
                   statusProp: partner.filter((x: any) => x.status == 11),
                 });
               }}
@@ -324,18 +324,8 @@ export default ({navigation} : any) => {
               partnerOrMember={"parceiros"}
               totalPartners={partnerCount.toString()}
               onPress={() => {
-                navigation.navigate("Detail", { 
+                navigation.navigate("DetailTotal", { 
                   statusProp: partner
-                })
-
-              }}
-            />
-            <CardPartner
-              partnerOrMember={"membros"}
-              totalPartners={memberCount.toString()}
-              onPress={() => {
-                navigation.navigate("Detail", {
-                  statusProp: member
                 })
 
               }}
