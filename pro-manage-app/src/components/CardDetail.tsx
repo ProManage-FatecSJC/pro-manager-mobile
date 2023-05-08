@@ -5,7 +5,7 @@ interface Props {
   name: string;
   status: string;
   responsible: string;
-  onPress?: () => void;
+  onPress?: any;
 }
 
 const Button: React.FC<Props> = ({ name, status, responsible, onPress }) => {

@@ -211,7 +211,7 @@ export default ({navigation} : any) => {
               totalPartners={partnersPrimeiroContato.toString()}
               onPress={() => {
                 navigation.navigate("DetailStatus", {
-                  statusProp: partner.filter((x: any) => x.status == 1),
+                  statusProp: partner.filter((x: any) => x.status == 1)
                 });
               }}
             />

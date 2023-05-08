@@ -64,7 +64,7 @@ export default ({ navigation, route }: any) => {
               name={item.name}
               status={optionsStatus[item.status]}
               responsible={item.intermediateResponsible}
-              onPress={navigation.navigate("InfPartner")}
+              onPress={() => {navigation.navigate("InfPartner")}}
             />
           ))}
         </View>
