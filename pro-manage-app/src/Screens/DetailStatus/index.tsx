@@ -47,6 +47,7 @@ export default ({ navigation, route }: any) => {
     });
 
     console.log('PARCEIROS FILTRADOS: ', filteredPartners)
+
     
     setPartners(filteredPartners);
   };
@@ -63,7 +64,10 @@ export default ({ navigation, route }: any) => {
               name={item.name}
               status={optionsStatus[item.status]}
               responsible={item.intermediateResponsible}
-              onPress={() => {navigation.navigate("InfPartner")}}
+              onPress={() => {
+                navigation.navigate("InfPartner", {
+                  idProp: item.id});
+              }}
             />
           ))}
         </View>

@@ -204,6 +204,7 @@ export default ({navigation} : any) => {
                 navigation.navigate("DetailStatus", {
                   statusProp: partner.filter((x: any) => x.status == 0),
                 })
+                console.log(partner)
               }}
             />
             <CardStatus

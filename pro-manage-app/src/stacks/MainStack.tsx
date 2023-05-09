@@ -7,6 +7,7 @@ import ShowBottomTabs from "./MainTab";
 import DetailStatus from "../Screens/DetailStatus";
 import DetailTotal from "../Screens/DetailTotal";
 import InfPartner from "../Screens/InfPartner";
+import Members from "../Screens/Members";
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,7 @@ export default class Navegador extends React.Component {
         <Stack.Screen name="DetailStatus" component={DetailStatus} />
         <Stack.Screen name="DetailTotal" component={DetailTotal} />
         <Stack.Screen name="InfPartner" component={InfPartner} />
+        <Stack.Screen name="Members" component={Members} />
       </Stack.Navigator>
     );
   }
