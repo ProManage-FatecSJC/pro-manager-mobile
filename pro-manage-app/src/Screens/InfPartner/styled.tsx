@@ -4,7 +4,6 @@ const styles = StyleSheet.create({
   Container: {
     flex: 1,
     backgroundColor: "#fff",
-    justifyContent: "center",
     padding: 20,
   },
   Divider: {
@@ -17,12 +16,25 @@ const styles = StyleSheet.create({
   Text1: {
     fontWeight: "bold",
     fontSize: 24,
-    marginTop: 20,
+    marginTop: 10,
   },
   Text2: {
     fontWeight: "bold",
     fontSize: 20,
-    marginBottom: 20,
+    marginBottom: 10,
+  },
+  Text3: {
+    fontSize: 20,
+    fontWeight: "normal",
+  },
+  UserImage: {
+    width: 100,
+    height: 100,
+    marginTop: 10,
+  },
+  Center: {
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

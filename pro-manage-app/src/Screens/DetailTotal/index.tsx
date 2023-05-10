@@ -10,13 +10,8 @@ import SearchBar from "../../components/SearchBar.tsx";
 
 export default ({ navigation, route }: any) => {
   const { statusProp } = route.params;
-
   const sessionController = new SessionController();
-
   const [partners, setPartners] = useState(statusProp);
-
-  
-
   const optionsStatus = [
     "Parceiros em Prospecção",
     "Parceiros com primeiro Contato feito",
@@ -31,15 +26,12 @@ export default ({ navigation, route }: any) => {
     "Parceiros prontos para Assinatura",
     "Parceiros com Parceria Firmada",
   ];
-
   const title = `${optionsStatus[statusProp[0].status]}`;
-
   const handleSearch = (text : any) => {
     if (!text) {
       setPartners(statusProp);
       return;
     }
-
     const filteredPartners = statusProp.filter((partner: any) => {
       const name = partner.name.toLowerCase();
       const searchTerm = text.toLowerCase();
@@ -64,11 +56,15 @@ export default ({ navigation, route }: any) => {
               name={item.name}
               status={optionsStatus[item.status]}
               responsible={item.intermediateResponsible}
-              onPress={() => {navigation.navigate("InfPartner")}}
+              onPress={() => {
+                navigation.navigate("InfPartner", {
+                  idProp: item.id,
+                });
+              }}
             />
           ))}
         </View>
       </ScrollView>
     </View>
   );
-}
+};

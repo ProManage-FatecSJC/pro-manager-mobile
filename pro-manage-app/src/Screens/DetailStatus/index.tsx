@@ -65,11 +65,12 @@ export default ({ navigation, route }: any) => {
               status={optionsStatus[item.status]}
               responsible={item.intermediateResponsible}
               onPress={() => {
+                console.log("ID AQUI: ", item.id)
                 navigation.navigate("InfPartner", {
                   idProp: item.id});
-              }}
-            />
-          ))}
+              }} 
+            /> ))
+          }
         </View>
       </ScrollView>
     </View>

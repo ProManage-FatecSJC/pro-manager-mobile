@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, View } from "react-native";
+import { Image, ScrollView, Text, View } from "react-native";
 import styles from "./styled.tsx";
 
 import api from "../../api/api.ts";
@@ -14,66 +14,129 @@ export default ({navigation, route}: any) => {
   const {idProp} = route.params;
 
   const [id, setId] = useState(idProp);
-  const [data, setData] = useState({})
+  const [data, setData] = useState();
+  const [name, setName] = useState();
+  const [status, setStatus] = useState(0);
+  const [privase, setPrivase] = useState(0);
+  const [type, setType] = useState(0);
+  const [members, setMembers] = useState();
+  const [contacts, setContacts] = useState();
+  const [response, setResponse] = useState();
+  const [uf, setUf] = useState();
+  
   const [inf, setInf] = useState(0);
   const sessionController = new SessionController();
 
   async function handlePartner() {
     const token = await sessionController.getToken();
-
+    console.log(idProp)
     try {
-      await api.get(URI.PARTNER,{
+      await api.get(URI.PARTNER+`/${id}`,{
         headers: { Authorization: token}  
       }).then(response => {
-        setData(response.data)
-  
+        setData(response.data);
+        setName(response.data.name);
+        setStatus(response.data.status);
+        setPrivase(response.data.privacy);
+        setType(response.data.type);
+        setMembers(response.data.membersQuantity);
+        setContacts(response.data.telephone);
+        setResponse(response.data.intermediateResponsible);
+        setUf(response.data.state);
+
       })
     }catch (error) {
       console.log(error)
     }
     
-  }
+  };
+
+  const optionsStatus = [
+    "Em Prospecção",
+    "Primeiro Contato feito",
+    "Primeira Reunião marcada/realizada",
+    "Documentação enviada/em analise(Parceiro)",
+    "Documetação devolvida (Em análise Academy)",
+    "Documetação devolvida (Em análise Legal)",
+    "Documetação analisada devolvida (Parceiro)",
+    "Em preparação de Executive Sumary (Academy)",
+    "ES em Análise (Legal)",
+    "ES em Análise (Academy Global)",
+    "Pronto para Assinatura",
+    "Parceria Firmada",
+  ];
+
+  const optionsPrivace = [
+    "Público",
+    "Privado"
+  ];
+
+  const optionsType = [
+    "Único",
+    "Multiplo"
+  ]
+
   
   useEffect(() => {
-    console.log(data);
-
-  }, [])
+    handlePartner()
+  }, []);
   
   return (
     <View style={styles.Container}>
-      <Text style={styles.Text1}> Parceiro: Fatec</Text>
-      <View style={styles.Divider}></View>
-      <ScrollView>
-        <Text style={styles.Text2}>Nome: </Text>
-        <Text style={styles.Text2}>Status: </Text>
-        <Text style={styles.Text2}>Privacidade: </Text>
-        <Text style={styles.Text2}>Tipo: </Text>
-        <Text style={styles.Text2}>Membros: </Text>
-        <Text style={styles.Text2}>Contato: </Text>
-        <Text style={styles.Text2}>Responsável: </Text>
-        <Text style={styles.Text2}>Estado: </Text>
-
-        <ButtonBlue
-          title={"Editar"}
-          onPress={function (): void {
-            throw new Error("Function not implemented.");
-          }}
+      <Text style={styles.Text1}> Parceiro: {name}</Text>
+      <View style={styles.Center}>
+        <Image
+          source={require("../../assets/avatar.png")}
+          style={styles.UserImage}
         />
+        <View style={styles.Divider}></View>
+        <Text style={styles.Text2}>
+          Nome: <Text style={styles.Text3}>{name}</Text>
+        </Text>
+        <Text style={styles.Text2}>
+          Status: <Text style={styles.Text3}>{optionsStatus[status]}</Text>
+        </Text>
+        <Text style={styles.Text2}>
+          Privacidade:{" "}
+          <Text style={styles.Text3}>{optionsPrivace[privase]}</Text>
+        </Text>
+        <Text style={styles.Text2}>
+          Tipo: <Text style={styles.Text3}>{optionsType[type]}</Text>
+        </Text>
+        <Text style={styles.Text2}>
+          Membros: <Text style={styles.Text3}>{members}</Text>
+        </Text>
+        <Text style={styles.Text2}>
+          Contato: <Text style={styles.Text3}>{contacts}</Text>
+        </Text>
+        <Text style={styles.Text2}>
+          Responsável: <Text style={styles.Text3}>{response}</Text>
+        </Text>
+        <Text style={styles.Text2}>
+          Estado: <Text style={styles.Text3}>{uf}</Text>
+        </Text>
+      </View>
 
-        <ButtonGreen
-          title={"Visualizar Membros"}
-          onPress={() => {
-            navigation.navigate("Members");
-          }}
-        />
+      <ButtonBlue
+        title={"Editar"}
+        onPress={() => {
+          navigation.navigate("PartnerUpdate");
+        }}
+      />
 
-        <ButtonRed
-          title={"Arquivar Parceiro"}
-          onPress={function (): void {
-            throw new Error("Function not implemented.");
-          }}
-        />
-      </ScrollView>
+      <ButtonGreen
+        title={"Visualizar Membros"}
+        onPress={() => {
+          navigation.navigate("Members");
+        }}
+      />
+
+      <ButtonRed
+        title={"Arquivar Parceiro"}
+        onPress={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+      />
     </View>
   );
 };
