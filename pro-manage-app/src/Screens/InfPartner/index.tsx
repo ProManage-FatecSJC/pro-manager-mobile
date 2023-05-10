@@ -29,7 +29,6 @@ export default ({navigation, route}: any) => {
 
   async function handlePartner() {
     const token = await sessionController.getToken();
-    console.log(idProp)
     try {
       await api.get(URI.PARTNER+`/${id}`,{
         headers: { Authorization: token}  
@@ -127,7 +126,10 @@ export default ({navigation, route}: any) => {
       <ButtonGreen
         title={"Visualizar Membros"}
         onPress={() => {
-          navigation.navigate("Members");
+          console.log(idProp);
+          navigation.navigate("Members", {
+            idProp: id,
+          });
         }}
       />
 

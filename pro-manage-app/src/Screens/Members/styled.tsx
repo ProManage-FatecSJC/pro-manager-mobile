@@ -6,7 +6,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     justifyContent: "center",
     padding: 20,
-  }
+  },
+  Text1: {
+    fontWeight: "bold",
+    fontSize: 24,
+    marginTop: 10,
+  },
 });
 
 export default styles;
