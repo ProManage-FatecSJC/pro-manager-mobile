@@ -23,12 +23,14 @@ export default ({ navigation, route }: any) => {
     const token = await sessionController.getToken();
 
     try {
-      await api.get(URI.MEMBERS+`/${id}`, {
+      await api.get(URI.MEMBERSBYID +`/${id}`, {
           headers: {
             Authorization: token,
-          },}).then((response) => {
-          setMembers(response.data)
-          console.log(members)
+          },
+        })
+        .then((response) => {
+          setMembers(response.data);
+          console.log(members);
         });
     } catch (error) {
       console.log(error);
