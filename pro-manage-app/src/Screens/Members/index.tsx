@@ -11,10 +11,11 @@ export default ({ navigation, route }: any) => {
   const { idProp } = route.params;
 
   const [id, setId] = useState(idProp);
-  const [members, setMembers] = useState();
+  const [members, setMembers] = useState([]);
   const [name, setName] = useState();
   const [fantasyName, setFantasyName] = useState();
   const [cnpj, setCnpj] = useState();
+  const [count, setCount] = useState(0)
 
   const sessionController = new SessionController();
 
@@ -22,11 +23,11 @@ export default ({ navigation, route }: any) => {
     const token = await sessionController.getToken();
 
     try {
-      await api.get(URI.MEMBERSBYID+`/${id}`, {
+      await api.get(URI.MEMBERS+`/${id}`, {
           headers: {
             Authorization: token,
           },}).then((response) => {
-          setMembers(response.data);
+          setMembers(response.data)
           console.log(members)
         });
     } catch (error) {
@@ -35,8 +36,11 @@ export default ({ navigation, route }: any) => {
   }
 
   useEffect(() => {
-    handleMembers();
-  }, []);
+    if (count < 2) {
+      handleMembers();
+      setCount(count + 1)
+    }
+  }, [members]);
 
   return (
     <View style={styles.Container}>
