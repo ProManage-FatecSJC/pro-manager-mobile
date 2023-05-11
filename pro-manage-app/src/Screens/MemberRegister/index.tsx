@@ -42,13 +42,15 @@ async function searchCep(cep: string): Promise<Location | null | undefined> {
   }
 }
 
-export default ({navigation}: any) => {
+export default ({ navigation, route }: any) => {
+  const { idProp } = route.params;
 
+  const [id, setId] = useState(idProp);
   const [memberName, setMemberName] = useState("");
   const [memberFantasy, setMemberFantasy] = useState("");
   const [memberCNPJ, setCNPJ] = useState("");
   const [memberPhone, setMemberPhone] = useState("");
-  const [partner, setPartner] = useState("");;
+  const [partner, setPartner] = useState("");
   const [responsible, setresponsible] = useState("");
 
   const [cep, setCEP] = useState("");
@@ -68,38 +70,42 @@ export default ({navigation}: any) => {
     CNPJ: memberCNPJ,
     telephone: memberPhone,
     partner: partner,
-    address: [],
+    address: {
+      cep: resCep,
+      street: street,
+      number: number,
+      complement: complement,
+      district: district,
+      city: city,
+      uf: uf,
+    },
     responsible: responsible,
-  }
+  };
 
-  let address = {
-    cep: resCep,
-    street: street,
-    number: number,
-    complement: complement,
-    district: district,
-    city: city,
-    uf: uf,
-  }
 
   const handleNewMember = async () => {
-    const token = await sessionController.getToken()
-    console.log(member)
-    await api.
-    post(URI.MEMBERS, member, {
-      headers: {
-        Authorization: token
-      }
-    })
-    .then(response => {
-      if (response.status === 200) {
-        navigation.navigate()
-      }
-    }).catch(error => {
-      console.log(error)
-    })
+    const token = await sessionController.getToken();
+    api.post(URI.MEMBERS, member, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          //////////
 
-  }
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+     function onEsc(event: KeyboardEvent) {
+       }} )
+
+
 
   const handleCancelMember = () => {
     navigation.navigate("Detail");
@@ -119,22 +125,41 @@ export default ({navigation}: any) => {
       } else {
         setEditableAdress(true);
       }
-    } 
-    
+    }
   }
 
   const optionsState = [
-    "Acre", "Alagoas", "Amapá", "Amazonas", "Bahia",
-    "Ceará", "Espírito Santos", "Goiás", "Maranhão", "Mato Grosso",
-    "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná",
-    "Pernambuco", "Piaui", "Rio de Janeiro", "Rio Grande do Norte",
-    "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", 
-    "São Paulo", "Sergipe", "Tocantins"]
+    "Acre",
+    "Alagoas",
+    "Amapá",
+    "Amazonas",
+    "Bahia",
+    "Ceará",
+    "Espírito Santos",
+    "Goiás",
+    "Maranhão",
+    "Mato Grosso",
+    "Mato Grosso do Sul",
+    "Minas Gerais",
+    "Pará",
+    "Paraíba",
+    "Paraná",
+    "Pernambuco",
+    "Piaui",
+    "Rio de Janeiro",
+    "Rio Grande do Norte",
+    "Rio Grande do Sul",
+    "Rondônia",
+    "Roraima",
+    "Santa Catarina",
+    "São Paulo",
+    "Sergipe",
+    "Tocantins",
+  ];
 
   const handleSelect = (selectedOption: string) => {
     console.log(`Opção Selecionada: ${selectedOption}`);
   };
-
 
   return (
     <View style={styles.Container}>
@@ -181,12 +206,24 @@ export default ({navigation}: any) => {
           value={city}
           editable={editableAdress}
         />
-            <Text style={styles.Text}>Estado</Text>
-            <SignInServeral options={optionsState} onSelect={handleSelect} value={uf} disabled={!editableAdress}/>
-          
+        <Text style={styles.Text}>Estado</Text>
+        <SignInServeral
+          options={optionsState}
+          onSelect={handleSelect}
+          value={uf}
+          disabled={editableAdress}
+        />
 
         <ButtonBlue title={"Salvar"} onPress={handleNewMember} />
-        <ButtonRed title={"Cancelar"} onPress={handleCancelMember} />
+        <ButtonRed
+          title={"Cancelar"}
+          onPress={() => {
+            console.log(idProp);
+            navigation.navigate("Members", {
+              idProp: id,
+            });
+          }}
+        />
       </ScrollView>
     </View>
   );

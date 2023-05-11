@@ -90,6 +90,7 @@ export default ({navigation} : any) => {
       }).then(response => {
         setMember(response.data)
         setMemberCount(member.length)
+        
       })
     } catch (error) {
       console.log(error)
@@ -131,9 +132,6 @@ export default ({navigation} : any) => {
     navigation.navigate('SignIn')
   }
 
-  function handleClickDetails(): void {
-    navigation.navigate("Detail");
-  }
 
   return (
     <View style={styles.Container}>
@@ -189,7 +187,7 @@ export default ({navigation} : any) => {
               },
             ]}
           >
-            Parceiros/Membros
+            Parceiros
           </Text>
         </TouchableOpacity>
       </View>
@@ -202,72 +200,121 @@ export default ({navigation} : any) => {
             <CardStatus
               status={"Em Prospecção"}
               totalPartners={partnersEmProspec.toString()}
-              onPress={handleClickDetails}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 0),
+                })
+                console.log(partner)
+              }}
             />
             <CardStatus
               status={"Primeiro contato feito"}
               totalPartners={partnersPrimeiroContato.toString()}
-              onPress={handleClickDetails}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 1)
+                });
+              }}
             />
 
             <CardStatus
               status={"Primeira reunião marcada/realizada"}
               totalPartners={partnersPrimeiraReuniao.toString()}
-              onPress={handleClickDetails}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 2),
+                });
+              }}
             />
 
             <CardStatus
               status={"Documentação enviada/em análise (parceiro)"}
               totalPartners={partners4.toString()}
-              onPress={handleClickDetails}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 3),
+                });
+              }}
             />
 
             <CardStatus
               status={"Documentação devolvida (Em análise Academy)"}
               totalPartners={partners5.toString()}
-              onPress={handleClickDetails}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 4),
+                });
+              }}
             />
 
             <CardStatus
               status={"Documentação devolvida (Em análise legal)"}
               totalPartners={partners6.toString()}
-              onPress={handleClickDetails}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 5),
+                });
+              }}
             />
 
             <CardStatus
               status={"Documentação análisada devolvida (Parceiro)"}
               totalPartners={partners7.toString()}
-              onPress={handleClickDetails}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 6),
+                });
+              }}
             />
 
             <CardStatus
               status={"Em preparação de Executive Sumary (Academy)"}
               totalPartners={partners8.toString()}
-              onPress={handleClickDetails}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 7),
+                });
+              }}
             />
 
             <CardStatus
               status={"ES em análise (Legal)"}
               totalPartners={partners9.toString()}
-              onPress={handleClickDetails}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 8),
+                });
+              }}
             />
 
             <CardStatus
               status={"ES em análise (Academy Global)"}
               totalPartners={partners10.toString()}
-              onPress={handleClickDetails}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 9),
+                });
+              }}
             />
 
             <CardStatus
               status={"Pronto para assinatura"}
               totalPartners={partners11.toString()}
-              onPress={handleClickDetails}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 10),
+                });
+              }}
             />
 
             <CardStatus
               status={"Parceria Firmada"}
               totalPartners={partners12.toString()}
-              onPress={handleClickDetails}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 11),
+                });
+              }}
             />
           </View>
         </ScrollView>
@@ -277,12 +324,12 @@ export default ({navigation} : any) => {
             <CardPartner
               partnerOrMember={"parceiros"}
               totalPartners={partnerCount.toString()}
-              onPress={handleClickDetails}
-            />
-            <CardPartner
-              partnerOrMember={"membros"}
-              totalPartners={memberCount.toString()}
-              onPress={handleClickDetails}
+              onPress={() => {
+                navigation.navigate("DetailTotal", { 
+                  statusProp: partner
+                })
+
+              }}
             />
           </View>
         </ScrollView>

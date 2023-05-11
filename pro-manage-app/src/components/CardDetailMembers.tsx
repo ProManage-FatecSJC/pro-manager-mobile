@@ -3,22 +3,25 @@ import { TouchableOpacity, StyleSheet, Text, View, Image } from "react-native";
 
 interface Props {
   name: string;
-  status: string;
-  responsible: string;
+  nameFantasy: string;
+  cnpj: string;
   onPress?: any;
 }
 
-const Button: React.FC<Props> = ({ name, status, responsible, onPress }) => {
+const Button: React.FC<Props> = ({ name, nameFantasy, cnpj, onPress }) => {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
-        <View>
-            <Image source={require("../assets/avatar.png")} style={styles.UserImage} />
-        </View>
-        <View style={styles.textCardWrapperWithMargin}>
-            <Text style={styles.Text}>Nome: {name}</Text>
-            <Text style={styles.Text}>Status: {status}</Text>
-            <Text style={styles.Text}>Responsável: {responsible}</Text>
-        </View>
+      <View>
+        <Image
+          source={require("../assets/avatar.png")}
+          style={styles.UserImage}
+        />
+      </View>
+      <View style={styles.textCardWrapperWithMargin}>
+        <Text style={styles.Text}>Nome: {name}</Text>
+        <Text style={styles.Text}>Nome Fantasia: {nameFantasy}</Text>
+        <Text style={styles.Text}>CNPJ: {cnpj}</Text>
+      </View>
     </TouchableOpacity>
   );
 };
