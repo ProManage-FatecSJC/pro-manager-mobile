@@ -72,7 +72,7 @@ export default ({navigation, route}: any) => {
 
   const optionsType = [
     "Único",
-    "Multiplo"
+    "Múltiplo"
   ]
 
   

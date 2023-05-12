@@ -129,32 +129,10 @@ export default ({ navigation, route }: any) => {
   }
 
   const optionsState = [
-    "Acre",
-    "Alagoas",
-    "Amapá",
-    "Amazonas",
-    "Bahia",
-    "Ceará",
-    "Espírito Santos",
-    "Goiás",
-    "Maranhão",
-    "Mato Grosso",
-    "Mato Grosso do Sul",
-    "Minas Gerais",
-    "Pará",
-    "Paraíba",
-    "Paraná",
-    "Pernambuco",
-    "Piaui",
-    "Rio de Janeiro",
-    "Rio Grande do Norte",
-    "Rio Grande do Sul",
-    "Rondônia",
-    "Roraima",
-    "Santa Catarina",
-    "São Paulo",
-    "Sergipe",
-    "Tocantins",
+    "Acre","Alagoas","Amapá","Amazonas","Bahia","Ceará","Espírito Santos","Goiás","Maranhão","Mato Grosso",
+    "Mato Grosso do Sul","Minas Gerais","Pará","Paraíba","Paraná","Pernambuco","Piaui","Rio de Janeiro",
+    "Rio Grande do Norte","Rio Grande do Sul","Rondônia","Roraima","Santa Catarina","São Paulo","Sergipe",
+    "Tocantins"
   ];
 
   const handleSelect = (selectedOption: string) => {
