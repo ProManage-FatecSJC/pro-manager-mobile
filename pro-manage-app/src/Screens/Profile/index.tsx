@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import styles from "./styled.tsx";
 import { View, Text, Image, SafeAreaView, TextInput } from "react-native";
 import { SessionController } from "../../session/SessionController.ts";
+import Button from "../../components/ButtonAddUser.tsx";
+import { useNavigation } from "@react-navigation/native";
 
 export default () => {
+  const navigation = useNavigation();
 
   const [userName, setUserName] = useState('')
   const sessionController = new SessionController()
@@ -51,6 +54,8 @@ export default () => {
               editable={false}
             />
           </View>
+
+          {/* <Button title="Adicionar Perfil" onPress={() => navigation.navigate('')} /> */}
         </SafeAreaView>
       </View>
     </View>

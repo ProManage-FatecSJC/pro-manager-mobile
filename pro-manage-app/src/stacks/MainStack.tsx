@@ -9,6 +9,7 @@ import DetailTotal from "../Screens/DetailTotal";
 import InfPartner from "../Screens/InfPartner";
 import Members from "../Screens/Members";
 import PartnerUpdate from "../Screens/PartnerUpdate";
+import UserRegister from "../Screens/UserRegister";
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,7 @@ export default class Navegador extends React.Component {
         <Stack.Screen name="InfPartner" component={InfPartner} />
         <Stack.Screen name="Members" component={Members} />
         <Stack.Screen name="PartnerUpdate" component={PartnerUpdate} />
+        <Stack.Screen name="UserRegister" component={UserRegister} />
       </Stack.Navigator>
     );
   }
