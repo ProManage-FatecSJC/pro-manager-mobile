@@ -13,8 +13,8 @@ export default ({ navigation, route }: any) => {
   const { idProp } = route.params;
 
   const [id, setId] = useState(idProp);
-    const [membersData, setMembersData] = useState([])
-    const [members, setMembers] = useState([]);
+  const [membersData, setMembersData] = useState([])
+  const [members, setMembers] = useState([]);
   const [name, setName] = useState();
   const [fantasyName, setFantasyName] = useState();
   const [cnpj, setCnpj] = useState();

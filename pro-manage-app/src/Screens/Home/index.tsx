@@ -322,13 +322,23 @@ export default ({navigation} : any) => {
         <ScrollView>
           <View>
             <CardPartner
-              partnerOrMember={"parceiros"}
+              title={"Total de parceiros cadastrados"}
               totalPartners={partnerCount.toString()}
+              registeredArchived="cadastrados"
               onPress={() => {
                 navigation.navigate("DetailTotal", { 
                   statusProp: partner
                 })
 
+              }}
+            />
+
+            <CardPartner
+              title={"Total de parceiros arquivados"}
+              totalPartners={partnerCount.toString()}
+              registeredArchived="arquivados"
+              onPress={() => {
+                navigation.navigate("ArquivePartners")
               }}
             />
           </View>
@@ -337,4 +347,3 @@ export default ({navigation} : any) => {
     </View>
   );
 };
-

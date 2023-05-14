@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     padding: 5,
     flexDirection: "row",
     width: "100%",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "transparent",
     borderBottomWidth: 1,
     borderBottomColor: "#00688C",
     alignItems: "center",
