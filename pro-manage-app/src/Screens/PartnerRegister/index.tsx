@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styled.tsx";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Modal, Pressable } from "react-native";
 import PartnerSignIn from "../../components/PartnerSignIn.tsx";
 import SignInServeral from "../../components/SignInSeveral.tsx";
-import Button from "../../components/ButtonAddPartner.tsx";
+import Button from "../../components/ButtonSignIn.tsx";
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 import { SessionController } from "../../session/SessionController.ts";
 
-export default ({navigation}: any) => {
+export default ({ navigation }: any) => {
 
   const [partnerName, setPartnerName] = useState('');
   const [partnerPrivacy, setPartnerPrivacy] = useState('0');
@@ -18,6 +18,7 @@ export default ({navigation}: any) => {
   const [partnerContact, setPartnerContact] = useState('');
   const [partnerResponsible, setPartnerResponsible] = useState('');
   const [partnerState, setPartnerState] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
 
   const sessionController = new SessionController()
 
@@ -36,20 +37,21 @@ export default ({navigation}: any) => {
     const token = await sessionController.getToken()
     console.log(partner)
     await api.
-    post(URI.PARTNER, partner, {
+      post(URI.PARTNER, partner, {
         headers: {
-            Authorization: token
+          Authorization: token
         }
-    })
-    .then(response => {
-        if(response.status == 200){
-            navigation.navigate('Home')
+      })
+      .then(response => {
+        if (response.status == 200) {
+          navigation.navigate('Home')
         }
-    })
-    .catch(error => {
+      })
+      .catch(error => {
+        setModalVisible(true);
         console.log(error);
-    })
-}
+      })
+  }
 
   const optionsType = ["Unico", "Multiplo"];
 
@@ -75,7 +77,7 @@ export default ({navigation}: any) => {
     "Ceará", "Espírito Santos", "Goiás", "Maranhão", "Mato Grosso",
     "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná",
     "Pernambuco", "Piaui", "Rio de Janeiro", "Rio Grande do Norte",
-    "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", 
+    "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina",
     "São Paulo", "Sergipe", "Tocantins"]
 
   const handleSelect = (selectedOption: string) => {
@@ -84,6 +86,24 @@ export default ({navigation}: any) => {
 
   return (
     <View style={styles.Container}>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible)
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Dados de cadastro incompletos ou incorretos!</Text>
+            <Pressable
+              style={[styles.button]}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.textStyle}>OK</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       <Text style={styles.Text1}>Adicionar um parceiro</Text>
       <Text style={styles.Text2}>Coloque os dados do seu parceiro</Text>
       <View style={styles.Divider}></View>
@@ -107,8 +127,8 @@ export default ({navigation}: any) => {
 
         <Button
           title={"Adicionar"}
-          onPress={function (): void {
-            throw new Error("Function not implemented.");
+          onPress={() => {
+            handleNewPartner()
           }}
         />
       </ScrollView>

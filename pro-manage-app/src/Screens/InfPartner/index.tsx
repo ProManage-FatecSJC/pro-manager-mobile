@@ -9,9 +9,9 @@ import ButtonBlue from '../../components/ButtonSignIn.tsx';
 import ButtonRed from '../../components/ButtonRed.tsx';
 import ButtonGreen from '../../components/ButtonGreen.tsx';
 
-export default ({navigation, route}: any) => {
+export default ({ navigation, route }: any) => {
 
-  const {idProp} = route.params;
+  const { idProp } = route.params;
 
   const [id, setId] = useState(idProp);
   const [data, setData] = useState();
@@ -23,15 +23,15 @@ export default ({navigation, route}: any) => {
   const [contacts, setContacts] = useState();
   const [response, setResponse] = useState();
   const [uf, setUf] = useState();
-  
+
   const [inf, setInf] = useState(0);
   const sessionController = new SessionController();
 
   async function handlePartner() {
     const token = await sessionController.getToken();
     try {
-      await api.get(URI.PARTNER+`/${id}`,{
-        headers: { Authorization: token}  
+      await api.get(URI.PARTNER + `/${id}`, {
+        headers: { Authorization: token }
       }).then(response => {
         setData(response.data);
         setName(response.data.name);
@@ -44,10 +44,10 @@ export default ({navigation, route}: any) => {
         setUf(response.data.state);
 
       })
-    }catch (error) {
+    } catch (error) {
       console.log(error)
     }
-    
+
   };
 
   const optionsStatus = [
@@ -75,70 +75,73 @@ export default ({navigation, route}: any) => {
     "Multiplo"
   ]
 
-  
+
   useEffect(() => {
     handlePartner()
   }, []);
-  
+
   return (
     <View style={styles.Container}>
       <Text style={styles.Text1}> Parceiro: {name}</Text>
-      <View style={styles.Center}>
-        <Image
-          source={require("../../assets/avatar.png")}
-          style={styles.UserImage}
+      <ScrollView>
+        <View style={styles.Center}>
+          <Image
+            source={require("../../assets/avatar.png")}
+            style={styles.UserImage}
+          />
+          <View style={styles.Divider}></View>
+          <Text style={styles.Text2}>
+            Nome: <Text style={styles.Text3}>{name}</Text>
+          </Text>
+          <Text style={styles.Text2}>
+            Status: <Text style={styles.Text3}>{optionsStatus[status]}</Text>
+          </Text>
+          <Text style={styles.Text2}>
+            Privacidade:{" "}
+            <Text style={styles.Text3}>{optionsPrivace[privase]}</Text>
+          </Text>
+          <Text style={styles.Text2}>
+            Tipo: <Text style={styles.Text3}>{optionsType[type]}</Text>
+          </Text>
+          <Text style={styles.Text2}>
+            Membros: <Text style={styles.Text3}>{members}</Text>
+          </Text>
+          <Text style={styles.Text2}>
+            Contato: <Text style={styles.Text3}>{contacts}</Text>
+          </Text>
+          <Text style={styles.Text2}>
+            Responsável: <Text style={styles.Text3}>{response}</Text>
+          </Text>
+          <Text style={styles.Text2}>
+            Estado: <Text style={styles.Text3}>{uf}</Text>
+          </Text>
+
+        </View>
+
+        <ButtonBlue
+          title={"Editar"}
+          onPress={() => {
+            navigation.navigate("PartnerUpdate");
+          }}
         />
-        <View style={styles.Divider}></View>
-        <Text style={styles.Text2}>
-          Nome: <Text style={styles.Text3}>{name}</Text>
-        </Text>
-        <Text style={styles.Text2}>
-          Status: <Text style={styles.Text3}>{optionsStatus[status]}</Text>
-        </Text>
-        <Text style={styles.Text2}>
-          Privacidade:{" "}
-          <Text style={styles.Text3}>{optionsPrivace[privase]}</Text>
-        </Text>
-        <Text style={styles.Text2}>
-          Tipo: <Text style={styles.Text3}>{optionsType[type]}</Text>
-        </Text>
-        <Text style={styles.Text2}>
-          Membros: <Text style={styles.Text3}>{members}</Text>
-        </Text>
-        <Text style={styles.Text2}>
-          Contato: <Text style={styles.Text3}>{contacts}</Text>
-        </Text>
-        <Text style={styles.Text2}>
-          Responsável: <Text style={styles.Text3}>{response}</Text>
-        </Text>
-        <Text style={styles.Text2}>
-          Estado: <Text style={styles.Text3}>{uf}</Text>
-        </Text>
-      </View>
 
-      <ButtonBlue
-        title={"Editar"}
-        onPress={() => {
-          navigation.navigate("PartnerUpdate");
-        }}
-      />
+        <ButtonGreen
+          title={"Visualizar Membros"}
+          onPress={() => {
+            console.log(idProp);
+            navigation.navigate("Members", {
+              idProp: id,
+            });
+          }}
+        />
 
-      <ButtonGreen
-        title={"Visualizar Membros"}
-        onPress={() => {
-          console.log(idProp);
-          navigation.navigate("Members", {
-            idProp: id,
-          });
-        }}
-      />
-
-      <ButtonRed
-        title={"Arquivar Parceiro"}
-        onPress={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-      />
+        <ButtonRed
+          title={"Arquivar Parceiro"}
+          onPress={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
+      </ScrollView>
     </View>
   );
 };
