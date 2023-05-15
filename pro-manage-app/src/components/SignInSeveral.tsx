@@ -4,13 +4,17 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 interface CustomDropdownProps {
   options: any[];
   onSelect: (selectedOption: any) => void;
+  disabled?: boolean;
+  value?: string;
 }
 
 const SignInServeral: React.FC<CustomDropdownProps> = ({
   options,
   onSelect,
+  disabled,
+  value
 }) => {
-  const [selectedOption, setSelectedOption] = React.useState("");
+  const [selectedOption, setSelectedOption] = React.useState(value);
   const [showOptions, setShowOptions] = React.useState(false);
 
   const handleSelect = (option: any) => {
@@ -26,6 +30,7 @@ const SignInServeral: React.FC<CustomDropdownProps> = ({
   return (
     <View >
       <TouchableOpacity
+        disabled={disabled}
         style={styles.selectedOptionContainer}
         onPress={handleToggleOptions}
       >

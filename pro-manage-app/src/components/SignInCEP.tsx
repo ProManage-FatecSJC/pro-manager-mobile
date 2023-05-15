@@ -5,18 +5,24 @@ interface Props {
   placeholder: string;
   onChangeText: (text: string) => void;
   value?: string;
-  editable?: boolean;
+  onEndEditing: () => void;
 }
 
-const PartnerSignIn: React.FC<Props> = ({ placeholder, value, onChangeText, editable }) => {
 
+
+const CEPSignIn: React.FC<Props> = ({
+  placeholder,
+  value,
+  onChangeText,
+  onEndEditing,
+}) => {
   return (
     <TextInput
       style={styles.textInput}
       placeholder={placeholder}
       value={value}
       onChangeText={onChangeText}
-      editable={editable}
+      onEndEditing={onEndEditing}
     />
   );
 };
@@ -32,4 +38,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PartnerSignIn;
+export default CEPSignIn;

@@ -7,8 +7,12 @@ import DetailTotal from "../Screens/DetailTotal";
 import InfPartner from "../Screens/InfPartner";
 import Members from "../Screens/Members";
 import PartnerUpdate from "../Screens/PartnerUpdate";
+<<<<<<< HEAD
 import UserRegister from "../Screens/UserRegister";
 import { ArquivePartners } from '../Screens/ArquivePartners'
+=======
+import MemberRegister from "../Screens/MemberRegister";
+>>>>>>> feature/Cadastro_Membros
 
 const Stack = createStackNavigator();
 
@@ -28,8 +32,12 @@ export default class Navegador extends React.Component {
         <Stack.Screen name="InfPartner" component={InfPartner} />
         <Stack.Screen name="Members" component={Members} />
         <Stack.Screen name="PartnerUpdate" component={PartnerUpdate} />
+<<<<<<< HEAD
         <Stack.Screen name="UserRegister" component={UserRegister} />
         <Stack.Screen name="ArquivePartners" component={ArquivePartners} />
+=======
+        <Stack.Screen name="MemberRegister" component={MemberRegister} />
+>>>>>>> feature/Cadastro_Membros
       </Stack.Navigator>
     );
   }

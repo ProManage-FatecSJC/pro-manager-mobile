@@ -51,7 +51,7 @@ export default ({navigation}: any) => {
     })
 }
 
-  const optionsType = ["Unico", "Multiplo"];
+  const optionsType = ["Único", "Múltiplo"];
 
   const optionsStatus = [
     "Em Prospecção",

@@ -88,7 +88,7 @@ export default ({ navigation, route }: any) => {
         title={"Cadastrar Membro"}
         onPress={() => {
           console.log(idProp);
-          navigation.navigate("Members", {
+          navigation.navigate("MemberRegister", {
             idProp: id,
           });
         }}
