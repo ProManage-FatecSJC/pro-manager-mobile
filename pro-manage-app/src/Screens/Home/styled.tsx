@@ -40,6 +40,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  NoPartners: {
+    color: "#7C7C8A",
+    fontSize: 20,
+    padding: 5,
+    maxWidth: 200,
+    textAlign: "center",
+    marginTop: 150,
+    marginLeft: 60,
+
+  },
 });
 
 export default styles;
