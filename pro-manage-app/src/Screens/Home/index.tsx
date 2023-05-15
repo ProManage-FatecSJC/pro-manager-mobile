@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView, Button } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
 
 import styles from "./styled.tsx";
 
@@ -8,7 +8,7 @@ import CardPartner from '../../components/CardPartner.tsx'
 import { SessionController } from "../../session/SessionController.ts";
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
-import { Image, SignOut } from "phosphor-react-native";
+import { SignOut } from "phosphor-react-native";
 
 
 export default ({navigation} : any) => {
@@ -204,6 +204,9 @@ export default ({navigation} : any) => {
           <View>
             {partnerCount === 0 ? (
               <>
+                <View>
+                  <Image source={require("../../assets/noPartners.png")} />
+                </View>
                 <Text style={styles.NoPartners}>
                   Você ainda não tem parceiros criados
                 </Text>
@@ -328,6 +331,9 @@ export default ({navigation} : any) => {
           <View>
             {partnerCount === 0 ? (
               <>
+                <View>
+                  <Image source={require("../../assets/noPartners.png")} />
+                </View>
                 <Text style={styles.NoPartners}>
                   Você ainda não tem parceiros criados
                 </Text>
@@ -347,7 +353,9 @@ export default ({navigation} : any) => {
 
                 <CardPartner
                   title={"Total de parceiros arquivados"}
-                  totalPartners={partnerCount.toString()}
+                  totalPartners={
+                    partner.filter((x: any) => x.isArchived == true).length
+                  }
                   registeredArchived="arquivados"
                   onPress={() => {
                     navigation.navigate("ArquivePartners");

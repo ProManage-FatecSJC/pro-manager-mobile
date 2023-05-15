@@ -3,7 +3,7 @@ import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 
 interface Props {
   title: string;
-  totalPartners: string;
+  totalPartners: string | number;
   registeredArchived: string;
   onPress?: () => void;
 }
