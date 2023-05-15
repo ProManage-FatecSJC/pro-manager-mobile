@@ -46,10 +46,13 @@ const styles = StyleSheet.create({
     padding: 5,
     maxWidth: 200,
     textAlign: "center",
-    marginTop: 150,
+    marginTop: 10,
     marginLeft: 60,
-
   },
+  Image:{
+    alignItems: "center",
+    marginTop: 50,
+  }
 });
 
 export default styles;

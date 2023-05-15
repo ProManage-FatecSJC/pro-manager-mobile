@@ -36,7 +36,7 @@ export default ({navigation} : any) => {
   const [member, setMember] = useState([])
   const [memberCount, setMemberCount] = useState(0)
 
-  const [zero, setZero] = useState([]);
+  const [zero, setZero] = useState(0);
 
   const sessionController = new SessionController()
 
@@ -204,7 +204,7 @@ export default ({navigation} : any) => {
           <View>
             {partnerCount === 0 ? (
               <>
-                <View>
+                <View style={styles.Image}>
                   <Image source={require("../../assets/noPartners.png")} />
                 </View>
                 <Text style={styles.NoPartners}>
@@ -331,7 +331,7 @@ export default ({navigation} : any) => {
           <View>
             {partnerCount === 0 ? (
               <>
-                <View>
+                <View style={styles.Image}>
                   <Image source={require("../../assets/noPartners.png")} />
                 </View>
                 <Text style={styles.NoPartners}>
