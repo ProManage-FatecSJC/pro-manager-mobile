@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./styled.tsx";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
-import { Text, View, TextInput } from "react-native";
+import { Text, View, TextInput, Modal, Pressable } from "react-native";
 import SignInInput from "../../components/SignInput.tsx";
 import Button from "../../components/ButtonSignIn.tsx";
 import { URI } from "../../api/uri.ts";
@@ -10,10 +10,11 @@ import api from "../../api/api.ts";
 import { SessionController } from "../../session/SessionController.ts";
 
 
-export default ({navigation}: any) => {
+export default ({ navigation }: any) => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [modalVisible, setModalVisible] = useState(false);
   const sessionController = new SessionController()
 
   async function handleButtonPress() {
@@ -27,10 +28,10 @@ export default ({navigation}: any) => {
         }
       )
     } catch (error: any) {
-      ///alert("Email e/ou senha incorretos!");
+      setModalVisible(true)
       console.log(error.message)
     }
-    
+
   }
 
   const login = {
@@ -41,6 +42,24 @@ export default ({navigation}: any) => {
   return (
     <>
       <View style={styles.Container}>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible)
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>E-mail ou senha incorretos!</Text>
+              <Pressable
+                style={[styles.button]}
+                onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={styles.textStyle}>OK</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
         <View style={styles.containerTitle}>
           <Text style={styles.TextLogin}>Olá,</Text>
           <Text style={styles.TextLogin}>Bem Vindo</Text>
