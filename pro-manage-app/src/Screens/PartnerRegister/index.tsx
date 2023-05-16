@@ -11,10 +11,10 @@ import { SessionController } from "../../session/SessionController.ts";
 export default ({ navigation }: any) => {
 
   const [partnerName, setPartnerName] = useState('');
-  const [partnerPrivacy, setPartnerPrivacy] = useState('0');
-  const [partnerType, setPartnerType] = useState('0');
+  const [partnerPrivacy, setPartnerPrivacy] = useState(0);
+  const [partnerType, setPartnerType] = useState(0);
   const [partnerAmount, setPartnerAmount] = useState('');
-  const [partnerStatus, setPartnerStatus] = useState('0');
+  const [partnerStatus, setPartnerStatus] = useState(0);
   const [partnerContact, setPartnerContact] = useState('');
   const [partnerResponsible, setPartnerResponsible] = useState('');
   const [partnerState, setPartnerState] = useState('');
@@ -24,8 +24,8 @@ export default ({ navigation }: any) => {
 
   let partner = {
     name: partnerName,
-    privacy: parseInt(partnerPrivacy),
-    type: parseInt(partnerType),
+    privacy: partnerPrivacy,
+    type: partnerType,
     membersQuantity: partnerAmount,
     status: partnerStatus,
     telephone: partnerContact,
@@ -81,8 +81,20 @@ export default ({ navigation }: any) => {
     "São Paulo", "Sergipe", "Tocantins"]
 
   const handleSelect = (selectedOption: string) => {
-    console.log(`Opção Selecionada: ${selectedOption}`);
+    setPartnerState(selectedOption)
   };
+
+  const handleSelectType = (selectedOption: string) => {
+    setPartnerType(optionsType.indexOf(selectedOption))
+  };
+
+  const handleSelectStatus = (selectedOption: string) => {
+    setPartnerStatus(optionsStatus.indexOf(selectedOption))
+  }
+
+  const handleSelectPrivacy = (selectedOption: string) => {
+    setPartnerPrivacy(options.indexOf(selectedOption))
+  }
 
   return (
     <View style={styles.Container}>
@@ -111,13 +123,13 @@ export default ({ navigation }: any) => {
         <Text style={styles.Text}>Nome do Parceiro</Text>
         <PartnerSignIn placeholder={""} onChangeText={setPartnerName} />
         <Text style={styles.Text}>Tipo de Parceiro</Text>
-        <SignInServeral options={optionsType} onSelect={handleSelect} />
+        <SignInServeral options={optionsType} onSelect={handleSelectType} />
         <Text style={styles.Text}>Status</Text>
-        <SignInServeral options={optionsStatus} onSelect={handleSelect} />
+        <SignInServeral options={optionsStatus} onSelect={handleSelectStatus} />
         <Text style={styles.Text}>Responsável</Text>
         <PartnerSignIn placeholder={""} onChangeText={setPartnerResponsible} />
         <Text style={styles.Text}>Público ou Privado</Text>
-        <SignInServeral options={options} onSelect={handleSelect} />
+        <SignInServeral options={options} onSelect={handleSelectPrivacy} />
         <Text style={styles.Text}>Quantidade de Membros</Text>
         <PartnerSignIn placeholder={""} onChangeText={setPartnerAmount} />
         <Text style={styles.Text}>Numero de Contato</Text>

@@ -14,6 +14,9 @@ export default StyleSheet.create({
         borderLeftColor: '#FFCDD2',
         borderLeftWidth: 5
     },
+    card: {
+        width: '100%'
+    },
     Text: {
         fontSize: 16,
         color: '#29292e'

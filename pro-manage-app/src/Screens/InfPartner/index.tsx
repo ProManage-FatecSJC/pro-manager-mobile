@@ -50,6 +50,21 @@ export default ({ navigation, route }: any) => {
 
   };
 
+  async function handleArchivePartner(partnerId : string) {
+    const token = await sessionController.getToken()
+    try {
+      await api.put(URI.PARTNER + `/archive/${partnerId}`, {}, {
+        headers: { Authorization: token }
+      }).then(response => {
+        if(response.status == 200) {
+          navigation.navigate('Home')
+        }
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const optionsStatus = [
     "Em Prospecção",
     "Primeiro Contato feito",
@@ -121,7 +136,9 @@ export default ({ navigation, route }: any) => {
         <ButtonBlue
           title={"Editar"}
           onPress={() => {
-            navigation.navigate("PartnerUpdate");
+            navigation.navigate("PartnerUpdate", {
+              idProp: id
+            });
           }}
         />
 
@@ -137,8 +154,8 @@ export default ({ navigation, route }: any) => {
 
         <ButtonRed
           title={"Arquivar Parceiro"}
-          onPress={function (): void {
-            throw new Error("Function not implemented.");
+          onPress={() => {
+            handleArchivePartner(idProp)
           }}
         />
       </ScrollView>

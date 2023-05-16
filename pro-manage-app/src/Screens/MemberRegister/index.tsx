@@ -69,17 +69,17 @@ export default ({ navigation, route }: any) => {
     trade_name: memberFantasy,
     CNPJ: memberCNPJ,
     telephone: memberPhone,
-    partner: partner,
+    partner: {
+      id: id
+    },
     address: {
-      cep: resCep,
+      CEP: resCep,
       street: street,
       number: number,
       complement: complement,
-      district: district,
       city: city,
-      uf: uf,
-    },
-    responsible: responsible,
+      state: uf,
+    }
   };
 
 
@@ -92,8 +92,9 @@ export default ({ navigation, route }: any) => {
       })
       .then((response) => {
         if (response.status === 200) {
-          //////////
-
+          navigation.navigate("InfPartner", {
+            idProp: id,
+          });
         }
       })
       .catch((error) => {
@@ -108,7 +109,9 @@ export default ({ navigation, route }: any) => {
 
 
   const handleCancelMember = () => {
-    navigation.navigate("Detail");
+    navigation.navigate("Members", {
+      idProp: id,
+    });
   };
 
   async function handleSearchCep(): Promise<void> {
@@ -136,7 +139,8 @@ export default ({ navigation, route }: any) => {
   ];
 
   const handleSelect = (selectedOption: string) => {
-    console.log(`Opção Selecionada: ${selectedOption}`);
+    setUf(selectedOption)
+    console.log(uf)
   };
 
   return (

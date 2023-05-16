@@ -42,7 +42,7 @@ export default ({ navigation, route }: any) => {
   }
 
   useEffect(() => {
-    if (count < 2) {
+    if (count < 10) {
       handleMembers();
       console.log(count)
       setCount(count + 1)
