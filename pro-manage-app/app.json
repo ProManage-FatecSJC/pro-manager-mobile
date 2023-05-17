@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "pro-manage-app",
-    "slug": "pro-manage-app",
+    "name": "pro-manager-app",
+    "slug": "pro-manager-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -9,11 +9,15 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#4994CE"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
+    "packagerOpts" : {
+      "config": "metro.config.js",
+      "sourceExts": ["js", "jsx", "ts", "tsx", "svg"]
+    },
     "ios": {
       "supportsTablet": true
     },
