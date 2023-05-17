@@ -10,6 +10,7 @@ import { SessionController } from "../../session/SessionController.ts";
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 import SignInServeral from "../../components/SignInSeveral.tsx";
+import MaskedInput from "../../components/MaskedInput/index.tsx";
 
 const sessionController = new SessionController();
 
@@ -156,7 +157,13 @@ export default ({ navigation, route }: any) => {
         <Text style={styles.Text}>CNPJ</Text>
         <PartnerSignIn placeholder={""} onChangeText={setCNPJ} />
         <Text style={styles.Text}>Telefone</Text>
-        <PartnerSignIn placeholder={""} onChangeText={setMemberPhone} />
+        <MaskedInput
+          title="(XX)XXXXX-XXXX"
+          mask="phone"
+          inputMaskChange={(text: string) => setMemberPhone(text)}
+          value={memberPhone}
+          maxLength={14}
+        />
         <Text style={styles.Text}>CEP</Text>
         <CEPSignIn
           placeholder={"Busque o CEP"}

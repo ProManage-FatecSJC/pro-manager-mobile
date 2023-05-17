@@ -7,6 +7,7 @@ import Button from "../../components/ButtonSignIn.tsx";
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 import { SessionController } from "../../session/SessionController.ts";
+import MaskedInput from "../../components/MaskedInput/index.tsx";
 
 export default ({ navigation }: any) => {
 
@@ -130,10 +131,10 @@ export default ({ navigation }: any) => {
         <PartnerSignIn placeholder={""} onChangeText={setPartnerResponsible} />
         <Text style={styles.Text}>Público ou Privado</Text>
         <SignInServeral options={options} onSelect={handleSelectPrivacy} />
-        <Text style={styles.Text}>Quantidade de Membros</Text>
+        <Text style={styles.Text}>Quantidade Máxima de Membros</Text>
         <PartnerSignIn placeholder={""} onChangeText={setPartnerAmount} />
         <Text style={styles.Text}>Numero de Contato</Text>
-        <PartnerSignIn placeholder={""} onChangeText={setPartnerContact} />
+        <MaskedInput title="(XX)XXXXX-XXXX" mask="phone" inputMaskChange={(text: string) => setPartnerContact(text)} value={partnerContact} maxLength = {14}/>
         <Text style={styles.Text}>Estado</Text>
         <SignInServeral options={optionsState} onSelect={handleSelect} />
 

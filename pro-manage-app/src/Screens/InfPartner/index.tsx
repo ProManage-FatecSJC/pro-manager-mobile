@@ -119,7 +119,7 @@ export default ({ navigation, route }: any) => {
             Tipo: <Text style={styles.Text3}>{optionsType[type]}</Text>
           </Text>
           <Text style={styles.Text2}>
-            Membros: <Text style={styles.Text3}>{members}</Text>
+            Max. Membros: <Text style={styles.Text3}>{members}</Text>
           </Text>
           <Text style={styles.Text2}>
             Contato: <Text style={styles.Text3}>{contacts}</Text>

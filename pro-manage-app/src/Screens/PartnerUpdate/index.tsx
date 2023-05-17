@@ -148,7 +148,7 @@ export default ({ navigation, route }: any) => {
         <PartnerSignIn placeholder={""} onChangeText={setPartnerResponsible} value={partnerResponsible}/>
         <Text style={styles.Text}>Público ou Privado</Text>
         <SignInServeral options={options} onSelect={handleSelect} value={partnerPrivacy}/>
-        <Text style={styles.Text}>Quantidade de Membros</Text>
+        <Text style={styles.Text}>Quantidade Máxima de Membros</Text>
         <PartnerSignIn placeholder={""} onChangeText={setPartnerAmount} value={partnerAmount}/>
         <Text style={styles.Text}>Numero de Contato</Text>
         <PartnerSignIn placeholder={""} onChangeText={setPartnerContact} value={partnerContact}/>

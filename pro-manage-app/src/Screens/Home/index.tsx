@@ -342,11 +342,11 @@ export default ({navigation} : any) => {
               <>
                 <CardPartner
                   title={"Total de parceiros cadastrados"}
-                  totalPartners={partnerCount.toString()}
+                  totalPartners={partner.filter((x: any) => x.isArchived != true).length}
                   registeredArchived="cadastrados"
                   onPress={() => {
                     navigation.navigate("DetailTotal", {
-                      statusProp: partner,
+                      statusProp: partner.filter((x: any) => x.isArchived != true),
                     });
                   }}
                 />

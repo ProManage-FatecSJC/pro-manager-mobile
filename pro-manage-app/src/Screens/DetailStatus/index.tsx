@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import styles from "./styled.tsx";
 import CardDetail from "../../components/CardDetail.tsx";
