@@ -22,6 +22,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-evenly",
   },
+  NoPartners: {
+    color: "#7C7C8A",
+    fontSize: 20,
+    padding: 5,
+    maxWidth: 200,
+    textAlign: "center",
+    marginTop: 10,
+    marginLeft: 60,
+    marginBottom: 60,
+  },
+  Image: {
+    alignItems: "center",
+    marginTop: -40,
+  },
 });
 
 export default styles;

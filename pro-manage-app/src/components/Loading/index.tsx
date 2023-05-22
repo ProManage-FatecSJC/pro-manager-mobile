@@ -8,6 +8,7 @@ import {
     Spinner,
     Heading
 } from 'native-base';
+import { Text } from 'react-native';
 
 export default function Loading() {
     return (

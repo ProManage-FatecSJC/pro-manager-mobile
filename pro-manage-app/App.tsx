@@ -9,9 +9,10 @@ export default () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <NavigationContainer>
-        <NativeBaseProvider>
+        {/* <NativeBaseProvider>
           <Loading />
-        </NativeBaseProvider>
+        </NativeBaseProvider> */}
+        <MainStack />
       </NavigationContainer>
     </SafeAreaView>
   );

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Image, ScrollView, Text, View } from "react-native";
 import styles from "./styled.tsx";
 import CardDetail from "../../components/CardDetail.tsx";
 import SearchBar from "../../components/SearchBar.tsx";
+import ButtonGreen from "../../components/ButtonGreen.tsx";
 
 export default ({ navigation, route }: any) => {
   const { statusProp } = route.params;
@@ -22,8 +23,9 @@ export default ({ navigation, route }: any) => {
     "Parceiros com Parceria Firmada",
   ];
 
-  const title = `${optionsStatus[statusProp[0].status]}`;
-
+  const title =
+    statusProp.length == 0 ? "" : `${optionsStatus[statusProp[0].status]}`; 
+  
   const handleSearch = (text : any) => {
     if (!text) {
       setPartners(statusProp);
@@ -45,24 +47,45 @@ export default ({ navigation, route }: any) => {
   return (
     <View style={styles.Container}>
       <Text style={styles.Text1}> {title} </Text>
-      <SearchBar placeholder={"Pesquisa"} onChangeText={handleSearch} />
-      <ScrollView>
-        <View>
-          {partners.map((item: any) => (
-            <CardDetail
-              key={item.id}
-              name={item.name}
-              status={optionsStatus[item.status]}
-              responsible={item.intermediateResponsible}
-              onPress={() => {
-                console.log("ID AQUI: ", item.id)
-                navigation.navigate("InfPartner", {
-                  idProp: item.id});
-              }} 
-            /> ))
-          }
-        </View>
-      </ScrollView>
+      {partners.length === 0 ? (
+        <>
+          <View style={styles.Image}>
+            <Image source={require("../../assets/noPartners.png")} />
+          </View>
+          <Text style={styles.NoPartners}>
+            Você ainda não tem parceiros criados
+          </Text>
+
+          <ButtonGreen
+            title={"Cadastre um  Parceiro"}
+            onPress={() => {
+              navigation.navigate("PartnerRegister");
+            }}
+          />
+        </>
+      ) : (
+        <>
+          <SearchBar placeholder={"Pesquisa"} onChangeText={handleSearch} />
+          <ScrollView>
+            <View>
+              {partners.map((item: any) => (
+                <CardDetail
+                  key={item.id}
+                  name={item.name}
+                  status={optionsStatus[item.status]}
+                  responsible={item.intermediateResponsible}
+                  onPress={() => {
+                    console.log("ID AQUI: ", item.id);
+                    navigation.navigate("InfPartner", {
+                      idProp: item.id,
+                    });
+                  }}
+                />
+              ))}
+            </View>
+          </ScrollView>
+        </>
+      )}
     </View>
   );
 }
