@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, View } from "react-native";
-import styles from "./styled.tsx";
+import styles from "./styles.ts";
 import SearchBar from '../../components/SearchBar.tsx';
 import { SessionController } from '../../session/SessionController.ts';
 import api from '../../api/api.ts';
 import { URI } from '../../api/uri.ts';
-import ButtonGreen from '../../components/ButtonGreen.tsx';
+import {DefaultButton} from '../../components/DefaultButton'
 import CardDetailMembers from '../../components/CardDetailMembers.tsx';
 
 export function Members ({ navigation, route }: any) {
@@ -84,7 +84,8 @@ export function Members ({ navigation, route }: any) {
           ))}
         </View>
       </ScrollView>
-      <ButtonGreen
+      <DefaultButton
+      bg="green"
         title={"Cadastrar Membro"}
         onPress={() => {
           console.log(idProp);

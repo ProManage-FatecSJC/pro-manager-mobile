@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, Text, View } from "react-native";
-import styles from "./styled.tsx";
+import styles from "./styles.ts";
 
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 import { SessionController } from '../../session/SessionController.ts';
-import ButtonBlue from '../../components/ButtonSignIn.tsx';
-import ButtonRed from '../../components/ButtonRed.tsx';
-import ButtonGreen from '../../components/ButtonGreen.tsx';
+import { DefaultButton } from '../../components/DefaultButton/index.tsx';
 
 export function InfPartner ({ navigation, route }: any){
 
@@ -133,8 +131,8 @@ export function InfPartner ({ navigation, route }: any){
 
         </View>
 
-        <ButtonBlue
-          title={"Editar"}
+        <DefaultButton
+          title="Editar"
           onPress={() => {
             navigation.navigate("PartnerUpdate", {
               idProp: id
@@ -142,8 +140,8 @@ export function InfPartner ({ navigation, route }: any){
           }}
         />
 
-        <ButtonGreen
-          title={"Visualizar Membros"}
+        <DefaultButton
+          title="Visualizar Membros"
           onPress={() => {
             console.log(idProp);
             navigation.navigate("Members", {
@@ -152,8 +150,8 @@ export function InfPartner ({ navigation, route }: any){
           }}
         />
 
-        <ButtonRed
-          title={"Arquivar Parceiro"}
+        <DefaultButton
+          title="Arquivar Parceiro"
           onPress={() => {
             handleArchivePartner(idProp)
           }}

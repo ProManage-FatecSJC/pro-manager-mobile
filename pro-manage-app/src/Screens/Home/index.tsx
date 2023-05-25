@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
 
-import styles from "./styled.tsx";
+import styles from "./styles.ts";
 
 import CardStatus from '../../components/CardStatus.tsx'
 import CardPartner from '../../components/CardPartner.tsx'

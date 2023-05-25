@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import styles from "./styled.tsx";
+import styles from "./styles.ts";
 import { Text, View, TextInput, Modal, Pressable } from "react-native";
-import Button from "../../components/ButtonSignIn.tsx";
 import { URI } from "../../api/uri.ts";
 import api from "../../api/api.ts";
 import { SessionController } from "../../session/SessionController.ts";
+import { DefaultButton } from "../../components/DefaultButton/index.tsx";
 
 
 export function SignIn ({ navigation }: any) {
@@ -81,7 +81,7 @@ export function SignIn ({ navigation }: any) {
           <Text style={{ color: "#00688C", marginLeft: "auto" }}>
             Esqueceu a Senha?
           </Text>
-          <Button title="Entrar" onPress={handleButtonPress} />
+          <DefaultButton  title="Entrar" onPress={handleButtonPress}/>
         </View>
       </View>
     </>
