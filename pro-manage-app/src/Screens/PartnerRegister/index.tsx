@@ -9,7 +9,7 @@ import { URI } from "../../api/uri.ts";
 import { SessionController } from "../../session/SessionController.ts";
 import MaskedInput from "../../components/MaskedInput/index.tsx";
 
-export default ({ navigation }: any) => {
+export function PartnerRegister ({ navigation }: any) {
 
   const [partnerName, setPartnerName] = useState('');
   const [partnerPrivacy, setPartnerPrivacy] = useState(0);

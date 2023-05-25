@@ -9,7 +9,7 @@ import ButtonBlue from '../../components/ButtonSignIn.tsx';
 import ButtonRed from '../../components/ButtonRed.tsx';
 import ButtonGreen from '../../components/ButtonGreen.tsx';
 
-export default ({ navigation, route }: any) => {
+export function InfPartner ({ navigation, route }: any){
 
   const { idProp } = route.params;
 

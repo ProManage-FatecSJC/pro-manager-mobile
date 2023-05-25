@@ -13,7 +13,7 @@ import { SessionController } from "../../session/SessionController.ts";
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 
-export default ({navigation}: any) => {
+export function UserRegister ({navigation}: any){
 
   const [UserName, setUserName] = useState('');
   const [UserEmail, setUserEmail] = useState('');

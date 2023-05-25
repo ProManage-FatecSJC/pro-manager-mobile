@@ -8,7 +8,7 @@ import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 import { SessionController } from "../../session/SessionController.ts";
 
-export default ({ navigation, route }: any) => {
+export function PartnerUpdate ({ navigation, route }: any) {
 
   const { idProp } = route.params
   const [partnerName, setPartnerName] = useState('');

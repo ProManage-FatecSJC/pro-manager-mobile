@@ -8,7 +8,7 @@ import { URI } from '../../api/uri.ts';
 import ButtonGreen from '../../components/ButtonGreen.tsx';
 import CardDetailMembers from '../../components/CardDetailMembers.tsx';
 
-export default ({ navigation, route }: any) => {
+export function Members ({ navigation, route }: any) {
 
   const { idProp } = route.params;
 

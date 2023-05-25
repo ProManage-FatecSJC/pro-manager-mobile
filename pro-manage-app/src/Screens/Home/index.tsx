@@ -11,7 +11,7 @@ import { URI } from "../../api/uri.ts";
 import { SignOut } from "phosphor-react-native";
 
 
-export default ({navigation} : any) => {
+export function Home ({navigation} : any) {
   const [buttonPressed, setButtonPressed] = useState<'status' | 'partner'>('status');
   const [pressedStatus, setPressedStatus] = useState(true);
   const [pressedPartner, setPressedPartner] = useState(false);

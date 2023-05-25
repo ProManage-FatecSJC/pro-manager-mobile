@@ -5,7 +5,7 @@ import { SessionController } from "../../session/SessionController.ts";
 import Button from "../../components/ButtonAddUser.tsx";
 import { useNavigation } from "@react-navigation/native";
 
-export default () => {
+export function Profile() {
   const navigation = useNavigation();
 
   const [userName, setUserName] = useState('')

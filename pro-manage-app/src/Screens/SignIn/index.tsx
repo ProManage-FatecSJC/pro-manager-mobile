@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./styled.tsx";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
 import { Text, View, TextInput, Modal, Pressable } from "react-native";
-import SignInInput from "../../components/SignInput.tsx";
 import Button from "../../components/ButtonSignIn.tsx";
 import { URI } from "../../api/uri.ts";
 import api from "../../api/api.ts";
 import { SessionController } from "../../session/SessionController.ts";
 
 
-export default ({ navigation }: any) => {
+export function SignIn ({ navigation }: any) {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -18,13 +15,11 @@ export default ({ navigation }: any) => {
   const sessionController = new SessionController()
 
   async function handleButtonPress() {
-
-    console.log(login)
     try {
       await api.post(URI.LOGIN, login).then(
         async response => {
           await sessionController.setToken(response.data)
-          navigation.navigate('MainTab')
+          navigation.navigate('Home')
         }
       )
     } catch (error: any) {

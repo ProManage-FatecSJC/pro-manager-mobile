@@ -43,7 +43,7 @@ async function searchCep(cep: string): Promise<Location | null | undefined> {
   }
 }
 
-export default ({ navigation, route }: any) => {
+export function MemberRegister({ navigation, route }: any){
   const { idProp } = route.params;
 
   const [id, setId] = useState(idProp);
