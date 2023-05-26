@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import styles from "./styled.tsx";
+import styles from "./styles.ts";
 import { View, Text, Image, SafeAreaView, TextInput } from "react-native";
 import { SessionController } from "../../session/SessionController.ts";
-import Button from "../../components/ButtonAddUser.tsx";
 import { useNavigation } from "@react-navigation/native";
 
 export function Profile() {

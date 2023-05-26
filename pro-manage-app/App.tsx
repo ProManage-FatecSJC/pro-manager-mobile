@@ -8,7 +8,7 @@ import {
 } from '@expo-google-fonts/poppins';
 
 import { Loading } from './src/components/Loading'
-import Routes from "./src/stacks";
+import Routes from "./src/routes";
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);

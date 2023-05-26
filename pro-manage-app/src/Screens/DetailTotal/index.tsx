@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
-import styles from "./styled.tsx";
+import styles from "./styles.ts";
 
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";

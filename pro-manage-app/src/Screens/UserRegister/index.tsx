@@ -4,14 +4,13 @@ import {
   Text, 
   TextInput,
 } from 'react-native';
-import Button from "../../components/ButtonAddUser.tsx";
 import { useNavigation } from "@react-navigation/native"; 
 import styles from './styles.tsx';
-import ButtonCancel from "../../components/ButtonRed.tsx";
 import SignInServeral from "../../components/SignInSeveral.tsx";
 import { SessionController } from "../../session/SessionController.ts";
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
+import { DefaultButton } from "../../components/DefaultButton";
 
 export function UserRegister ({navigation}: any){
 
@@ -26,7 +25,7 @@ const sessionController = new SessionController()
   const token = await sessionController.getToken()
    console.log(user)
    await api.
-  post(URI.USER, user, {
+  post(URI.LOGIN, user, {
        headers: {
            Authorization: token
        }
@@ -81,11 +80,11 @@ const onCancel = () => {
 
         <SignInServeral options={RoleOptions} onSelect={handleSelect} /> 
           
-          <Button title="Salvar" onPress={function (): void {
+          <DefaultButton title="Salvar" onPress={function (): void {
             throw new Error("Function not implemented.");
           }} />
           
-          <ButtonCancel title="Cancelar" onPress={onCancel}/>
+          <DefaultButton title="Cancelar" onPress={onCancel} bg="red"/>
           
         </View>
       );

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import styles from "./styled.tsx";
+import styles from "./styles.ts";
 import { View, Text, ScrollView } from "react-native";
 import PartnerSignIn from "../../components/PartnerSignIn.tsx";
 import SignInServeral from "../../components/SignInSeveral.tsx";
-import Button from "../../components/ButtonAddPartner.tsx";
+import { DefaultButton } from "../../components/DefaultButton";
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 import { SessionController } from "../../session/SessionController.ts";
@@ -155,7 +155,7 @@ export function PartnerUpdate ({ navigation, route }: any) {
         <Text style={styles.Text}>Estado</Text>
         <SignInServeral options={optionsState} onSelect={handleSelect} value={partnerState}/>
 
-        <Button
+        <DefaultButton
           title={"Adicionar"}
           onPress={function (): void {
             handleNewPartner(idProp)
