@@ -1,20 +1,32 @@
-import React, { useState } from "react";
-import styles from "./styles.ts";
-import { Text, View, TextInput, Modal, Pressable } from "react-native";
-import { URI } from "../../api/uri.ts";
-import api from "../../api/api.ts";
-import { SessionController } from "../../session/SessionController.ts";
-import { DefaultButton } from "../../components/DefaultButton/index.tsx";
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  Modal,
+  Pressable,
+  KeyboardAvoidingView,
+  Platform
+} from 'react-native';
 
+import api from '../../api/api';
+import { URI } from '../../api/uri';
+import { SessionController } from '../../session/SessionController';
 
-export function SignIn ({ navigation }: any) {
+import {
+  DefaultButton,
+  DefaultInput,
+  PasswordInput
+} from '../../components';
 
+import { styles } from './styles'
+
+export function SignIn({ navigation }: any) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [modalVisible, setModalVisible] = useState(false);
   const sessionController = new SessionController()
 
-  async function handleButtonPress() {
+  async function handleLogin() {
     try {
       await api.post(URI.LOGIN, login).then(
         async response => {
@@ -35,9 +47,12 @@ export function SignIn ({ navigation }: any) {
   }
 
   return (
-    <>
-      <View style={styles.Container}>
-        <Modal
+    <KeyboardAvoidingView 
+      style={styles.Container} 
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -150}
+    >
+      <Modal
           animationType="fade"
           transparent={true}
           visible={modalVisible}
@@ -50,41 +65,30 @@ export function SignIn ({ navigation }: any) {
               <Pressable
                 style={[styles.button]}
                 onPress={() => setModalVisible(!modalVisible)}>
-                <Text style={styles.textStyle}>OK</Text>
+                <Text style={styles.textStyle}>Fechar</Text>
               </Pressable>
             </View>
           </View>
         </Modal>
-        <View style={styles.containerTitle}>
-          <Text style={styles.TextLogin}>Olá,</Text>
-          <Text style={styles.TextLogin}>Bem Vindo</Text>
-        </View>
 
-        <View style={styles.containerInputs}>
-          <View>
-            <TextInput
-              style={styles.Input}
-              placeholder="E-mail"
-              onChangeText={setEmail}
-            />
-          </View>
-
-          <View style={styles.inputMargin}>
-            <TextInput
-              style={styles.Input}
-              placeholder="Senha"
-              onChangeText={setPassword}
-              secureTextEntry={true}
-            />
-          </View>
-
-          <Text style={{ color: "#00688C", marginLeft: "auto" }}>
-            Esqueceu a Senha?
-          </Text>
-          <DefaultButton  title="Entrar" onPress={handleButtonPress}/>
-        </View>
+      <View style={styles.titleWrapper}>
+        <Text style={styles.textTitle}>Olá de novo!</Text>
+        <Text style={styles.textSubtitle}>
+          Sejá bem-vindo, você fez falta!
+        </Text>
       </View>
-    </>
-  );
-};
 
+      <View style={styles.containerInputs}>
+        <DefaultInput placeholder="E-mail" onChangeText={setEmail}/>
+
+        <PasswordInput marginTop={24} marginBottom={16} onChangeText={setPassword}/>
+
+        <Text style={{ color: "#00688C", marginLeft: "auto" }}>Esqueceu a senha?</Text>
+      </View>
+      <DefaultButton
+        title="Entrar"
+        onPress={handleLogin}
+      />
+    </KeyboardAvoidingView>
+  )
+}

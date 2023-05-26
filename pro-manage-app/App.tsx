@@ -25,8 +25,8 @@ export default function App() {
   }, []);
 
   return (
-    <NativeBaseProvider>
-        {isLoading || !fontsLoaded ? <Loading /> : <Routes />}
-    </NativeBaseProvider>
+      <NativeBaseProvider>
+          {isLoading || !fontsLoaded ? <Loading /> : <Routes />}
+      </NativeBaseProvider>
   );
 };
