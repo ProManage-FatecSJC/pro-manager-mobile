@@ -51,7 +51,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20
   },
-
+  
+  titleWrapper: {},
+  title: {},
+  subtitle: {},
   divider: {
     marginTop: 20,
     marginBottom: 10,
@@ -59,10 +62,7 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: "#e0e0e0",
   },
-  titleWrapper: {},
-  title: {},
-  subtitle: {},
-
+  formContentWrapper:{},
 });
 
 export default styles;
