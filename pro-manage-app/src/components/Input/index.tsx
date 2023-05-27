@@ -8,7 +8,7 @@ interface InputProps extends TextInputProps {
     marginBottom?: number;
 }
 
-export default function DefaultInput({ placeholder, marginTop, marginBottom, ...rest}: InputProps) {
+export function DefaultInput({ placeholder, marginTop, marginBottom, ...rest}: InputProps) {
     return (
         <TextInput
             style={

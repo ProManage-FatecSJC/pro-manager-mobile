@@ -1,16 +1,30 @@
-import React, { useEffect, useState } from "react";
-import styles from "./styles.ts";
-import { View, Text, ScrollView, Modal, Pressable } from "react-native";
-import PartnerSignIn from "../../components/PartnerSignIn.tsx";
-import SignInServeral from "../../components/SignInSeveral.tsx";
-import {DefaultButton} from '../../components/DefaultButton'
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  Modal,
+  Pressable
+} from "react-native";
+
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 import { SessionController } from "../../session/SessionController.ts";
-import MaskedInput from "../../components/MaskedInput/index.tsx";
 
-export function PartnerRegister ({ navigation }: any) {
+import {
+  DefaultButton, 
+  MaskedInput
+} from '../../components'
 
+import {
+  ChevronUpIcon,
+  Select
+} from "native-base";
+
+import styles from "./styles.ts";
+
+export function PartnerRegister({ navigation }: any) {
+  const [service, setService] = useState('');
   const [partnerName, setPartnerName] = useState('');
   const [partnerPrivacy, setPartnerPrivacy] = useState(0);
   const [partnerType, setPartnerType] = useState(0);
@@ -54,51 +68,8 @@ export function PartnerRegister ({ navigation }: any) {
       })
   }
 
-  const optionsType = ["Único", "Múltiplo"];
-
-  const optionsStatus = [
-    "Em Prospecção",
-    "Primeiro Contato feito",
-    "Primeira Reunião marcada/realizada",
-    "Documentação enviada/em analise(Parceiro)",
-    "Documetação devolvida (Em análise Academy)",
-    "Documetação devolvida (Em análise Legal)",
-    "Documetação analisada devolvida (Parceiro)",
-    "Em preparação de Executive Sumary (Academy)",
-    "ES em Análise (Legal)",
-    "ES em Análise (Academy Global)",
-    "Pronto para Assinatura",
-    "Parceria Firmada"
-  ];
-
-  const options = ["Público", "Privado"];
-
-  const optionsState = [
-    "Acre", "Alagoas", "Amapá", "Amazonas", "Bahia",
-    "Ceará", "Espírito Santos", "Goiás", "Maranhão", "Mato Grosso",
-    "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná",
-    "Pernambuco", "Piaui", "Rio de Janeiro", "Rio Grande do Norte",
-    "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina",
-    "São Paulo", "Sergipe", "Tocantins"]
-
-  const handleSelect = (selectedOption: string) => {
-    setPartnerState(selectedOption)
-  };
-
-  const handleSelectType = (selectedOption: string) => {
-    setPartnerType(optionsType.indexOf(selectedOption))
-  };
-
-  const handleSelectStatus = (selectedOption: string) => {
-    setPartnerStatus(optionsStatus.indexOf(selectedOption))
-  }
-
-  const handleSelectPrivacy = (selectedOption: string) => {
-    setPartnerPrivacy(options.indexOf(selectedOption))
-  }
-
   return (
-    <View style={styles.Container}>
+    <View style={styles.container}>
       <Modal
         animationType="fade"
         transparent={true}
@@ -117,26 +88,130 @@ export function PartnerRegister ({ navigation }: any) {
           </View>
         </View>
       </Modal>
-      <Text style={styles.Text1}>Adicionar um parceiro</Text>
-      <Text style={styles.Text2}>Coloque os dados do seu parceiro</Text>
-      <View style={styles.Divider}></View>
+
+      <View style={styles.titleWrapper}>
+        <Text style={styles.title}>Adicionar um parceiro</Text>
+        <Text style={styles.subtitle}>Coloque os dados do seu parceiro</Text>
+      </View>
+
+      <View style={styles.divider}></View>
       <ScrollView>
-        <Text style={styles.Text}>Nome do Parceiro</Text>
-        <PartnerSignIn placeholder={""} onChangeText={setPartnerName} />
-        <Text style={styles.Text}>Tipo de Parceiro</Text>
-        <SignInServeral options={optionsType} onSelect={handleSelectType} />
-        <Text style={styles.Text}>Status</Text>
-        <SignInServeral options={optionsStatus} onSelect={handleSelectStatus} />
-        <Text style={styles.Text}>Responsável</Text>
-        <PartnerSignIn placeholder={""} onChangeText={setPartnerResponsible} />
-        <Text style={styles.Text}>Público ou Privado</Text>
-        <SignInServeral options={options} onSelect={handleSelectPrivacy} />
-        <Text style={styles.Text}>Quantidade Máxima de Membros</Text>
-        <PartnerSignIn placeholder={""} onChangeText={setPartnerAmount} />
-        <Text style={styles.Text}>Numero de Contato</Text>
-        <MaskedInput title="(XX)XXXXX-XXXX" mask="phone" inputMaskChange={(text: string) => setPartnerContact(text)} value={partnerContact} maxLength = {14}/>
-        <Text style={styles.Text}>Estado</Text>
-        <SignInServeral options={optionsState} onSelect={handleSelect} />
+        <MaskedInput
+          title="(99) 99999-9999"
+          mask="phone"
+          inputMaskChange={(text: string) => setPartnerContact(text)}
+          value={partnerContact} maxLength={14}
+        />
+
+        <Select 
+          selectedValue={service}
+          minWidth="200"
+          padding={3.5}
+          accessibilityLabel="Choose Service"
+          placeholder="Choose Service"
+          borderColor={'#E2E8F0'}
+          _selectedItem={{
+            bg: "#eaeaea",
+          }}
+          dropdownOpenIcon={
+          <ChevronUpIcon name="openicon" size={6} marginRight={3}/>
+        }
+          mt={1} onValueChange={itemValue => setService(itemValue)}
+        >
+          <Select.Item label="UX Research" value="ux" />
+          <Select.Item label="Web Development" value="web" />
+          <Select.Item label="Cross Platform Development" value="cross" />
+          <Select.Item label="UI Designing" value="ui" />
+          <Select.Item label="Backend Development" value="backend" />
+        </Select>
+
+        <Select 
+          selectedValue={service}
+          minWidth="200"
+          padding={3.5}
+          accessibilityLabel="Choose Service"
+          placeholder="Choose Service"
+          borderColor={'#E2E8F0'}
+          _selectedItem={{
+            bg: "#eaeaea",
+          }}
+          dropdownOpenIcon={
+          <ChevronUpIcon name="openicon" size={6} marginRight={3}/>
+        }
+          mt={1} onValueChange={itemValue => setService(itemValue)}
+        >
+          <Select.Item label="UX Research" value="ux" />
+          <Select.Item label="Web Development" value="web" />
+          <Select.Item label="Cross Platform Development" value="cross" />
+          <Select.Item label="UI Designing" value="ui" />
+          <Select.Item label="Backend Development" value="backend" />
+        </Select>
+
+        <Select 
+          selectedValue={service}
+          minWidth="200"
+          padding={3.5}
+          accessibilityLabel="Choose Service"
+          placeholder="Choose Service"
+          borderColor={'#E2E8F0'}
+          _selectedItem={{
+            bg: "#eaeaea",
+          }}
+          dropdownOpenIcon={
+          <ChevronUpIcon name="openicon" size={6} marginRight={3}/>
+        }
+          mt={1} onValueChange={itemValue => setService(itemValue)}
+        >
+          <Select.Item label="UX Research" value="ux" />
+          <Select.Item label="Web Development" value="web" />
+          <Select.Item label="Cross Platform Development" value="cross" />
+          <Select.Item label="UI Designing" value="ui" />
+          <Select.Item label="Backend Development" value="backend" />
+        </Select>
+
+        <Select 
+          selectedValue={service}
+          minWidth="200"
+          padding={3.5}
+          accessibilityLabel="Choose Service"
+          placeholder="Choose Service"
+          borderColor={'#E2E8F0'}
+          _selectedItem={{
+            bg: "#eaeaea",
+          }}
+          dropdownOpenIcon={
+          <ChevronUpIcon name="openicon" size={6} marginRight={3}/>
+        }
+          mt={1} onValueChange={itemValue => setService(itemValue)}
+        >
+          <Select.Item label="UX Research" value="ux" />
+          <Select.Item label="Web Development" value="web" />
+          <Select.Item label="Cross Platform Development" value="cross" />
+          <Select.Item label="UI Designing" value="ui" />
+          <Select.Item label="Backend Development" value="backend" />
+        </Select>
+
+        <Select 
+          selectedValue={service}
+          minWidth="200"
+          padding={3.5}
+          accessibilityLabel="Choose Service"
+          placeholder="Choose Service"
+          borderColor={'#E2E8F0'}
+          _selectedItem={{
+            bg: "#eaeaea",
+          }}
+          dropdownOpenIcon={
+          <ChevronUpIcon name="openicon" size={6} marginRight={3}/>
+        }
+          mt={1} onValueChange={itemValue => setService(itemValue)}
+        >
+          <Select.Item label="UX Research" value="ux" />
+          <Select.Item label="Web Development" value="web" />
+          <Select.Item label="Cross Platform Development" value="cross" />
+          <Select.Item label="UI Designing" value="ui" />
+          <Select.Item label="Backend Development" value="backend" />
+        </Select>
 
         <DefaultButton
           title={"Adicionar"}

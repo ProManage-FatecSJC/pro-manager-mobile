@@ -7,7 +7,7 @@ interface InputProps extends TextInputProps {
   inputMaskChange: any;
 }
 
-export default function MaskedInput({
+export function MaskedInput({
   mask,
   title,
   inputMaskChange,
@@ -39,7 +39,5 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 16,
     paddingVertical: 16,
-    marginBottom: 24,
-    fontSize: 16,
   },
 });

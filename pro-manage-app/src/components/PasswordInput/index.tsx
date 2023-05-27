@@ -9,7 +9,7 @@ interface PasswordInputProps extends TextInputProps {
   marginBottom?: number;
 }
 
-export default function PasswordInput({ marginTop, marginBottom, ...rest }: PasswordInputProps) {
+export function PasswordInput({ marginTop, marginBottom, ...rest }: PasswordInputProps) {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
