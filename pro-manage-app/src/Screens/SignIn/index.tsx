@@ -1,37 +1,54 @@
-import React, { useEffect, useState } from "react";
-import styles from "./styled.tsx";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
-import { Text, View, TextInput, Modal, Pressable } from "react-native";
-import SignInInput from "../../components/SignInput.tsx";
-import Button from "../../components/ButtonSignIn.tsx";
-import { URI } from "../../api/uri.ts";
-import api from "../../api/api.ts";
-import { SessionController } from "../../session/SessionController.ts";
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  Modal,
+  Pressable,
+  KeyboardAvoidingView,
+  Platform
+} from 'react-native';
 
+import api from '../../api/api';
+import { URI } from '../../api/uri';
+import { SessionController } from '../../session/SessionController';
 
-export default ({ navigation }: any) => {
+import {
+  DefaultButton,
+  DefaultInput,
+  PasswordInput
+} from '../../components';
 
+import { styles } from './styles'
+
+export function SignIn({ navigation }: any) {
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [modalVisible, setModalVisible] = useState(false);
   const sessionController = new SessionController()
 
-  async function handleButtonPress() {
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+  }, []);
 
-    console.log(login)
+  async function handleLogin() {
     try {
+      setIsLoading(true)
       await api.post(URI.LOGIN, login).then(
         async response => {
           await sessionController.setToken(response.data)
-          navigation.navigate('MainTab')
+          navigation.navigate('Home')
         }
       )
     } catch (error: any) {
+      setIsLoading(false)
       setModalVisible(true)
       console.log(error.message)
+    } finally {
+      setIsLoading(false)
     }
-
   }
 
   const login = {
@@ -40,9 +57,12 @@ export default ({ navigation }: any) => {
   }
 
   return (
-    <>
-      <View style={styles.Container}>
-        <Modal
+    <KeyboardAvoidingView 
+      style={styles.Container} 
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -150}
+    >
+      <Modal
           animationType="fade"
           transparent={true}
           visible={modalVisible}
@@ -55,41 +75,32 @@ export default ({ navigation }: any) => {
               <Pressable
                 style={[styles.button]}
                 onPress={() => setModalVisible(!modalVisible)}>
-                <Text style={styles.textStyle}>OK</Text>
+                <Text style={styles.textStyle}>Fechar</Text>
               </Pressable>
             </View>
           </View>
         </Modal>
-        <View style={styles.containerTitle}>
-          <Text style={styles.TextLogin}>Olá,</Text>
-          <Text style={styles.TextLogin}>Bem Vindo</Text>
-        </View>
 
-        <View style={styles.containerInputs}>
-          <View>
-            <TextInput
-              style={styles.Input}
-              placeholder="E-mail"
-              onChangeText={setEmail}
-            />
-          </View>
-
-          <View style={styles.inputMargin}>
-            <TextInput
-              style={styles.Input}
-              placeholder="Senha"
-              onChangeText={setPassword}
-              secureTextEntry={true}
-            />
-          </View>
-
-          <Text style={{ color: "#00688C", marginLeft: "auto" }}>
-            Esqueceu a Senha?
-          </Text>
-          <Button title="Entrar" onPress={handleButtonPress} />
-        </View>
+      <View style={styles.titleWrapper}>
+        <Text style={styles.textTitle}>Olá de novo!</Text>
+        <Text style={styles.textSubtitle}>
+          Sejá bem-vindo, você fez falta!
+        </Text>
       </View>
-    </>
-  );
-};
 
+      <View style={styles.containerInputs}>
+        <DefaultInput placeholder="E-mail" onChangeText={setEmail}/>
+
+        <PasswordInput marginTop={24} marginBottom={16} onChangeText={setPassword}/>
+
+        <Text style={{ color: "#00688C", marginLeft: "auto" }}>Esqueceu a senha?</Text>
+      </View>
+
+      <DefaultButton
+        title="Entrar"
+        onPress={handleLogin}
+        isLoading={isLoading}
+      />
+    </KeyboardAvoidingView>
+  )
+}

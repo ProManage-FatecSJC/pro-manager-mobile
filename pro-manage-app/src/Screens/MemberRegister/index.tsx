@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import styles from "./styled.tsx";
+import styles from "./styles.ts";
 import { View, Text, ScrollView } from "react-native";
 import PartnerSignIn from "../../components/PartnerSignIn.tsx";
-import ButtonRed from "../../components/ButtonRed.tsx";
-import ButtonBlue from "../../components/ButtonBlue.tsx";
+import {DefaultButton} from '../../components/DefaultButton';
 import axios from "axios";
 import CEPSignIn from "../../components/SignInCEP.tsx";
 import { SessionController } from "../../session/SessionController.ts";
@@ -43,7 +42,7 @@ async function searchCep(cep: string): Promise<Location | null | undefined> {
   }
 }
 
-export default ({ navigation, route }: any) => {
+export function MemberRegister({ navigation, route }: any){
   const { idProp } = route.params;
 
   const [id, setId] = useState(idProp);
@@ -203,8 +202,9 @@ export default ({ navigation, route }: any) => {
           disabled={editableAdress}
         />
 
-        <ButtonBlue title={"Salvar"} onPress={handleNewMember} />
-        <ButtonRed
+        <DefaultButton title={"Salvar"} onPress={handleNewMember} />
+        <DefaultButton
+        bg="red"
           title={"Cancelar"}
           onPress={() => {
             console.log(idProp);

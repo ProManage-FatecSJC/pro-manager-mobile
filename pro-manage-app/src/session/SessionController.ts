@@ -1,4 +1,4 @@
-import { AsyncStorage } from "react-native"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import {decode as atob, encode as btoa} from 'base-64'
 
 

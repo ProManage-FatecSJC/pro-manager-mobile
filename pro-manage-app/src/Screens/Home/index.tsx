@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
 
-import styles from "./styled.tsx";
+import styles from "./styles.ts";
 
 import CardStatus from '../../components/CardStatus.tsx'
 import CardPartner from '../../components/CardPartner.tsx'
@@ -11,7 +11,7 @@ import { URI } from "../../api/uri.ts";
 import { SignOut } from "phosphor-react-native";
 
 
-export default ({navigation} : any) => {
+export function Home ({navigation} : any) {
   const [buttonPressed, setButtonPressed] = useState<'status' | 'partner'>('status');
   const [pressedStatus, setPressedStatus] = useState(true);
   const [pressedPartner, setPressedPartner] = useState(false);

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
-import styles from "./styled.tsx";
+import styles from "./styles.ts";
 import CardDetail from "../../components/CardDetail.tsx";
 import SearchBar from "../../components/SearchBar.tsx";
 
-export default ({ navigation, route }: any) => {
+export function DetailStatus ({ navigation, route }: any){
   const { statusProp } = route.params;
   const [partners, setPartners] = useState(statusProp);
   const optionsStatus = [
