@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 24,
   },
+  // estilização do modal
   centeredView: {
     flex: 1,
     justifyContent: 'center',
@@ -51,18 +52,35 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20
   },
-  
-  titleWrapper: {},
-  title: {},
-  subtitle: {},
+  // Estilização da página
+  titleWrapper: {
+    marginTop: 40,
+  },
+  titleIcon: {
+    gap: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: '700',
+  },
+  subtitle: {
+    color: '#C3C3C3',
+    fontSize: 16,
+    marginLeft: 40
+   },
   divider: {
-    marginTop: 20,
-    marginBottom: 10,
+    marginTop: 24,
+    marginBottom: 32,
     width: "100%",
     height: 1,
     backgroundColor: "#e0e0e0",
   },
-  formContentWrapper:{},
+  formContentWrapper:{
+    gap: 4,
+    marginBottom: 16
+  },
 });
 
 export default styles;

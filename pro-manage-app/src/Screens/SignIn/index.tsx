@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -21,13 +21,21 @@ import {
 import { styles } from './styles'
 
 export function SignIn({ navigation }: any) {
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [modalVisible, setModalVisible] = useState(false);
   const sessionController = new SessionController()
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+  }, []);
+
   async function handleLogin() {
     try {
+      setIsLoading(true)
       await api.post(URI.LOGIN, login).then(
         async response => {
           await sessionController.setToken(response.data)
@@ -35,10 +43,12 @@ export function SignIn({ navigation }: any) {
         }
       )
     } catch (error: any) {
+      setIsLoading(false)
       setModalVisible(true)
       console.log(error.message)
+    } finally {
+      setIsLoading(false)
     }
-
   }
 
   const login = {
@@ -85,9 +95,11 @@ export function SignIn({ navigation }: any) {
 
         <Text style={{ color: "#00688C", marginLeft: "auto" }}>Esqueceu a senha?</Text>
       </View>
+
       <DefaultButton
         title="Entrar"
         onPress={handleLogin}
+        isLoading={isLoading}
       />
     </KeyboardAvoidingView>
   )
