@@ -12,9 +12,9 @@ export default ({ navigation }: any) => {
   const sessionController = new SessionController();
   const [usersData, setUsersData ] = useState([])
   const [users, setUsers] = useState(usersData);
-  const [userName, setUserName] = useState("Ana");
-  const [userEmail, setUserEmail] = useState("Email");
-  const [userRole, setUserRole] = useState("Usuário");
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userRole, setUserRole] = useState("");
   const optionsRole = [
     "Administrador",
     "Observador",
@@ -91,6 +91,12 @@ export default ({ navigation }: any) => {
                   name={item.name}
                   email={item.email}
                   role={optionsRole[item.role]}
+                  onPress={() =>{
+                    console.log("ID AQUI: ", item.id);
+                    navigation.navigate("UserUpdate", {
+                      idProp: item.id,
+                    });
+                  }}
                 />
               ))}
             </View>

@@ -31,6 +31,28 @@ export class SessionController {
         }
     }
 
+    public async getId(){
+        try {
+            let token = await AsyncStorage.getItem('token') as string
+            token = token.split(' ')[1]
+            let tokenData = JSON.parse(atob(token.split('.')[1]))
+            return tokenData.id
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    public async getRole(){
+        try {
+            let token = await AsyncStorage.getItem('token') as string
+            token = token.split(' ')[1]
+            let tokenData = JSON.parse(atob(token.split('.')[1]))
+            return tokenData.role
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     public async clearSession(){
         try {
             await AsyncStorage.clear()

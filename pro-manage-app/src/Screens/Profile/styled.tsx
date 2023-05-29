@@ -8,14 +8,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   containerHeaderUser: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+    marginTop: 40,
+    marginBottom: 32
   },
   UserImage: {
-    width: 178,
-    height: 178,
+    width: 150,
+    height: 150,
   },
   UserName: {
     width: '100%',
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginTop: 16,
-    marginBottom: 24,
+    marginBottom: 20,
   },
   Divider: {
     width: '100%',
@@ -43,10 +44,13 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     width: '100%',
     paddingHorizontal: 8,
-    paddingVertical:16,
+    paddingVertical:10,
   },
   inputMarginBottom: {
-    marginBottom: 16
+    marginBottom: 30
+  },
+  Space: {
+    marginBottom: 30
   }
 });
 
