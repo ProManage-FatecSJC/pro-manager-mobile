@@ -4,7 +4,8 @@ import {
   Text,
   ScrollView,
   Modal,
-  Pressable
+  Pressable,
+  Alert
 } from "react-native";
 
 import api from "../../api/api.ts";
@@ -26,31 +27,91 @@ import { UserPlus } from "phosphor-react-native";
 import styles from "./styles.ts";
 
 export function PartnerRegister({ navigation }: any) {
-  const [service, setService] = useState('');
+  const [partnerName, setPartnerName] = useState('')
+  const [partnerAmount, setPartnerAmount] = useState('');
+  const [partnerResponsible, setPartnerResponsible] = useState('');
   const [selectedState, setSelectedState] = useState('');
-  const [selectedType, setSelectedType] = useState('');
-  const [selectedStatus, setSelectedStatus] = useState('');
-  const [selectedPrivacy, setSelectedPrivacy] = useState('');
-  const [partnerContact, setPartnerContact] = useState('')
+  const [selectedType, setSelectedType] = useState(0);
+  const [selectedStatus, setSelectedStatus] = useState(0);
+  const [selectedPrivacy, setSelectedPrivacy] = useState(0);
+  const [partnerContact, setPartnerContact] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleStateChange = (itemValue: string) => {
-    setSelectedState(itemValue);
+  const sessionController = new SessionController()
+
+  let partner = {
+    name: partnerName,
+    privacy: selectedPrivacy,
+    type: selectedType,
+    membersQuantity: parseInt(partnerAmount),
+    status: selectedStatus,
+    telephone: partnerContact,
+    intermediateResponsible: partnerResponsible,
+    state: selectedState,
+  }
+
+  const handleNewPartner = async () => {
+    const token = await sessionController.getToken()
+    console.log(partner)
+    setIsLoading(true)
+    await api.
+      post(URI.PARTNER, partner, {
+        headers: {
+          Authorization: token
+        }
+      })
+      .then(response => {
+        
+        if (response.status == 200) {
+          Alert.alert('Cadastro de parceiro', 'Parceiro registrado com sucesso.')
+          navigation.goBack()
+        }
+      })
+      .catch(error => {
+        setIsLoading(false)
+        setModalVisible(true);
+        console.log(error);
+      })
+  }
+
+  const handleStateChange = (selectedOption: string) => {
+    setSelectedState(selectedOption);
   };
 
-  const handleTypeChange = (itemValue: string) => {
-    setSelectedType(itemValue);
+  const handleTypeChange = (selectedOption: number) => {
+    setSelectedType(selectedOption);
   };
 
-  const handleStatusChange = (itemValue: string) => {
-    setSelectedStatus(itemValue);
+  const handleStatusChange = (selectedOption: number) => {
+    setSelectedStatus(selectedOption);
   };
 
-  const handlePrivacyChange = (itemValue: string) => {
-    setSelectedPrivacy(itemValue);
+  const handlePrivacyChange = (selectedOption: number) => {
+    setSelectedPrivacy(selectedOption);
   };
   
   return (
     <View style={styles.container}>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible)
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Dados de cadastro incompletos ou incorretos!</Text>
+            <Pressable
+              style={[styles.button]}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.textStyle}>OK</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+
       <View style={styles.titleWrapper}>
         <View style={styles.titleIcon}>
         <UserPlus size={30} weight="fill" />
@@ -62,11 +123,11 @@ export function PartnerRegister({ navigation }: any) {
       </View>
 
       <View style={styles.divider}></View>
-      <ScrollView >
 
+      <ScrollView >
         <View style={styles.formContentWrapper}>
           <Text>Nome do parceiro</Text>
-          <DefaultInput placeholder="Nome do parceiro" />
+          <DefaultInput placeholder="Nome do parceiro" onChangeText={setPartnerName}/>
         </View>
 
         <View style={styles.formContentWrapper}>
@@ -86,8 +147,8 @@ export function PartnerRegister({ navigation }: any) {
           }
           mt={1} onValueChange={handlePrivacyChange}
         >
-          <Select.Item label="Privado" value="private" />
-          <Select.Item label="Público" value="public" />
+          <Select.Item label="Privado" value={0} />
+          <Select.Item label="Público" value={1} />
         </Select>
         </View>
 
@@ -108,14 +169,14 @@ export function PartnerRegister({ navigation }: any) {
           }
           mt={1} onValueChange={handleTypeChange}
         >
-          <Select.Item label="Único" value="unic" />
-          <Select.Item label="Múltiplo" value="multiple" />
+          <Select.Item label="Único" value={0} />
+          <Select.Item label="Múltiplo" value={1} />
         </Select>
         </View>
 
         <View style={styles.formContentWrapper}>
           <Text>Quantidade de membros</Text>
-          <DefaultInput placeholder="Quantidade de membros" keyboardType="numeric" />
+          <DefaultInput placeholder="Quantidade de membros" keyboardType="numeric" onChangeText={setPartnerAmount}/>
         </View>
 
         <View style={styles.formContentWrapper}>
@@ -135,18 +196,18 @@ export function PartnerRegister({ navigation }: any) {
           }
           mt={1} onValueChange={handleStatusChange}
         >
-            <Select.Item label="Em Prospecção" value="prospec" />
-            <Select.Item label="Primeiro Contato feito" value="firstContact" />
-            <Select.Item label="Primeira Reunião marcada/realizada" value="firstMeeting" />
-            <Select.Item label="Documentação enviada/em analise(Parceiro)" value="sendDocPartner" />
-            <Select.Item label="Documetação devolvida (Em análise Academy)" value="docReturnedAcademy" />
-            <Select.Item label="Documetação devolvida (Em análise Legal)" value="docRetunedLegal" />
-            <Select.Item label="Documetação analisada devolvida (Parceiro)" value="docAnalyzedPartner" />
-            <Select.Item label="Em preparação de Executive Sumary (Academy)" value="prospecAcademy" />
-            <Select.Item label="ES em Análise (Legal)" value="esAnalyzedLegal" />
-            <Select.Item label="ES em Análise (Academy Global)" value="esAnalyzedAcademy" />
-            <Select.Item label="Pronto para Assinatura" value="readySignature" />
-            <Select.Item label="Parceria Firmada" value="partnerSigned" />
+            <Select.Item label="Em Prospecção" value={0} />
+            <Select.Item label="Primeiro Contato feito" value={1} />
+            <Select.Item label="Primeira Reunião marcada/realizada" value={2} />
+            <Select.Item label="Documentação enviada/em analise(Parceiro)" value={3} />
+            <Select.Item label="Documetação devolvida (Em análise Academy)" value={4} />
+            <Select.Item label="Documetação devolvida (Em análise Legal)" value={5} />
+            <Select.Item label="Documetação analisada devolvida (Parceiro)" value={6} />
+            <Select.Item label="Em preparação de Executive Sumary (Academy)" value={7} />
+            <Select.Item label="ES em Análise (Legal)" value={8} />
+            <Select.Item label="ES em Análise (Academy Global)" value={9} />
+            <Select.Item label="Pronto para Assinatura" value={10} />
+            <Select.Item label="Parceria Firmada" value={11} />
           </Select>
         </View>
 
@@ -165,6 +226,7 @@ export function PartnerRegister({ navigation }: any) {
             <Text>Respnsável</Text>
             <DefaultInput 
             placeholder="Responsável do parceiro"
+            onChangeText={setPartnerResponsible}
             />
         </View>
 
@@ -211,6 +273,8 @@ export function PartnerRegister({ navigation }: any) {
 
         <DefaultButton
           title={"Adicionar"}
+          onPress={handleNewPartner}
+          isLoading={isLoading}
         />
       </ScrollView>
     </View>
