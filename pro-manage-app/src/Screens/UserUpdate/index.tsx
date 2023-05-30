@@ -48,7 +48,7 @@ export default ({ navigation, route }: any) => {
   let user = {
     name: userName,
     email: userEmail,
-    oldpassword: userPassCurrent,
+    oldPassword: userPassCurrent,
     password: userNewPass,
     role: userRole,
   };
@@ -155,6 +155,7 @@ const handleSelect = (selectedOption: any) => {
           placeholder={""}
           onChangeText={setUserEmail}
           value={userEmail}
+          editable={false}
         />
 
         {idProp === userId ? (

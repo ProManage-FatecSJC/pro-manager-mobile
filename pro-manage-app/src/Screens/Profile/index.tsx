@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styled.tsx";
-import { View, Text, Image, SafeAreaView, TextInput } from "react-native";
+import { View, Text, Image, SafeAreaView, TextInput, Modal, Pressable } from "react-native";
 import { SessionController } from "../../session/SessionController.ts";
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
@@ -14,6 +14,7 @@ export default ({navigation}: any) => {
   const [userEmail, setUserEmail] = useState("");
   const [userRole, setUserRole] = useState(1);
   const [count, setCount] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const [userData, setUserData] = useState()
   const sessionController = new SessionController()
@@ -56,10 +57,51 @@ export default ({navigation}: any) => {
 
   const RoleOptions = ["Administrador", "Observador"];
 
+  const deleteUser = async (userId: string) => {
+    const token = await sessionController.getToken();
+    await api
+      .delete(URI.USERS + `/${userId}`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((response) => {
+        
+        if (response.status == 200) {
+          navigation.navigate("SignIn");
+        } 
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
 
 
   return (
     <View style={styles.Container}>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Confirmar Exclusão?</Text>
+            <Pressable
+              style={[styles.button]}
+              onPress={() => {
+                setModalVisible(!modalVisible);
+                deleteUser(userId);}}
+            >
+              <Text style={styles.textStyle}>Sim</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.containerHeaderUser}>
         <Image
           source={require("../../assets/avatar.png")}
@@ -95,9 +137,10 @@ export default ({navigation}: any) => {
           />
 
           <ButtonRed
-            title={"Excluir Perfil"} onPress={function (): void {
-              throw new Error("Function not implemented.");
-            } }
+            title={"Excluir Perfil"}
+            onPress={function (): void {
+              setModalVisible(true);
+            }}
           />
         </SafeAreaView>
       </View>

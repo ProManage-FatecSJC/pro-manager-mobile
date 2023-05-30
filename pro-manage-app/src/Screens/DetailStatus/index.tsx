@@ -53,7 +53,7 @@ export default ({ navigation, route }: any) => {
             <Image source={require("../../assets/noPartners.png")} />
           </View>
           <Text style={styles.NoPartners}>
-            Você ainda não tem parceiros criados
+            Você ainda não tem parceiros nessa fase
           </Text>
 
           <ButtonGreen
