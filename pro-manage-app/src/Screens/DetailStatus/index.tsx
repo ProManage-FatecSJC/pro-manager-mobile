@@ -1,25 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import styles from "./styles.ts";
-import CardDetail from "../../components/CardDetail.tsx";
-import SearchBar from "../../components/SearchBar.tsx";
+import {
+  SearchBar,
+  CardDetail
+} from '../../components'
+import { ArrowLeft } from "phosphor-react-native";
+import { TouchableOpacity } from "react-native";
 
 export function DetailStatus ({ navigation, route }: any){
   const { statusProp } = route.params;
   const [partners, setPartners] = useState(statusProp);
   const optionsStatus = [
-    "Parceiros em Prospecção",
-    "Parceiros com primeiro Contato feito",
-    "Parceiros com primeira Reunião marcada/realizada",
-    "Parceiros com documentação enviada/em analise(Parceiro)",
-    "Parceiros com ocumetação devolvida (Em análise Academy)",
-    "Parceiros com documetação devolvida (Em análise Legal)",
-    "Parceiros com documetação analisada devolvida (Parceiro)",
-    "Parceiros em preparação de Executive Sumary (Academy)",
-    "Parceiros com ES em Análise (Legal)",
-    "Parceiros com ES em Análise (Academy Global)",
-    "Parceiros prontos para Assinatura",
-    "Parceiros com Parceria Firmada",
+    "Em Prospecção",
+    "Primeiro Contato feito",
+    "Primeira Reunião marcada/realizada",
+    "Documentação enviada/em analise(Parceiro)",
+    "Documetação devolvida (Em análise Academy)",
+    "Documetação devolvida (Em análise Legal)",
+    "Documetação analisada devolvida (Parceiro)",
+    "Em preparação de Executive Sumary (Academy)",
+    "ES em Análise (Legal)",
+    "ES em Análise (Academy Global)",
+    "Prontos para Assinatura",
+    "Parceria Firmada",
   ];
 
   const title = `${optionsStatus[statusProp[0].status]}`;
@@ -35,16 +39,19 @@ export function DetailStatus ({ navigation, route }: any){
       const searchTerm = text.toLowerCase();
       return name.includes(searchTerm);
     });
-
     console.log('PARCEIROS FILTRADOS: ', filteredPartners)
-
-    
     setPartners(filteredPartners);
   };
 
   return (
-    <View style={styles.Container}>
-      <Text style={styles.Text1}> {title} </Text>
+    <View style={styles.container}>
+      <View style={styles.headerWrapper}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <ArrowLeft size={24}/>
+        </TouchableOpacity>
+
+        <Text style={styles.headerTitle}>{title}</Text>
+      </View>
       <SearchBar placeholder={"Pesquisa"} onChangeText={handleSearch} />
       <ScrollView>
         <View>

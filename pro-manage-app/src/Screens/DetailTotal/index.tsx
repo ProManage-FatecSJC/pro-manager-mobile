@@ -5,8 +5,8 @@ import styles from "./styles.ts";
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 import { SessionController } from "../../session/SessionController.ts";
-import CardDetail from "../../components/CardDetail.tsx";
-import SearchBar from "../../components/SearchBar.tsx";
+import CardDetail from "../../components/CardDetail/index.tsx";
+import SearchBar from "../../components/SearchBar/index.tsx";
 
 export function DetailTotal ({ navigation, route }: any) {
   const { statusProp } = route.params;
