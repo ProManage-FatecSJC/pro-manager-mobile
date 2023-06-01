@@ -13,6 +13,8 @@ export declare global {
             Profile: undefined;
             SignIn: undefined;
             UserRegister: undefined;
+            UserUpdate: undefined;
+            Users: undefined;
         }
     }
 }

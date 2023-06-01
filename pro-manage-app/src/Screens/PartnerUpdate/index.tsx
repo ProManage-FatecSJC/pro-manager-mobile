@@ -7,15 +7,17 @@ import { DefaultButton } from "../../components/DefaultButton";
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 import { SessionController } from "../../session/SessionController.ts";
+import ButtonBlue from "../../components/ButtonBlue.tsx";
+import ButtonRed from "../../components/ButtonRed.tsx";
 
 export function PartnerUpdate ({ navigation, route }: any) {
 
   const { idProp } = route.params
   const [partnerName, setPartnerName] = useState('');
-  var partnerPrivacy = ''
-  const [partnerType, setPartnerType] = useState('');
+  const [partnerPrivacy, setPartnerPrivacy] = useState(0);
+  const [partnerType, setPartnerType] = useState(0);
   const [partnerAmount, setPartnerAmount] = useState('');
-  const [partnerStatus, setPartnerStatus] = useState('');
+  const [partnerStatus, setPartnerStatus] = useState(0);
   const [partnerContact, setPartnerContact] = useState('');
   const [partnerResponsible, setPartnerResponsible] = useState('');
   const [partnerState, setPartnerState] = useState('');
@@ -25,25 +27,25 @@ export function PartnerUpdate ({ navigation, route }: any) {
 
   let partner = {
     name: partnerName,
-    privacy: parseInt(partnerPrivacy),
-    type: parseInt(partnerType),
+    privacy: partnerPrivacy,
+    type: partnerType,
     membersQuantity: partnerAmount,
-    status: partnerStatus,
     telephone: partnerContact,
+    status: partnerStatus,
+    state: partnerState,
     intermediateResponsible: partnerResponsible,
-    state: partnerState
-  }
+  };
 
   const setPartnerData = (data: any) => {
     setPartnerName(data.name)
-    setPartnerType(optionsType[data.type])
+    setPartnerType(data.type)
+    console.log(data.type)
     setPartnerAmount(data.membersQuantity.toString())
     setPartnerStatus(data.status)
     setPartnerContact(data.telephone)
     setPartnerResponsible(data.intermediateResponsible)
     setPartnerState(data.state)
-    partnerPrivacy = options[data.privacy]
-    console.log(partnerPrivacy)
+    setPartnerPrivacy(data.privacy)
   }
 
   const handleGetPartner = async (partnerId: string) => {
@@ -55,7 +57,9 @@ export function PartnerUpdate ({ navigation, route }: any) {
         }
       })
       .then(response => {
+
         setPartnerData(response.data)
+        console.log(response.data);
         
       })
       .catch(error => {
@@ -66,28 +70,28 @@ export function PartnerUpdate ({ navigation, route }: any) {
   const handleNewPartner = async (partnerId: string) => {
     const token = await sessionController.getToken()
     console.log(partner)
-    await api.
-      post(URI.PARTNER, partner, {
+    await api
+      .put(URI.PARTNER + `/${partnerId}`, partner, {
         headers: {
-          Authorization: token
-        }
+          Authorization: token,
+        },
       })
-      .then(response => {
+      .then((response) => {
         if (response.status == 200) {
-          navigation.navigate('Home')
+          navigation.navigate("Home");
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
-      })
+      });
   }
 
   useEffect(() => {
-    if (count < 10) {
+    if (count < 2) {
       handleGetPartner(idProp)
       setCount(count + 1)
   }
-  }, [partnerName])
+  }, [count])
 
   const optionsType = ["Unico", "Multiplo"];
 
@@ -121,15 +125,15 @@ export function PartnerUpdate ({ navigation, route }: any) {
     };
   
     const handleSelectType = (selectedOption: string) => {
-      setPartnerType(selectedOption)
+      setPartnerType(optionsType.indexOf(selectedOption))
     };
   
     const handleSelectStatus = (selectedOption: string) => {
-      setPartnerStatus(selectedOption)
+      setPartnerStatus(optionsStatus.indexOf(selectedOption));
     }
   
     const handleSelectPrivacy = (selectedOption: string) => {
-      partnerPrivacy = selectedOption
+      setPartnerPrivacy(options.indexOf(selectedOption))
     }
 
   return (
@@ -139,26 +143,64 @@ export function PartnerUpdate ({ navigation, route }: any) {
       <View style={styles.Divider}></View>
       <ScrollView>
         <Text style={styles.Text}>Nome do Parceiro</Text>
-        <PartnerSignIn placeholder={""} onChangeText={setPartnerName} value={partnerName}/>
-        <Text style={styles.Text}>Tipo de Parceiro</Text>
-        <SignInServeral options={optionsType} onSelect={handleSelect} value={partnerType}/>
+        <PartnerSignIn
+          placeholder={""}
+          onChangeText={setPartnerName}
+          value={partnerName}
+        />
+        <Text style={styles.Text}>Tipo de Parceiro {partnerType}</Text>
+        <SignInServeral
+          options={optionsType}
+          onSelect={handleSelectType}
+          value={optionsType[partnerType]}
+        />
         <Text style={styles.Text}>Status</Text>
-        <SignInServeral options={optionsStatus} onSelect={handleSelect} value={partnerStatus}/>
+        <SignInServeral
+          options={optionsStatus}
+          onSelect={handleSelectStatus}
+          value={optionsStatus[partnerStatus]}
+        />
         <Text style={styles.Text}>Responsável</Text>
-        <PartnerSignIn placeholder={""} onChangeText={setPartnerResponsible} value={partnerResponsible}/>
+        <PartnerSignIn
+          placeholder={""}
+          onChangeText={setPartnerResponsible}
+          value={partnerResponsible}
+        />
         <Text style={styles.Text}>Público ou Privado</Text>
-        <SignInServeral options={options} onSelect={handleSelect} value={partnerPrivacy}/>
+        <SignInServeral
+          options={options}
+          onSelect={handleSelectPrivacy}
+          value={options[partnerPrivacy]}
+        />
         <Text style={styles.Text}>Quantidade Máxima de Membros</Text>
-        <PartnerSignIn placeholder={""} onChangeText={setPartnerAmount} value={partnerAmount}/>
+        <PartnerSignIn
+          placeholder={""}
+          onChangeText={setPartnerAmount}
+          value={partnerAmount}
+        />
         <Text style={styles.Text}>Numero de Contato</Text>
-        <PartnerSignIn placeholder={""} onChangeText={setPartnerContact} value={partnerContact}/>
+        <PartnerSignIn
+          placeholder={""}
+          onChangeText={setPartnerContact}
+          value={partnerContact}
+        />
         <Text style={styles.Text}>Estado</Text>
-        <SignInServeral options={optionsState} onSelect={handleSelect} value={partnerState}/>
+        <SignInServeral
+          options={optionsState}
+          onSelect={handleSelect}
+          value={partnerState}
+        />
 
         <DefaultButton
-          title={"Adicionar"}
-          onPress={function (): void {
-            handleNewPartner(idProp)
+          title={"Editar Parceiroh"}
+          onPress={() => {
+            handleNewPartner(idProp);
+          }}
+        />
+        <DefaultButton
+          title={"Cancelar"}
+          onPress={() => {
+            navigation.navigate("Home");
           }}
         />
       </ScrollView>

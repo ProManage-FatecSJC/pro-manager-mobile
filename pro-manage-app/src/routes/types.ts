@@ -11,10 +11,14 @@ export type RootStackParamList = {
     Profile: undefined;
     SignIn: undefined;
     UserRegister: undefined;
+    UserUpdate: undefined;
+    Users: undefined;
 };
 
 export type RootTabParamList = {
     HomeTab: undefined;
     PartnerRegisterTab: undefined;
     ProfileTab: undefined;
+    UsersTab: undefined;
+
 };

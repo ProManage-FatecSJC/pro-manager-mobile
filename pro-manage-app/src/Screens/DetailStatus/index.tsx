@@ -50,7 +50,7 @@ export function DetailStatus ({ navigation, route }: any){
       {partners.length === 0 ? (
         <>
           <Text style={styles.NoPartners}>
-            Você ainda não tem parceiros criados
+            Você ainda não tem parceiros nessa fase
           </Text>
 
           <DefaultButton
