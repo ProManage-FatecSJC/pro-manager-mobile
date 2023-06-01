@@ -9,6 +9,7 @@ import {
 
 import { Loading } from './src/components/Loading'
 import Routes from "./src/routes";
+import { SafeAreaView } from "react-native";
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,8 +26,10 @@ export default function App() {
   }, []);
 
   return (
+    <SafeAreaView style={{ flex: 1 }}>
       <NativeBaseProvider>
           {isLoading || !fontsLoaded ? <Loading /> : <Routes />}
       </NativeBaseProvider>
+    </SafeAreaView>
   );
 };

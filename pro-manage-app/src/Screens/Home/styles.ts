@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     justifyContent: "center",
-    padding: 24,
+    paddingHorizontal: 24,
   },
   buttonWrapper: {
     flexDirection: "row",

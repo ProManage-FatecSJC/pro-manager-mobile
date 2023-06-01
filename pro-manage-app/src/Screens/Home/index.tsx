@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 
 import styles from "./styles.ts";
 
@@ -11,7 +11,7 @@ import { URI } from "../../api/uri.ts";
 import { SignOut } from "phosphor-react-native";
 
 
-export function Home ({navigation} : any) {
+export function Home ({navigation}: any) {
   const [buttonPressed, setButtonPressed] = useState<'status' | 'partner'>('status');
   const [pressedStatus, setPressedStatus] = useState(true);
   const [pressedPartner, setPressedPartner] = useState(false);
@@ -83,7 +83,6 @@ export function Home ({navigation} : any) {
 
   async function handleMembers() {
     const token = await sessionController.getToken()
-
     try {
       await api.get(URI.MEMBERS, {
         headers: {
@@ -92,7 +91,6 @@ export function Home ({navigation} : any) {
       }).then(response => {
         setMember(response.data)
         setMemberCount(member.length)
-        
       })
     } catch (error) {
       console.log(error)
@@ -101,13 +99,11 @@ export function Home ({navigation} : any) {
 
   const getName = async () => {
     let token = await sessionController.getName() as string
-
     setUserName(token)
   }
 
   useEffect(() => {
     if (count < 10) {
-
       handlePartners()
       handleMembers()
       setCount(count + 1)
