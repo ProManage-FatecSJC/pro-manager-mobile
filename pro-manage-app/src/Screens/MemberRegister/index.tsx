@@ -9,7 +9,7 @@ import { SessionController } from "../../session/SessionController.ts";
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 import SignInServeral from "../../components/SignInSeveral.tsx";
-import MaskedInput from "../../components/MaskedInput/index.tsx";
+import {MaskedInput} from "../../components/MaskedInput/index.tsx";
 
 const sessionController = new SessionController();
 
