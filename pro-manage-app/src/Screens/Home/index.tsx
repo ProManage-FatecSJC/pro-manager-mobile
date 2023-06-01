@@ -74,9 +74,6 @@ export function Home ({navigation} : any) {
         setPartners9(partner.filter((x: any) => x.status == 8).length)
         setPartners10(partner.filter((x: any) => x.status == 9).length)
         setPartners11(partner.filter((x: any) => x.status == 10).length)
-
-
-        
         setPartners12(partner.filter((x: any) => x.status == 11).length)
       })
     } catch (error) {
