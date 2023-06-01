@@ -9,13 +9,13 @@ import {
     Members,
     PartnerUpdate,
     SignIn,
-    UserRegister
+    UserRegister,
+    UserUpdate
 } from '../Screens';
 
 import { RootStackParamList } from './types';
 
 import ShowBottomTabs from './tab.routes';
-import UserUpdate from '../Screens/UserUpdate';
 
 const { Screen, Navigator } = createStackNavigator<RootStackParamList>();
 
@@ -38,6 +38,7 @@ export default function StackRoutes() {
         <Screen name="UserRegister" component={UserRegister} />
         <Screen name="Profile" component={ShowBottomTabs} />
         <Screen name="UserUpdate" component={UserUpdate} />
+        <Screen name="Users" component={ShowBottomTabs} />
       </Navigator>
     );
 }

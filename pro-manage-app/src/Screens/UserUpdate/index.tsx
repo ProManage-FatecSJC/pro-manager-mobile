@@ -8,7 +8,7 @@ import { URI } from "../../api/uri.ts";
 import { SessionController } from "../../session/SessionController.ts";
 import { DefaultButton } from "../../components/index.tsx";
 
-export default ({ navigation, route }: any) => {
+export function UserUpdate({ navigation, route }: any){
 
   const { idProp } = route.params  /// usuáio que vem de Usuários
 

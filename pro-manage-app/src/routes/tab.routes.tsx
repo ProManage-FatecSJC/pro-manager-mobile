@@ -7,9 +7,9 @@ import { House, UserCirclePlus, User } from 'phosphor-react-native';
 import {
   Home,
   PartnerRegister,
-  Profile
+  Profile,
+  Users
 } from '../Screens';
-import Users from '../Screens/Users';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 

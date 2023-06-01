@@ -6,7 +6,7 @@ import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 import { DefaultButton } from "../../components/DefaultButton/index.tsx";
 
-export default ({navigation}: any) => {
+export function Profile({navigation}: any){
 
   const [userName, setUserName] = useState('')
   const [userId, setUserId] = useState('')

@@ -8,7 +8,7 @@ import { URI } from "../../api/uri.ts";
 import { SessionController } from "../../session/SessionController.ts";
 import { DefaultButton } from "../../components/index.tsx";
 
-export default ({ navigation }: any) => {
+export function Users ({ navigation }: any){
   const sessionController = new SessionController();
   const [usersData, setUsersData ] = useState([])
   const [users, setUsers] = useState(usersData);
