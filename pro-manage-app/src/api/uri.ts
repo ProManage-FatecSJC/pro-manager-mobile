@@ -3,5 +3,6 @@ export enum URI{
     MEMBERS = "members",
     MEMBERSBYID = "membersById",
     LOGIN = "login",
-    USERS = "users"
+    USERS = "users",
+    REGISTER = "register",
 }

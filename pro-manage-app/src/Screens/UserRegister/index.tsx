@@ -1,23 +1,19 @@
 import React, { useState } from "react";
-import { 
-  View, 
-  Text, 
-  TextInput,
-} from 'react-native';
-import { useNavigation } from "@react-navigation/native"; 
 import styles from './styles.tsx';
 import SignInServeral from "../../components/SignInSeveral.tsx";
 import { SessionController } from "../../session/SessionController.ts";
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 import { DefaultButton } from "../../components/DefaultButton";
+import { Text, View } from "react-native";
+import PartnerSignIn from "../../components/PartnerSignIn.tsx";
 
 export function UserRegister ({navigation}: any){
 
-  const [UserName, setUserName] = useState('');
-  const [UserEmail, setUserEmail] = useState('');
-  const [UserPass, setUserPass] = useState('');
-  const [UserRole, setUserRole] = useState('');
+  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  const [userPass, setUserPass] = useState('');
+  const [userRole, setUserRole] = useState(1);
 
 const sessionController = new SessionController()
 
@@ -25,14 +21,14 @@ const sessionController = new SessionController()
   const token = await sessionController.getToken()
    console.log(user)
    await api.
-  post(URI.LOGIN, user, {
+  post(URI.REGISTER, user, {
        headers: {
            Authorization: token
        }
    })
    .then(response => {
        if(response.status == 200){
-            navigation.navigate('profile')
+            navigation.navigate("Profile");
        }
    })
   .catch(error => {
@@ -40,52 +36,69 @@ const sessionController = new SessionController()
    })
  }
 
-const RoleOptions = [
-  { label: 'Administrador', value: 0 },
-  { label: 'Observador', value: 1 },
-  
-];
+const RoleOptions = ["Administrador", "Observador"];
+
+const handleSelect = (selectedOption: any) => {
+  if(selectedOption == "Administrador"){
+    setUserRole(0)
+  } else {
+    setUserRole(1);
+  }
+  ;}
+
 
 let user = {
-  name: UserName,
-  email: UserEmail,
-  senha: UserPass,
-  Role: parseInt(UserRole)
-}
-
-const handleSelect = (selectedOption: string) => {
-      console.log(`Função Selecionada: ${selectedOption}`);
-    };
+  name: userName,
+  email: userEmail,
+  password: userPass,
+  role: userRole,
+};
 
 const onCancel = () => {
       console.log(`Cancelado`);
-      navigation.navigate('profile')
+      navigation.navigate("Profile");
     };
 
 
     return (
-    <View style={styles.Title}>
-      <Text style={styles.Text1}>Adicionar um usuário</Text>
-      <Text style={styles.Text2}>Adicione um usuário ao sistema</Text>
-      <View style={styles.Divider}></View>
-         
-        <Text style={styles.Text}>Nome do Usuário</Text>
-        <TextInput style={styles.input} placeholder="Digite o nome do usuário " onChangeText={setUserName} value={UserName}/>
+      <View style={styles.Container}>
+          <Text style={styles.Text1}>Adicionar um usuário</Text>
+          <Text style={styles.Text2}>Adicione um usuário ao sistema</Text>
+          <View style={styles.Divider}></View>
 
-        <Text style={styles.Text}>Email</Text>
-        <TextInput style={styles.input} placeholder="Digite o Email" onChangeText={setUserEmail} value={UserEmail}/>
+          <Text style={styles.Text}>Nome do Usuário</Text>
+          <PartnerSignIn
+            placeholder={"Digite o Nome"}
+            onChangeText={setUserName}
+            value={userName}
+          />
 
-        <Text style={styles.Text}>Senha</Text>    
-        <TextInput style={styles.input} placeholder="Digite a senha" onChangeText={setUserPass} secureTextEntry={true} value={UserPass}/>
+          <Text style={styles.Text}>Email</Text>
+          <PartnerSignIn
+            placeholder={"Digite o Email"}
+            onChangeText={setUserEmail}
+            value={userEmail}
+          />
+
+          <Text style={styles.Text}>Senha</Text>
+          <PartnerSignIn
+            placeholder={"Digite a senha"}
+            onChangeText={setUserPass}
+            value={userPass}
+
+          />
 
         <SignInServeral options={RoleOptions} onSelect={handleSelect} /> 
           
-          <DefaultButton title="Salvar" onPress={function (): void {
-            throw new Error("Function not implemented.");
-          }} />
+          <DefaultButton
+            title={"Salvar"}
+            onPress={() => {
+              handleNewUser()
+            }}
+          />
           
           <DefaultButton title="Cancelar" onPress={onCancel} bg="red"/>
           
-        </View>
-      );
-    }
+      </View>
+  );
+}
