@@ -142,7 +142,6 @@ export function Home ({navigation} : any) {
     <View style={styles.Container}>
       <View style={styles.Text}>
         <Text style={{ fontSize: 24 }}>
-          {" "}
           Bem vindo, <Text style={{ fontWeight: "bold" }}> {userName}</Text>
         </Text>
         <TouchableOpacity onPress={handleLogoffClick}>

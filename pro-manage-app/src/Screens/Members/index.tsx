@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, View } from "react-native";
 import styles from "./styles.ts";
-import SearchBar from '../../components/SearchBar.tsx';
+import SearchBar from '../../components/SearchBar/index.tsx';
 import { SessionController } from '../../session/SessionController.ts';
 import api from '../../api/api.ts';
 import { URI } from '../../api/uri.ts';
