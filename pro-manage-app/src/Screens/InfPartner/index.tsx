@@ -6,8 +6,10 @@ import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 import { SessionController } from '../../session/SessionController.ts';
 import { DefaultButton } from '../../components/DefaultButton/index.tsx';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ArrowRight, ListDashes } from 'phosphor-react-native';
 
-export function InfPartner ({ navigation, route }: any){
+export function InfPartner({ navigation, route }: any) {
 
   const { idProp } = route.params;
 
@@ -48,13 +50,13 @@ export function InfPartner ({ navigation, route }: any){
 
   };
 
-  async function handleArchivePartner(partnerId : string) {
+  async function handleArchivePartner(partnerId: string) {
     const token = await sessionController.getToken()
     try {
       await api.put(URI.PARTNER + `/archive/${partnerId}`, {}, {
         headers: { Authorization: token }
       }).then(response => {
-        if(response.status == 200) {
+        if (response.status == 200) {
           navigation.navigate('Home')
         }
       })
@@ -94,45 +96,74 @@ export function InfPartner ({ navigation, route }: any){
   }, []);
 
   return (
-    <View style={styles.Container}>
-      <Text style={styles.Text1}> Parceiro: {name}</Text>
-      <ScrollView>
-        <View style={styles.Center}>
-          <Image
-            source={require("../../assets/avatar.png")}
-            style={styles.UserImage}
-          />
-          <View style={styles.Divider}></View>
-          <Text style={styles.Text2}>
-            Nome: <Text style={styles.Text3}>{name}</Text>
-          </Text>
-          <Text style={styles.Text2}>
-            Status: <Text style={styles.Text3}>{optionsStatus[status]}</Text>
-          </Text>
-          <Text style={styles.Text2}>
-            Privacidade:{" "}
-            <Text style={styles.Text3}>{optionsPrivace[privase]}</Text>
-          </Text>
-          <Text style={styles.Text2}>
-            Tipo: <Text style={styles.Text3}>{optionsType[type]}</Text>
-          </Text>
-          <Text style={styles.Text2}>
-            Max. Membros: <Text style={styles.Text3}>{members}</Text>
-          </Text>
-          <Text style={styles.Text2}>
-            Contato: <Text style={styles.Text3}>{contacts}</Text>
-          </Text>
-          <Text style={styles.Text2}>
-            Responsável: <Text style={styles.Text3}>{response}</Text>
-          </Text>
-          <Text style={styles.Text2}>
-            Estado: <Text style={styles.Text3}>{uf}</Text>
-          </Text>
+    <SafeAreaView style={styles.container}>
 
+      <View style={styles.headerTitleWrapper}>
+        <Text style={styles.titleText}>{name}</Text>
+      </View>
+
+      <View style={styles.divider} />
+
+      <View style={styles.informationPartnerDataWrapper}>
+   
+          <Text style={styles.informationTextTitle}>
+            Nome: {' '}
+            <Text style={styles.informationTextData}>{name}</Text>
+          </Text>
+    
+
+        <View style={styles.informationTextWrapper}>
+          <Text style={styles.informationTextTitle}>Status:</Text>
+          <Text style={styles.informationTextData}>{optionsStatus[status]}</Text>
         </View>
 
+        <View style={styles.informationTextWrapper}>
+          <Text style={styles.informationTextTitle}>Privacidade:</Text>
+          <Text style={styles.informationTextData}>{optionsPrivace[privase]}</Text>
+        </View>
+
+        <View style={styles.informationTextWrapper}>
+          <Text style={styles.informationTextTitle}>Tipo:</Text>
+          <Text style={styles.informationTextData}>{optionsType[type]}</Text>
+        </View>
+
+        <View style={styles.informationTextWrapper}>
+          <Text style={styles.informationTextTitle}>Quantidade de membros: </Text>
+          <Text style={styles.informationTextData}>{members}</Text>
+        </View>
+
+        <View style={styles.informationTextWrapper}>
+          <Text style={styles.informationTextTitle}>Contato:</Text>
+          <Text style={styles.informationTextData}>{contacts}</Text>
+        </View>
+
+        <View style={styles.informationTextWrapper}>
+          <Text style={styles.informationTextTitle}>Responsável:</Text>
+          <Text style={styles.informationTextData}>{response}</Text>
+        </View>
+
+        <View style={styles.informationTextWrapper}>
+          <Text style={styles.informationTextTitle}>Estado:</Text>
+          <Text style={styles.informationTextData}>{uf}</Text>
+        </View>
+
+        <View style={[styles.informationTextWrapper, { marginTop: 16}]}>
+          <ListDashes color='grey'/>
+          <Text style={[styles.informationTextData, {color: 'grey'}]}>Ver lista de membros</Text>
+        </View>
+      </View>
+
+      <View style={styles.buttonGap}>
         <DefaultButton
           title="Editar"
+          bg={'transparent'}
+          textColor={'#4994CE'}
+          borderColor={'#4994CE'}
+          borderWidth={1.5}
+          variant={'outline'}
+          _pressed={{
+            bg: "#f0f0f0",
+          }}
           onPress={() => {
             navigation.navigate("PartnerUpdate", {
               idProp: id
@@ -141,22 +172,14 @@ export function InfPartner ({ navigation, route }: any){
         />
 
         <DefaultButton
-          title="Visualizar Membros"
-          onPress={() => {
-            console.log(idProp);
-            navigation.navigate("Members", {
-              idProp: id,
-            });
-          }}
-        />
-
-        <DefaultButton
           title="Arquivar Parceiro"
+          bg={'transparent'}
+          textColor={'#DA4625'}  
           onPress={() => {
             handleArchivePartner(idProp)
           }}
         />
-      </ScrollView>
-    </View>
+      </View>
+    </SafeAreaView>
   );
 };

@@ -1,41 +1,57 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  Container: {
+  container: {
     flex: 1,
-    backgroundColor: "#fff",
-    padding: 20,
+    backgroundColor: '#f8f8f8',
+    padding: 24,
+    paddingTop: 16,
   },
-  Divider: {
+  headerTitleWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    paddingVertical: 16,
+    width: '100%',
+
+    backgroundColor: '#4994CE',
+    borderRadius: 999,
+  },
+  titleText: {
+    color: '#f8f8f8',
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  divider: {
     marginTop: 16,
     marginBottom: 32,
-    width: "100%",
+    width: '100%',
     height: 1,
-    backgroundColor: "#e0e0e0",
+    backgroundColor: '#e0e0e0'
   },
-  Text1: {
-    fontWeight: "bold",
-    fontSize: 24,
-    marginTop: 10,
+  informationPartnerDataWrapper: {
+    gap: 16,
+    flex: 1,
   },
-  Text2: {
-    fontWeight: "bold",
-    fontSize: 20,
-    marginBottom: 10,
+  informationTextWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8
   },
-  Text3: {
-    fontSize: 20,
-    fontWeight: "normal",
+  informationTextTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+
+    color: '#29292e',
   },
-  UserImage: {
-    width: 100,
-    height: 100,
-    marginTop: 10,
+  informationTextData: {
+    fontSize: 18,
+    color: '#29292e',
+    fontWeight: '400'
   },
-  Center: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
+  buttonGap: {
+    gap: 16,
+  }
 });
 
 export default styles;
