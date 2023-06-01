@@ -92,8 +92,6 @@ export function SignIn({ navigation }: any) {
         <DefaultInput placeholder="E-mail" onChangeText={setEmail}/>
 
         <PasswordInput marginTop={24} marginBottom={16} onChangeText={setPassword}/>
-
-        <Text style={{ color: "#00688C", marginLeft: "auto" }}>Esqueceu a senha?</Text>
       </View>
 
       <DefaultButton

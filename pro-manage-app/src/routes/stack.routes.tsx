@@ -10,7 +10,7 @@ import {
     PartnerUpdate,
     SignIn,
     UserRegister
-} from '../Screens';
+} from '../screens';
 
 import { RootStackParamList } from './types';
 

@@ -8,7 +8,7 @@ import {
   Home,
   PartnerRegister,
   Profile
-} from '../Screens';
+} from '../screens';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
