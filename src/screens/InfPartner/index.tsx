@@ -138,7 +138,7 @@ export function InfPartner({ navigation, route }: any) {
         <Text style={styles.informationTextTitle}>
           Nome:{' '}
           {isLoading ? (
-             <HStack space={2} alignItems="center">
+            <HStack space={2} alignItems="center">
               <Spinner color="#29292e" />
             </HStack>
           ) : (
@@ -160,7 +160,7 @@ export function InfPartner({ navigation, route }: any) {
         <Text style={styles.informationTextTitle}>
           Privacidade:{' '}
           {isLoading ? (
-             <HStack space={2} alignItems="center">
+            <HStack space={2} alignItems="center">
               <Spinner color="#29292e" />
             </HStack>
           ) : (
@@ -171,7 +171,7 @@ export function InfPartner({ navigation, route }: any) {
         <Text style={styles.informationTextTitle}>
           Tipo:{' '}
           {isLoading ? (
-             <HStack space={2} alignItems="center">
+            <HStack space={2} alignItems="center">
               <Spinner color="#29292e" />
             </HStack>
           ) : (
@@ -182,7 +182,7 @@ export function InfPartner({ navigation, route }: any) {
         <Text style={styles.informationTextTitle}>
           Quantidade de membros:{' '}
           {isLoading ? (
-             <HStack space={2} alignItems="center">
+            <HStack space={2} alignItems="center">
               <Spinner color="#29292e" />
             </HStack>
           ) : (
@@ -193,7 +193,7 @@ export function InfPartner({ navigation, route }: any) {
         <Text style={styles.informationTextTitle}>
           Contato:{' '}
           {isLoading ? (
-             <HStack space={2} alignItems="center">
+            <HStack space={2} alignItems="center">
               <Spinner color="#29292e" />
             </HStack>
           ) : (
@@ -204,7 +204,7 @@ export function InfPartner({ navigation, route }: any) {
         <Text style={styles.informationTextTitle}>
           Responsável:{' '}
           {isLoading ? (
-             <HStack space={2} alignItems="center">
+            <HStack space={2} alignItems="center">
               <Spinner color="#29292e" />
             </HStack>
           ) : (
@@ -215,7 +215,7 @@ export function InfPartner({ navigation, route }: any) {
         <Text style={styles.informationTextTitle}>
           Estado:{' '}
           {isLoading ? (
-             <HStack space={2} alignItems="center">
+            <HStack space={2} alignItems="center">
               <Spinner color="#29292e" />
             </HStack>
           ) : (
@@ -223,10 +223,17 @@ export function InfPartner({ navigation, route }: any) {
           )}
         </Text>
 
-        <View style={[styles.informationTextWrapper, { marginTop: 32 }]}>
-          <ListDashes color='grey' />
-          <Text style={[styles.informationTextData, { color: 'grey' }]}>Ver lista de membros</Text>
-        </View>
+        <TouchableOpacity onPress={() => {
+            console.log(idProp);
+            navigation.navigate("Members", {
+              idProp: id,
+            });
+          }}>
+          <View style={[styles.informationTextWrapper, { marginTop: 16 }]}>
+            <ListDashes color='grey' />
+            <Text style={[styles.informationTextData, { color: 'grey' }]}>Ver lista de membros</Text>
+          </View>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.buttonGap}>
@@ -251,6 +258,12 @@ export function InfPartner({ navigation, route }: any) {
           title="Arquivar Parceiro"
           bg={'transparent'}
           textColor={'#DA4625'}
+          borderColor={'#DA4625'}
+          borderWidth={1.5}
+          variant={'outline'}
+          _pressed={{
+            bg: "#f0f0f0",
+          }}
           onPress={() => {
             handleArchivePartner(idProp)
           }}
