@@ -23,5 +23,5 @@ export {
     PartnerUpdate,
     Profile,
     SignIn,
-    UserRegister
+    UserRegister,
 }

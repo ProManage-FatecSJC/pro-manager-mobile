@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+<<<<<<< HEAD:src/screens/Home/styles.ts
     backgroundColor: "#f8f8f8",
     paddingHorizontal: 24,
   },
@@ -10,6 +11,11 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+=======
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    paddingHorizontal: 24,
+>>>>>>> develop:pro-manage-app/src/Screens/Home/styles.ts
   },
   buttonWrapper: {
     flexDirection: "row",

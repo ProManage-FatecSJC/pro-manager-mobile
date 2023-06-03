@@ -9,6 +9,7 @@ import {
 
 import { Loading } from './src/components/Loading'
 import Routes from "./src/routes";
+import { SafeAreaView } from "react-native";
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);

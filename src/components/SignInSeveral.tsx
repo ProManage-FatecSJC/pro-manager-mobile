@@ -27,6 +27,8 @@ const SignInServeral: React.FC<CustomDropdownProps> = ({
     setShowOptions(!showOptions);
   };
 
+  React.useEffect(() => {setSelectedOption(value)}, [value])
+
   return (
     <View >
       <TouchableOpacity

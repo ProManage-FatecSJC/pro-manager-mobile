@@ -5,8 +5,7 @@ import styles from "./styles.ts";
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 import { SessionController } from "../../session/SessionController.ts";
-import CardDetail from "../../components/CardDetail/index.tsx";
-import SearchBar from "../../components/SearchBar/index.tsx";
+import { DefaultButton, SearchBar, CardDetail } from "../../components/index.tsx";
 
 export function DetailTotal ({ navigation, route }: any) {
   const { statusProp } = route.params;
@@ -26,7 +25,10 @@ export function DetailTotal ({ navigation, route }: any) {
     "Parceiros prontos para Assinatura",
     "Parceiros com Parceria Firmada",
   ];
-  const title = `${optionsStatus[statusProp[0].status]}`;
+
+  const title =
+    statusProp.length == 0 ? "" : `${optionsStatus[statusProp[0].status]}`; 
+  
   const handleSearch = (text : any) => {
     if (!text) {
       setPartners(statusProp);
@@ -46,25 +48,43 @@ export function DetailTotal ({ navigation, route }: any) {
 
   return (
     <View style={styles.Container}>
-      <Text style={styles.Text1}> Total de Parceiros </Text>
-      <SearchBar placeholder={"Pesquisa"} onChangeText={handleSearch} />
-      <ScrollView>
-        <View>
-          {partners.map((item: any) => (
-            <CardDetail
-              key={item.id}
-              name={item.name}
-              status={optionsStatus[item.status]}
-              responsible={item.intermediateResponsible}
-              onPress={() => {
-                navigation.navigate("InfPartner", {
-                  idProp: item.id,
-                });
-              }}
-            />
-          ))}
-        </View>
-      </ScrollView>
+      <Text style={styles.Text1}> {title} </Text>
+      {partners.length === 0 ? (
+        <>
+          <Text style={styles.NoPartners}>
+            Você ainda não tem parceiros nessa fase
+          </Text>
+
+          <DefaultButton
+            title={"Cadastre um  Parceiro"}
+            onPress={() => {
+              navigation.navigate("PartnerRegister");
+            }}
+          />
+        </>
+      ) : (
+        <>
+          <SearchBar placeholder={"Pesquisa"} onChangeText={handleSearch} />
+          <ScrollView>
+            <View>
+              {partners.map((item: any) => (
+                <CardDetail
+                  key={item.id}
+                  name={item.name}
+                  status={optionsStatus[item.status]}
+                  responsible={item.intermediateResponsible}
+                  onPress={() => {
+                    console.log("ID AQUI: ", item.id);
+                    navigation.navigate("InfPartner", {
+                      idProp: item.id,
+                    });
+                  }}
+                />
+              ))}
+            </View>
+          </ScrollView>
+        </>
+      )}
     </View>
   );
 };

@@ -9,7 +9,7 @@ import { SessionController } from "../../session/SessionController.ts";
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 import SignInServeral from "../../components/SignInSeveral.tsx";
-import MaskedInput from "../../components/MaskedInput/index.tsx";
+import {MaskedInput} from "../../components/MaskedInput/index.tsx";
 
 const sessionController = new SessionController();
 
@@ -53,6 +53,9 @@ export function MemberRegister({ navigation, route }: any){
   const [partner, setPartner] = useState("");
   const [responsible, setresponsible] = useState("");
 
+  const [name, setName] = useState();
+  const [count, setCount] = useState(0);
+
   const [cep, setCEP] = useState("");
   const [resCep, setResCep] = useState("");
   const [number, setNumber] = useState("");
@@ -61,6 +64,7 @@ export function MemberRegister({ navigation, route }: any){
   const [district, setDistrict] = useState("");
   const [city, setCity] = useState("");
   const [uf, setUf] = useState("");
+  
 
   const [editableAdress, setEditableAdress] = useState(true);
 
@@ -101,6 +105,30 @@ export function MemberRegister({ navigation, route }: any){
         console.log(error);
       });
   };
+
+  async function handlePartner() {
+    const token = await sessionController.getToken();
+    try {
+      await api
+        .get(URI.PARTNER + `/${id}`, {
+          headers: { Authorization: token },
+        })
+        .then((response) => {
+          setName(response.data.name);
+          console.log(name);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    if (count < 10) {
+      handlePartner();
+      console.log(count);
+      setCount(count + 1);
+    }
+  }, [name]);
 
   useEffect(() => {
      function onEsc(event: KeyboardEvent) {
@@ -146,7 +174,7 @@ export function MemberRegister({ navigation, route }: any){
   return (
     <View style={styles.Container}>
       <Text style={styles.Text1}>Adicionar um Membro {}</Text>
-      <Text style={styles.Text2}>Adicione um Membro ao seu Parceiro</Text>
+      <Text style={styles.Text2}>Ao seu Parceiro {name}</Text>
       <View style={styles.Divider}></View>
       <ScrollView>
         <Text style={styles.Text}>Nome</Text>
