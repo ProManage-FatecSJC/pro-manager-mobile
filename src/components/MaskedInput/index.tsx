@@ -1,9 +1,9 @@
 import { StyleSheet, TextInput, TextInputProps } from "react-native";
-import { maskPhone } from "../../utils/masks";
+import { maskPhone, maskCNPJ, maskCEP } from "../../utils/masks";
 
 interface InputProps extends TextInputProps {
   title: string;
-  mask?: "phone";
+  mask?: "phone" | "cnpj" | "cep";
   inputMaskChange: any;
 }
 
@@ -17,7 +17,14 @@ export function MaskedInput({
     if (mask === "phone") {
       const value = maskPhone(text);
       inputMaskChange(value);
+    } else if (mask === "cnpj") {
+      const value = maskCNPJ(text);
+      inputMaskChange(value);
+    } else if (mask === "cep") {
+      const value = maskCEP(text);
+      inputMaskChange(value);
     } else {
+      inputMaskChange(text);
     }
   }
 
@@ -26,7 +33,7 @@ export function MaskedInput({
       style={styles.textInput}
       placeholder={title}
       onChangeText={(text) => handleChange(text)}
-      {...rest}
+      {...rest} 
     />
   );
 }
@@ -38,6 +45,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     width: "100%",
     paddingHorizontal: 16,
-    paddingVertical: 16,
+    paddingVertical: 8,
   },
 });

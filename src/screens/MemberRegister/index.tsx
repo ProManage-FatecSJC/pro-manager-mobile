@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles.ts";
-import { View, Text, ScrollView } from "react-native";
-import PartnerSignIn from "../../components/PartnerSignIn.tsx";
-import {DefaultButton} from '../../components/DefaultButton';
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { DefaultButton } from '../../components/DefaultButton';
 import axios from "axios";
 import CEPSignIn from "../../components/SignInCEP.tsx";
 import { SessionController } from "../../session/SessionController.ts";
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
-import SignInServeral from "../../components/SignInSeveral.tsx";
-import {MaskedInput} from "../../components/MaskedInput/index.tsx";
+import { DefaultInput, MaskedInput } from "../../components";
+import { Select, HStack, Spinner } from "native-base";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { ArrowLeft } from "phosphor-react-native";
 
 const sessionController = new SessionController();
 
@@ -42,16 +43,14 @@ async function searchCep(cep: string): Promise<Location | null | undefined> {
   }
 }
 
-export function MemberRegister({ navigation, route }: any){
+export function MemberRegister({ navigation, route }: any) {
   const { idProp } = route.params;
-
+  const [isLoading, setIsLoading] = useState(false);
   const [id, setId] = useState(idProp);
   const [memberName, setMemberName] = useState("");
   const [memberFantasy, setMemberFantasy] = useState("");
   const [memberCNPJ, setCNPJ] = useState("");
   const [memberPhone, setMemberPhone] = useState("");
-  const [partner, setPartner] = useState("");
-  const [responsible, setresponsible] = useState("");
 
   const [name, setName] = useState();
   const [count, setCount] = useState(0);
@@ -63,8 +62,8 @@ export function MemberRegister({ navigation, route }: any){
   const [street, setStreet] = useState("");
   const [district, setDistrict] = useState("");
   const [city, setCity] = useState("");
-  const [uf, setUf] = useState("");
-  
+  const [selectedState, setSelectedState] = useState("");
+
 
   const [editableAdress, setEditableAdress] = useState(true);
 
@@ -82,7 +81,7 @@ export function MemberRegister({ navigation, route }: any){
       number: number,
       complement: complement,
       city: city,
-      state: uf,
+      state: selectedState,
     }
   };
 
@@ -90,15 +89,13 @@ export function MemberRegister({ navigation, route }: any){
   const handleNewMember = async () => {
     const token = await sessionController.getToken();
     api.post(URI.MEMBERS, member, {
-        headers: {
-          Authorization: token,
-        },
-      })
+      headers: {
+        Authorization: token,
+      },
+    })
       .then((response) => {
         if (response.status === 200) {
-          navigation.navigate("InfPartner", {
-            idProp: id,
-          });
+          navigation.goBack();
         }
       })
       .catch((error) => {
@@ -106,7 +103,8 @@ export function MemberRegister({ navigation, route }: any){
       });
   };
 
-  async function handlePartner() {
+  async function handleGetName() {
+    setIsLoading(true);
     const token = await sessionController.getToken();
     try {
       await api
@@ -116,31 +114,25 @@ export function MemberRegister({ navigation, route }: any){
         .then((response) => {
           setName(response.data.name);
           console.log(name);
+          setIsLoading(false);
         });
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   }
 
   useEffect(() => {
     if (count < 10) {
-      handlePartner();
+      handleGetName();
       console.log(count);
       setCount(count + 1);
     }
   }, [name]);
 
-  useEffect(() => {
-     function onEsc(event: KeyboardEvent) {
-       }} )
-
-
-
-  const handleCancelMember = () => {
-    navigation.navigate("Members", {
-      idProp: id,
-    });
-  };
+  function handleGoBack() {
+    navigation.goBack();
+  }
 
   async function handleSearchCep(): Promise<void> {
     const endereco = await searchCep(cep);
@@ -149,7 +141,7 @@ export function MemberRegister({ navigation, route }: any){
       setStreet(endereco.logradouro);
       setDistrict(endereco.bairro);
       setCity(endereco.localidade);
-      setUf(endereco.uf);
+      setSelectedState(endereco.uf);
 
       if (endereco.logradouro != null) {
         setEditableAdress(false);
@@ -159,89 +151,197 @@ export function MemberRegister({ navigation, route }: any){
     }
   }
 
-  const optionsState = [
-    "Acre","Alagoas","Amapá","Amazonas","Bahia","Ceará","Espírito Santos","Goiás","Maranhão","Mato Grosso",
-    "Mato Grosso do Sul","Minas Gerais","Pará","Paraíba","Paraná","Pernambuco","Piaui","Rio de Janeiro",
-    "Rio Grande do Norte","Rio Grande do Sul","Rondônia","Roraima","Santa Catarina","São Paulo","Sergipe",
-    "Tocantins"
-  ];
-
-  const handleSelect = (selectedOption: string) => {
-    setUf(selectedOption)
-    console.log(uf)
+  const handleStateChange = (selectedOption: string) => {
+    setSelectedState(selectedOption);
   };
 
   return (
-    <View style={styles.Container}>
-      <Text style={styles.Text1}>Adicionar um Membro {}</Text>
-      <Text style={styles.Text2}>Ao seu Parceiro {name}</Text>
-      <View style={styles.Divider}></View>
-      <ScrollView>
-        <Text style={styles.Text}>Nome</Text>
-        <PartnerSignIn placeholder={""} onChangeText={setMemberName} />
-        <Text style={styles.Text}>Nome Fantasia</Text>
-        <PartnerSignIn placeholder={""} onChangeText={setMemberFantasy} />
-        <Text style={styles.Text}>CNPJ</Text>
-        <PartnerSignIn placeholder={""} onChangeText={setCNPJ} />
-        <Text style={styles.Text}>Telefone</Text>
-        <MaskedInput
-          title="(XX)XXXXX-XXXX"
-          mask="phone"
-          inputMaskChange={(text: string) => setMemberPhone(text)}
-          value={memberPhone}
-          maxLength={14}
-        />
-        <Text style={styles.Text}>CEP</Text>
-        <CEPSignIn
-          placeholder={"Busque o CEP"}
-          onChangeText={setCEP}
-          onEndEditing={handleSearchCep}
-        />
-        <Text style={styles.Text}>Logradouro</Text>
-        <PartnerSignIn
-          placeholder={street}
-          onChangeText={setStreet}
-          value={street}
-          editable={editableAdress}
-        />
-        <Text style={styles.Text}>Número</Text>
-        <PartnerSignIn placeholder={""} onChangeText={setNumber} />
-        <Text style={styles.Text}>Complemento</Text>
-        <PartnerSignIn placeholder={""} onChangeText={setComplement} />
-        <Text style={styles.Text}>Bairro</Text>
-        <PartnerSignIn
-          placeholder={district}
-          onChangeText={setDistrict}
-          value={district}
-          editable={editableAdress}
-        />
-        <Text style={styles.Text}>Cidade</Text>
-        <PartnerSignIn
-          placeholder={city}
-          onChangeText={setCity}
-          value={city}
-          editable={editableAdress}
-        />
-        <Text style={styles.Text}>Estado</Text>
-        <SignInServeral
-          options={optionsState}
-          onSelect={handleSelect}
-          value={uf}
-          disabled={editableAdress}
-        />
+    <SafeAreaView style={styles.container}>
+      <View style={styles.headerTitleWrapper}>
+        <TouchableOpacity onPress={handleGoBack}>
+          <ArrowLeft size={30} color="#f8f8f8" />
+        </TouchableOpacity> 
+        <Text style={styles.headerTitleTextPartner}>
+          Cadastrar membros |
+          {" "}
+          {isLoading ? (
+            <HStack space={2} alignItems="center">
+              <Spinner size="sm" color="#f8f8f8" />
+            </HStack>
+          ):(
+            <Text>
+              {name}
+            </Text>
+          )}
+         
+        </Text>
+      </View>
 
-        <DefaultButton title={"Salvar"} onPress={handleNewMember} />
-        <DefaultButton
-        bg="red"
-          title={"Cancelar"}
-          onPress={() => {
-            console.log(idProp);
-            navigation.navigate("Members", {
-              idProp: id,
-            });
-          }}
-        />
+      <View style={styles.divider}></View>
+
+      <ScrollView>
+        <View style={styles.formContentWrapper}>
+          <Text>Nome</Text>
+          <DefaultInput placeholder={"Nome do membro"} onChangeText={setMemberName} />
+        </View>
+
+        <View style={styles.formContentWrapper}>
+          <Text>Nome Fantasia</Text>
+          <DefaultInput placeholder={"Nome fantasia"} onChangeText={setMemberFantasy} />
+        </View>
+
+        <View style={styles.formContentWrapper}>
+          <Text>CNPJ</Text>
+          <MaskedInput
+            title="XX.XXX.XXX/XXXX-XX"
+            mask="cnpj"
+            inputMaskChange={(text: string) => setCNPJ(text)}
+            value={memberCNPJ}
+            maxLength={18}
+          />
+        </View>
+
+        <View style={styles.formContentWrapper}>
+          <Text>Telefone</Text>
+          <MaskedInput
+            title="(XX) XXXXX-XXXX"
+            mask="phone"
+            inputMaskChange={(text: string) => setMemberPhone(text)}
+            value={memberPhone}
+            maxLength={14}
+          />
+        </View>
+
+        <View style={styles.formContentWrapper}>
+          <Text>CEP</Text>
+          <MaskedInput
+            title="XXXXX-XXX"
+            mask="cep"
+            inputMaskChange={(text: string) => setCEP(text)}
+            value={cep}
+            onEndEditing={handleSearchCep}
+            maxLength={9}
+          />
+        </View>
+
+        <View style={styles.formContentWrapper}>
+          <Text>Logradouro</Text>
+          <DefaultInput
+            placeholder={street}
+            onChangeText={setStreet}
+            value={street}
+            editable={editableAdress}
+          />
+        </View>
+
+        <View style={styles.formContentWrapper}>
+          <Text>Número</Text>
+          <DefaultInput placeholder={"Número do logradouro"} onChangeText={setNumber} />
+        </View>
+
+        <View style={styles.formContentWrapper}>
+          <Text>Complemento</Text>
+          <DefaultInput placeholder={"Complemento do logradouro"} onChangeText={setComplement} />
+        </View>
+
+        <View style={styles.formContentWrapper}>
+          <Text>Bairro</Text>
+          <DefaultInput
+            placeholder={district}
+            onChangeText={setDistrict}
+            value={district}
+            editable={editableAdress}
+          />
+        </View>
+
+        <View style={styles.formContentWrapper}>
+          <Text>Cidade</Text>
+          <DefaultInput
+            placeholder={city}
+            onChangeText={setCity}
+            value={city}
+            editable={editableAdress}
+          />
+        </View>
+
+        <View style={styles.formContentWrapper}>
+          <Text>Estado</Text>
+          <Select
+            selectedValue={selectedState}
+            minWidth={200}
+            padding={2}
+            accessibilityLabel="Selecione o estado"
+            placeholder="Selecione o estado"
+            borderColor="#E2E8F0"
+            onValueChange={handleStateChange}
+          >
+            <Select.Item label="Acre" value="AC" />
+            <Select.Item label="Alagoas" value="AL" />
+            <Select.Item label="Amapá" value="AP" />
+            <Select.Item label="Amazonas" value="AM" />
+            <Select.Item label="Bahia" value="BA" />
+            <Select.Item label="Ceará" value="CE" />
+            <Select.Item label="Distrito Federal" value="DF" />
+            <Select.Item label="Espírito Santo" value="ES" />
+            <Select.Item label="Goiás" value="GO" />
+            <Select.Item label="Maranhão" value="MA" />
+            <Select.Item label="Mato Grosso" value="MT" />
+            <Select.Item label="Mato Grosso do Sul" value="MS" />
+            <Select.Item label="Minas Gerais" value="MG" />
+            <Select.Item label="Pará" value="PA" />
+            <Select.Item label="Paraíba" value="PB" />
+            <Select.Item label="Paraná" value="PR" />
+            <Select.Item label="Pernambuco" value="PE" />
+            <Select.Item label="Piauí" value="PI" />
+            <Select.Item label="Rio de Janeiro" value="RJ" />
+            <Select.Item label="Rio Grande do Norte" value="RN" />
+            <Select.Item label="Rio Grande do Sul" value="RS" />
+            <Select.Item label="Rondônia" value="RO" />
+            <Select.Item label="Roraima" value="RR" />
+            <Select.Item label="Santa Catarina" value="SC" />
+            <Select.Item label="São Paulo" value="SP" />
+            <Select.Item label="Sergipe" value="SE" />
+            <Select.Item label="Tocantins" value="TO" />
+          </Select>
+        </View>
+
       </ScrollView>
-    </View>
+
+      <View style={styles.buttonSectionWrapper}>
+        <View style={styles.buttonWrapper}>
+          <DefaultButton
+            title={"Salvar"}
+            bg={'transparent'}
+            textColor={'#4994CE'}
+            borderColor={'#4994CE'}
+            borderWidth={1.5}
+            variant={'outline'}
+            _pressed={{
+              bg: "#f0f0f0",
+            }}
+            onPress={handleNewMember}
+          />
+        </View>
+
+        <View style={styles.buttonWrapper}>
+          <DefaultButton
+            title={"Cancelar"}
+            bg={'transparent'}
+            textColor={'#DA4625'}
+            borderColor={'#DA4625'}
+            borderWidth={1.5}
+            variant={'outline'}
+            _pressed={{
+              bg: "#f0f0f0",
+            }}
+            onPress={() => {
+              navigation.goBack({
+                idProp: id,
+              });
+            }}
+          />
+        </View>
+      </View>
+    </SafeAreaView>
   );
 };

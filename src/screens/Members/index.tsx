@@ -95,6 +95,11 @@ export function Members({ navigation, route }: any) {
     setMembers(filteredMembers);
   };
 
+  useEffect(() => {
+    handlePartner();
+    handleMembers();
+  }, []);
+  
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerWrapper}>

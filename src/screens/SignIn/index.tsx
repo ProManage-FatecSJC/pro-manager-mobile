@@ -86,7 +86,7 @@ export function SignIn({ navigation }: any) {
       <View style={styles.containerInputs}>
         <DefaultInput placeholder="E-mail" onChangeText={setEmail}/>
 
-        <PasswordInput marginTop={24} marginBottom={16} onChangeText={setPassword}/>
+        <PasswordInput marginTop={16} marginBottom={0} onChangeText={setPassword}/>
       </View>
 
       <DefaultButton

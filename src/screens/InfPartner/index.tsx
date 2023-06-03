@@ -263,7 +263,7 @@ export function InfPartner({ navigation, route }: any) {
 
         <View style={styles.buttonWrapper}>
           <DefaultButton
-            title="Arquivar Parceiro"
+            title="Arquivar"
             bg={'transparent'}
             textColor={'#DA4625'}
             borderColor={'#DA4625'}

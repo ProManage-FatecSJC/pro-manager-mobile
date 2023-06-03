@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f8f8f8',
     paddingHorizontal: 24,
+    paddingTop: 24,
   },
   headerTitleTextPartner: {
     color: '#f8f8f8',
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
   buttonSectionWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 32,
+    marginBottom: 24,
   },
   buttonWrapper: {
     width: '45%',

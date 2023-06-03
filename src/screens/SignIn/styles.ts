@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     padding: 24,
   },
   titleWrapper:{
-    justifyContent: "center",
+    height: '45%',
     alignItems: "center",
   },
   textTitle: {
@@ -23,8 +23,7 @@ export const styles = StyleSheet.create({
     textAlign: "center",
   },
   containerInputs: {
-    marginTop: 80,
-    marginBottom: 32,
+    height: '45%',
   },
   centeredView: {
     flex: 1,
