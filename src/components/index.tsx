@@ -5,6 +5,7 @@ import { PasswordInput } from './PasswordInput';
 import { MaskedInput } from './MaskedInput';
 import { SearchBar } from './SearchBar';
 import { CardDetail } from './CardDetail';
+import { DefaultCardPartner } from './DefaultCardPartner';
 
 export {
     DefaultButton,
@@ -13,5 +14,6 @@ export {
     PasswordInput,
     MaskedInput,
     SearchBar,
-    CardDetail
+    CardDetail,
+    DefaultCardPartner
 }

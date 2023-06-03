@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Image, SafeAreaView } from "react-native";
 
-import styles from "./styles.ts";
-
-import CardStatus from '../../components/CardStatus.tsx'
-import CardPartner from '../../components/CardPartner.tsx'
-import { SessionController } from "../../session/SessionController.ts";
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
+import { SessionController } from "../../session/SessionController.ts";
+
+import {
+  DefaultCardPartner
+} from '../../components'
+
 import { SignOut } from "phosphor-react-native";
+import styles from "./styles.ts";
 
 
-export function Home ({navigation} : any) {
+export function Home({ navigation }: any) {
   const [buttonPressed, setButtonPressed] = useState<'status' | 'partner'>('status');
   const [pressedStatus, setPressedStatus] = useState(true);
   const [pressedPartner, setPressedPartner] = useState(false);
@@ -36,8 +38,6 @@ export function Home ({navigation} : any) {
   const [member, setMember] = useState([])
   const [memberCount, setMemberCount] = useState(0)
 
-  const [zero, setZero] = useState(0);
-
   const sessionController = new SessionController()
 
 
@@ -54,7 +54,6 @@ export function Home ({navigation} : any) {
 
   async function handlePartners() {
     const token = await sessionController.getToken()
-
     try {
       await api.get(URI.PARTNER, {
         headers: {
@@ -74,9 +73,6 @@ export function Home ({navigation} : any) {
         setPartners9(partner.filter((x: any) => x.status == 8).length)
         setPartners10(partner.filter((x: any) => x.status == 9).length)
         setPartners11(partner.filter((x: any) => x.status == 10).length)
-
-
-        
         setPartners12(partner.filter((x: any) => x.status == 11).length)
       })
     } catch (error) {
@@ -86,7 +82,6 @@ export function Home ({navigation} : any) {
 
   async function handleMembers() {
     const token = await sessionController.getToken()
-
     try {
       await api.get(URI.MEMBERS, {
         headers: {
@@ -95,7 +90,6 @@ export function Home ({navigation} : any) {
       }).then(response => {
         setMember(response.data)
         setMemberCount(member.length)
-        
       })
     } catch (error) {
       console.log(error)
@@ -104,19 +98,16 @@ export function Home ({navigation} : any) {
 
   const getName = async () => {
     let token = await sessionController.getName() as string
-
     setUserName(token)
   }
 
   useEffect(() => {
     if (count < 10) {
-
       handlePartners()
       handleMembers()
       setCount(count + 1)
     }
   }, [partner])
-
   useEffect(() => {
     getName()
   }, [])
@@ -139,7 +130,7 @@ export function Home ({navigation} : any) {
 
 
   return (
-    <View style={styles.Container}>
+    <SafeAreaView style={styles.Container}>
       <View style={styles.Text}>
         <Text style={{ fontSize: 24 }}>
           Bem vindo, <Text style={{ fontWeight: "bold" }}> {userName}</Text>
@@ -201,170 +192,156 @@ export function Home ({navigation} : any) {
       {buttonPressed === "status" ? (
         <ScrollView>
           <View>
-            {partnerCount === 0 ? (
-              <>
-                <View style={styles.Image}>
-                  <Image source={require("../../assets/noPartners.png")} />
-                </View>
-                <Text style={styles.NoPartners}>
-                  Você ainda não tem parceiros criados
-                </Text>
-              </>
-            ) : (
-              <>
-                <CardStatus
-                  status={"Em Prospecção"}
-                  totalPartners={partnersEmProspec.toString()}
-                  onPress={() => {
-                    navigation.navigate("DetailStatus", {
-                      statusProp: partner.filter((x: any) => x.status == 0),
-                    });
-                    console.log(partner);
-                  }}
-                />
-                <CardStatus
-                  status={"Primeiro contato feito"}
-                  totalPartners={partnersPrimeiroContato.toString()}
-                  onPress={() => {
-                    navigation.navigate("DetailStatus", {
-                      statusProp: partner.filter((x: any) => x.status == 1),
-                    });
-                  }}
-                />
-                <CardStatus
-                  status={"Primeira reunião marcada/realizada"}
-                  totalPartners={partnersPrimeiraReuniao.toString()}
-                  onPress={() => {
-                    navigation.navigate("DetailStatus", {
-                      statusProp: partner.filter((x: any) => x.status == 2),
-                    });
-                  }}
-                />
-                <CardStatus
-                  status={"Documentação enviada/em análise (parceiro)"}
-                  totalPartners={partners4.toString()}
-                  onPress={() => {
-                    navigation.navigate("DetailStatus", {
-                      statusProp: partner.filter((x: any) => x.status == 3),
-                    });
-                  }}
-                />
-                <CardStatus
-                  status={"Documentação devolvida (Em análise Academy)"}
-                  totalPartners={partners5.toString()}
-                  onPress={() => {
-                    navigation.navigate("DetailStatus", {
-                      statusProp: partner.filter((x: any) => x.status == 4),
-                    });
-                  }}
-                />
-                <CardStatus
-                  status={"Documentação devolvida (Em análise legal)"}
-                  totalPartners={partners6.toString()}
-                  onPress={() => {
-                    navigation.navigate("DetailStatus", {
-                      statusProp: partner.filter((x: any) => x.status == 5),
-                    });
-                  }}
-                />
-                <CardStatus
-                  status={"Documentação análisada devolvida (Parceiro)"}
-                  totalPartners={partners7.toString()}
-                  onPress={() => {
-                    navigation.navigate("DetailStatus", {
-                      statusProp: partner.filter((x: any) => x.status == 6),
-                    });
-                  }}
-                />
-                <CardStatus
-                  status={"Em preparação de Executive Sumary (Academy)"}
-                  totalPartners={partners8.toString()}
-                  onPress={() => {
-                    navigation.navigate("DetailStatus", {
-                      statusProp: partner.filter((x: any) => x.status == 7),
-                    });
-                  }}
-                />
-                <CardStatus
-                  status={"ES em análise (Legal)"}
-                  totalPartners={partners9.toString()}
-                  onPress={() => {
-                    navigation.navigate("DetailStatus", {
-                      statusProp: partner.filter((x: any) => x.status == 8),
-                    });
-                  }}
-                />
-                <CardStatus
-                  status={"ES em análise (Academy Global)"}
-                  totalPartners={partners10.toString()}
-                  onPress={() => {
-                    navigation.navigate("DetailStatus", {
-                      statusProp: partner.filter((x: any) => x.status == 9),
-                    });
-                  }}
-                />
-                <CardStatus
-                  status={"Pronto para assinatura"}
-                  totalPartners={partners11.toString()}
-                  onPress={() => {
-                    navigation.navigate("DetailStatus", {
-                      statusProp: partner.filter((x: any) => x.status == 10),
-                    });
-                  }}
-                />
-                <CardStatus
-                  status={"Parceria Firmada"}
-                  totalPartners={partners12.toString()}
-                  onPress={() => {
-                    navigation.navigate("DetailStatus", {
-                      statusProp: partner.filter((x: any) => x.status == 11),
-                    });
-                  }}
-                />
-              </>
-            )}
+            <DefaultCardPartner
+              title={"Em Prospecção"}
+              totalPartners={partnersEmProspec.toString()}
+              registeredArchived={"cadastrados"}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 0),
+                });
+                console.log(partner);
+              }}
+            />
+            <DefaultCardPartner
+              title={"Primeiro contato feito"}
+              totalPartners={partnersPrimeiroContato.toString()}
+              registeredArchived={"cadastrados"}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 1),
+                });
+              }}
+            />
+            <DefaultCardPartner
+              title={"Primeira reunião marcada/realizada"}
+              totalPartners={partnersPrimeiraReuniao.toString()}
+              registeredArchived={"cadastrados"}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 2),
+                });
+              }}
+            />
+            <DefaultCardPartner
+              title={"Documentação enviada/em análise (parceiro)"}
+              totalPartners={partners4.toString()}
+              registeredArchived={"cadastrados"}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 3),
+                });
+              }}
+            />
+            <DefaultCardPartner
+              title={"Documentação devolvida (Em análise Academy)"}
+              totalPartners={partners5.toString()}
+              registeredArchived={"cadastrados"}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 4),
+                });
+              }}
+            />
+            <DefaultCardPartner
+              title={"Documentação devolvida (Em análise legal)"}
+              totalPartners={partners6.toString()}
+              registeredArchived={"cadastrados"}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 5),
+                });
+              }}
+            />
+            <DefaultCardPartner
+    title={"Documentação análisada devolvida (Parceiro)"}
+              totalPartners={partners7.toString()}
+              registeredArchived={"cadastrados"}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 6),
+                });
+              }}
+            />
+            <DefaultCardPartner
+              title={"Em preparação de Executive Sumary (Academy)"}
+              totalPartners={partners8.toString()}
+              registeredArchived={"cadastrados"}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 7),
+                });
+              }}
+            />
+            <DefaultCardPartner
+              title={"ES em análise (Legal)"}
+              totalPartners={partners9.toString()}
+              registeredArchived={"cadastrados"}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 8),
+                });
+              }}
+            />
+            <DefaultCardPartner
+              title={"ES em análise (Academy Global)"}
+              totalPartners={partners10.toString()}
+              registeredArchived={"cadastrados"}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 9),
+                });
+              }}
+            />
+            <DefaultCardPartner
+              title={"Pronto para assinatura"}
+              totalPartners={partners11.toString()}
+              registeredArchived={"cadastrados"}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 10),
+                });
+              }}
+            />
+            <DefaultCardPartner
+              title={"Parceria Firmada"}
+              totalPartners={partners12.toString()}
+              registeredArchived={"cadastrados"}
+              onPress={() => {
+                navigation.navigate("DetailStatus", {
+                  statusProp: partner.filter((x: any) => x.status == 11),
+                });
+              }}
+            />
           </View>
         </ScrollView>
       ) : (
         <ScrollView>
           <View>
-            {partnerCount === 0 ? (
-              <>
-                <View style={styles.Image}>
-                  <Image source={require("../../assets/noPartners.png")} />
-                </View>
-                <Text style={styles.NoPartners}>
-                  Você ainda não tem parceiros criados
-                </Text>
-              </>
-            ) : (
-              <>
-                <CardPartner
-                  title={"Total de parceiros cadastrados"}
-                  totalPartners={partner.filter((x: any) => x.isArchived != true).length}
-                  registeredArchived="cadastrados"
-                  onPress={() => {
-                    navigation.navigate("DetailTotal", {
-                      statusProp: partner.filter((x: any) => x.isArchived != true),
-                    });
-                  }}
-                />
+            <DefaultCardPartner
+              title={"Total de parceiros cadastrados"}
+              totalPartners={partner.filter((x: any) => x.isArchived != true).length}
+              registeredArchived="cadastrados"
+              onPress={() => {
+                navigation.navigate("DetailTotal", {
+                  statusProp: partner.filter((x: any) => x.isArchived != true),
+                });
+              }}
+            />
 
-                <CardPartner
-                  title={"Total de parceiros arquivados"}
-                  totalPartners={
-                    partner.filter((x: any) => x.isArchived == true).length
-                  }
-                  registeredArchived="arquivados"
-                  onPress={() => {
-                    navigation.navigate("ArquivePartners");
-                  }}
-                />
-              </>
-            )}
+            <DefaultCardPartner
+              title={"Total de parceiros arquivados"}
+              totalPartners={
+                partner.filter((x: any) => x.isArchived == true).length
+              }
+              registeredArchived="arquivados"
+              onPress={() => {
+                navigation.navigate("ArquivePartners");
+              }}
+            />
           </View>
         </ScrollView>
       )}
-    </View>
+    </SafeAreaView>
   );
 };

@@ -19,6 +19,7 @@ import {
 } from '../../components';
 
 import { styles } from './styles'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export function SignIn({ navigation }: any) {
   const [isLoading, setIsLoading] = useState(false);
@@ -57,12 +58,8 @@ export function SignIn({ navigation }: any) {
   }
 
   return (
-    <KeyboardAvoidingView 
-      style={styles.Container} 
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -150}
-    >
-      <Modal
+    <SafeAreaView style={styles.Container}>
+      <Modal 
           animationType="fade"
           transparent={true}
           visible={modalVisible}
@@ -99,6 +96,6 @@ export function SignIn({ navigation }: any) {
         onPress={handleLogin}
         isLoading={isLoading}
       />
-    </KeyboardAvoidingView>
+    </SafeAreaView>
   )
 }
