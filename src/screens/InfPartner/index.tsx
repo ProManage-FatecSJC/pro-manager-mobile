@@ -4,6 +4,8 @@ import React, {
 } from 'react';
 
 import {
+  Modal,
+  Pressable,
   Text,
   TouchableOpacity,
   View
@@ -29,6 +31,7 @@ import styles from "./styles.ts";
 export function InfPartner({ navigation, route }: any) {
 
   const { idProp } = route.params;
+  const [modalVisible, setModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [id, setId] = useState(idProp);
   const [data, setData] = useState();
@@ -77,6 +80,7 @@ export function InfPartner({ navigation, route }: any) {
       }).then(response => {
         if (response.status == 200) {
           navigation.goBack();
+          console.log(response.data)
         }
       })
     } catch (error) {
@@ -117,8 +121,43 @@ export function InfPartner({ navigation, route }: any) {
     handlePartner()
   }, []);
 
+  useEffect(() => {
+    setId(idProp);
+  }, [idProp]);
+  
   return (
     <SafeAreaView style={styles.container}>
+        <Modal 
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible)
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Você tem certeza ?</Text>
+              <View style={styles.buttonModalWrapper}>
+                <View style={styles.buttonModalWrapperWidth}>
+                  <Pressable
+                    style={[styles.button]}
+                    onPress={() => (handleArchivePartner(idProp))}>
+                    <Text style={styles.textStyle}>Arquivar</Text>
+                  </Pressable>
+                </View>
+
+                <View style={styles.buttonModalWrapperWidth}>
+                  <Pressable
+                    style={[styles.button]}
+                    onPress={() => setModalVisible(!modalVisible)}>
+                    <Text style={styles.textStyle}>Cancelar</Text>
+                  </Pressable>
+                </View>
+              </View>
+            </View>
+          </View>
+        </Modal>
+        
       <View style={styles.headerTitleWrapper}>
         <TouchableOpacity onPress={goBack}>
           <ArrowLeft size={30} color="#fff" />
@@ -273,7 +312,7 @@ export function InfPartner({ navigation, route }: any) {
               bg: "#f0f0f0",
             }}
             onPress={() => {
-              handleArchivePartner(idProp)
+              setModalVisible(true);
             }}
           />
         </View>

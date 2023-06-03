@@ -64,6 +64,56 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     width: '45%',
+  },
+  // Modal
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+  },
+  modalView: {
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    padding: 8,
+
+    width: '75%',
+    height: '30%',
+
+    backgroundColor: '#f8f8f8',
+
+    borderRadius: 8,
+    
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.75,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    backgroundColor: "#00688C",
+    borderRadius: 4,
+    padding: 16,
+    elevation: 2,
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    textAlign: 'center',
+    fontSize: 24,
+  },
+  buttonModalWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  buttonModalWrapperWidth: {
+    width: '45%',
   }
 });
 
