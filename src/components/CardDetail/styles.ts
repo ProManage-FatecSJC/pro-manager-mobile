@@ -38,7 +38,6 @@ export const styles = StyleSheet.create({
     },
     partnerName: {
         fontSize: 16,
-        fontWeight: '700',
 
         color: '#f8f8f8',
     },

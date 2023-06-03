@@ -2,29 +2,50 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     button: {
-      marginBottom: 16,
-      backgroundColor: "#00688C",
-      paddingVertical: 16,
+      backgroundColor: '#f8f8f8',
+
+        marginBottom: 16,
+        padding: 24,
+
+        borderRadius: 32,
+
+        borderColor: '#00688C',
+        borderWidth: 2,
+
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0,
+        shadowRadius: 32,
+
+        elevation: 2,
+    },
+    container: {
+      flex: 1,
+      gap: 16,
+      alignItems: 'flex-start',
+      flexDirection: 'column',
+    },
+    headerWrapper: {
+      paddingVertical: 8,
       paddingHorizontal: 16,
-      borderRadius: 4,
-      alignItems: "center",
+
+      backgroundColor: '#4994CE',
+
+      borderRadius: 999,
+    },
+    headerTitle: {
+      color: "#f8f8f8",
+      fontSize: 18,
     },
     textCardWrapper: {
-      width: '100%',
+      gap: 16,
     },
-    textCardWrapperWithMargin: {
-      width: '100%',
-      marginBottom: 8,
-    },
-    buttonText1: {
-      color: "white",
-      alignSelf: "flex-start",
-      fontSize: 16,
-    },
-    buttonText2: {
-      color: "white",
-      fontWeight: "bold",
-      alignSelf: "flex-start",
-      fontSize: 22,
+    textTitle: {
+      alignItems: 'center',
+      color: "#29292e",
+      fontSize: 18,
     },
   });

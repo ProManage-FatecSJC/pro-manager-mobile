@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, StyleSheet, Text, View, Image } from "react-native";
+import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 
 interface Props {
   name: string;
@@ -11,12 +11,6 @@ interface Props {
 const Button: React.FC<Props> = ({ name, nameFantasy, cnpj, onPress }) => {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
-      <View>
-        <Image
-          source={require("../assets/avatar.png")}
-          style={styles.UserImage}
-        />
-      </View>
       <View style={styles.textCardWrapperWithMargin}>
         <Text style={styles.Text}>Nome: {name}</Text>
         <Text style={styles.Text}>Nome Fantasia: {nameFantasy}</Text>

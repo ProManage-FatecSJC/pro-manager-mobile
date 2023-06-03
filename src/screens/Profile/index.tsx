@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles.ts";
-import { View, Text, Image, SafeAreaView, TextInput } from "react-native";
+import { View, Text, SafeAreaView, TextInput } from "react-native";
 import { SessionController } from "../../session/SessionController.ts";
 import { useNavigation } from "@react-navigation/native";
 
@@ -24,10 +24,6 @@ export function Profile() {
   return (
     <View style={styles.Container}>
       <View style={styles.containerHeaderUser}>
-        <Image 
-          source={require('../../assets/avatar.png')} 
-          style={styles.UserImage}
-        />
         <Text style={styles.UserName}>
          {userName}
         </Text>

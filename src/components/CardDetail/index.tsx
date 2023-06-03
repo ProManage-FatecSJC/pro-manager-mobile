@@ -19,7 +19,13 @@ export function CardDetail({ name, status, responsible, onPress }: buttonProps) 
     <TouchableOpacity style={styles.cardButton} onPress={onPress}>
       <View style={styles.container}>
         <View style={styles.partnerNameWrapper}>
-          <Text style={styles.partnerName}>{name}</Text>
+          <Text style={styles.partnerName}>
+            <Text style={{ fontWeight: '700' }}>
+              Parceiro |
+            </Text>
+            {" "}
+            {name}
+          </Text>
         </View>
 
         <View style={styles.partnerDetailsWrapper}>

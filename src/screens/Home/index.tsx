@@ -21,13 +21,12 @@ import { styles } from "./styles.ts";
 
 
 export function Home({ navigation }: any) {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [buttonPressed, setButtonPressed] = useState<'status' | 'partner'>('status');
   const [pressedStatus, setPressedStatus] = useState(true);
   const [pressedPartner, setPressedPartner] = useState(false);
   const [userName, setUserName] = useState('')
   const [count, setCount] = useState(0)
-
   const [partner, setPartner] = useState([])
   const [partnerCount, setPartnerCount] = useState(0)
   const [partnersEmProspec, setPartnersEmProspec] = useState(0)
@@ -42,7 +41,6 @@ export function Home({ navigation }: any) {
   const [partners10, setPartners10] = useState(0)
   const [partners11, setPartners11] = useState(0)
   const [partners12, setPartners12] = useState(0)
-
   const [member, setMember] = useState([])
   const [memberCount, setMemberCount] = useState(0)
 
@@ -70,7 +68,6 @@ export function Home({ navigation }: any) {
     }
   }
 
-
   async function handlePartners() {
     setIsLoading(true)
     const token = await sessionController.getToken()
@@ -82,18 +79,18 @@ export function Home({ navigation }: any) {
       }).then(response => {
         setPartner(response.data)
         setPartnerCount(partner.length)
-        setPartnersEmProspec(partner.filter((x: any) => x.status == 0).length)
-        setPartnersPrimeiroContato(partner.filter((x: any) => x.status == 1).length)
-        setPartnersPrimeiraReuniao(partner.filter((x: any) => x.status == 2).length)
-        setPartners4(partner.filter((x: any) => x.status == 3).length)
-        setPartners5(partner.filter((x: any) => x.status == 4).length)
-        setPartners6(partner.filter((x: any) => x.status == 5).length)
-        setPartners7(partner.filter((x: any) => x.status == 6).length)
-        setPartners8(partner.filter((x: any) => x.status == 7).length)
-        setPartners9(partner.filter((x: any) => x.status == 8).length)
-        setPartners10(partner.filter((x: any) => x.status == 9).length)
-        setPartners11(partner.filter((x: any) => x.status == 10).length)
-        setPartners12(partner.filter((x: any) => x.status == 11).length)
+        setPartnersEmProspec(partner.filter((x: any) => x.status == 0).length);
+        setPartnersPrimeiroContato(partner.filter((x: any) => x.status == 1).length);
+        setPartnersPrimeiraReuniao(partner.filter((x: any) => x.status == 2).length);
+        setPartners4(partner.filter((x: any) => x.status == 3).length);
+        setPartners5(partner.filter((x: any) => x.status == 4).length);
+        setPartners6(partner.filter((x: any) => x.status == 5).length);
+        setPartners7(partner.filter((x: any) => x.status == 6).length);
+        setPartners8(partner.filter((x: any) => x.status == 7).length);
+        setPartners9(partner.filter((x: any) => x.status == 8).length);
+        setPartners10(partner.filter((x: any) => x.status == 9).length);
+        setPartners11(partner.filter((x: any) => x.status == 10).length);
+        setPartners12(partner.filter((x: any) => x.status == 11).length);
         setIsLoading(false)
       })
     } catch (error) {
@@ -137,12 +134,10 @@ export function Home({ navigation }: any) {
     getName()
   }, [])
 
-
   async function handleLogoffClick() {
     await sessionController.clearSession()
     navigation.navigate('SignIn')
   }
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -154,7 +149,7 @@ export function Home({ navigation }: any) {
               <Spinner color="#29292e" />
             </HStack>
           ) : (
-            <Text style={{ fontWeight: "bold" }}>{userName}</Text>
+            <Text style={{ fontWeight: "bold"}}>{userName}</Text>
           )}
         </Text>
         <TouchableOpacity onPress={handleLogoffClick}>
@@ -171,8 +166,7 @@ export function Home({ navigation }: any) {
               borderWidth: pressedStatus ? 0 : 1,
             },
           ]}
-          onPress={handleButtonPressStatus}
-        >
+          onPress={handleButtonPressStatus}>
           <Text
             style={[
               styles.buttonText,
@@ -180,8 +174,7 @@ export function Home({ navigation }: any) {
                 color: pressedStatus ? "#f8f8f8" : "#00688C",
                 fontWeight: pressedStatus ? "bold" : "normal",
               },
-            ]}
-          >
+            ]}>
             Status dos Parceiros
           </Text>
         </TouchableOpacity>
@@ -194,8 +187,7 @@ export function Home({ navigation }: any) {
               borderWidth: pressedPartner ? 0 : 1,
             },
           ]}
-          onPress={handleButtonPressPartner}
-        >
+          onPress={handleButtonPressPartner}>
           <Text
             style={[
               styles.buttonText,
@@ -203,8 +195,7 @@ export function Home({ navigation }: any) {
                 color: pressedPartner ? "#f8f8f8" : "#00688C",
                 fontWeight: pressedPartner ? "bold" : "normal",
               },
-            ]}
-          >
+            ]}>
             Parceiros
           </Text>
         </TouchableOpacity>
@@ -215,7 +206,6 @@ export function Home({ navigation }: any) {
       {buttonPressed === "status" ? (
         <ScrollView>
           {isLoading ? (
-
             <HStack space={2} justifyContent="center" alignItems="center">
               <Heading color="#29292e" fontSize="md">
                 Carregando
@@ -225,6 +215,7 @@ export function Home({ navigation }: any) {
           ) : (
             <View>
               <DefaultCardPartner
+                statusTitle={"Status |"}
                 title={"Em Prospecção"}
                 totalPartners={partnersEmProspec.toString()}
                 registeredArchived={"cadastrados"}
@@ -232,10 +223,10 @@ export function Home({ navigation }: any) {
                   navigation.navigate("DetailStatus", {
                     statusProp: partner.filter((x: any) => x.status == 0),
                   });
-                  console.log(partner);
                 }}
               />
               <DefaultCardPartner
+                statusTitle={"Status |"}
                 title={"Primeiro contato feito"}
                 totalPartners={partnersPrimeiroContato.toString()}
                 registeredArchived={"cadastrados"}
@@ -246,6 +237,7 @@ export function Home({ navigation }: any) {
                 }}
               />
               <DefaultCardPartner
+                statusTitle={"Status |"}
                 title={"Primeira reunião marcada/realizada"}
                 totalPartners={partnersPrimeiraReuniao.toString()}
                 registeredArchived={"cadastrados"}
@@ -256,6 +248,7 @@ export function Home({ navigation }: any) {
                 }}
               />
               <DefaultCardPartner
+                statusTitle={"Status |"}
                 title={"Documentação enviada/em análise (parceiro)"}
                 totalPartners={partners4.toString()}
                 registeredArchived={"cadastrados"}
@@ -266,6 +259,7 @@ export function Home({ navigation }: any) {
                 }}
               />
               <DefaultCardPartner
+                statusTitle={"Status |"}
                 title={"Documentação devolvida (Em análise Academy)"}
                 totalPartners={partners5.toString()}
                 registeredArchived={"cadastrados"}
@@ -276,6 +270,7 @@ export function Home({ navigation }: any) {
                 }}
               />
               <DefaultCardPartner
+                statusTitle={"Status |"}
                 title={"Documentação devolvida (Em análise legal)"}
                 totalPartners={partners6.toString()}
                 registeredArchived={"cadastrados"}
@@ -286,6 +281,7 @@ export function Home({ navigation }: any) {
                 }}
               />
               <DefaultCardPartner
+                statusTitle={"Status |"}
                 title={"Documentação análisada devolvida (Parceiro)"}
                 totalPartners={partners7.toString()}
                 registeredArchived={"cadastrados"}
@@ -296,6 +292,7 @@ export function Home({ navigation }: any) {
                 }}
               />
               <DefaultCardPartner
+                statusTitle={"Status |"}
                 title={"Em preparação de Executive Sumary (Academy)"}
                 totalPartners={partners8.toString()}
                 registeredArchived={"cadastrados"}
@@ -306,6 +303,7 @@ export function Home({ navigation }: any) {
                 }}
               />
               <DefaultCardPartner
+                statusTitle={"Status |"}
                 title={"ES em análise (Legal)"}
                 totalPartners={partners9.toString()}
                 registeredArchived={"cadastrados"}
@@ -316,6 +314,7 @@ export function Home({ navigation }: any) {
                 }}
               />
               <DefaultCardPartner
+                statusTitle={"Status |"}
                 title={"ES em análise (Academy Global)"}
                 totalPartners={partners10.toString()}
                 registeredArchived={"cadastrados"}
@@ -326,6 +325,7 @@ export function Home({ navigation }: any) {
                 }}
               />
               <DefaultCardPartner
+                statusTitle={"Status |"}
                 title={"Pronto para assinatura"}
                 totalPartners={partners11.toString()}
                 registeredArchived={"cadastrados"}
@@ -336,6 +336,7 @@ export function Home({ navigation }: any) {
                 }}
               />
               <DefaultCardPartner
+                statusTitle={"Status |"}
                 title={"Parceria Firmada"}
                 totalPartners={partners12.toString()}
                 registeredArchived={"cadastrados"}
