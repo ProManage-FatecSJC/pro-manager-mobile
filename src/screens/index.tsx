@@ -9,7 +9,9 @@ import { PartnerRegister } from './PartnerRegister';
 import { PartnerUpdate } from './PartnerUpdate';
 import { Profile } from './Profile';
 import { SignIn } from './SignIn';
-import { UserRegister } from './UserRegister';
+import { UserRegister } from './UserRegister'
+import { UserUpdate } from './UserUpdate';
+import { Users } from './Users';
 
 export {
     ArquivePartners,
@@ -23,5 +25,7 @@ export {
     PartnerUpdate,
     Profile,
     SignIn,
-    UserRegister,
+    UserUpdate,
+    Users,
+    UserRegister
 }

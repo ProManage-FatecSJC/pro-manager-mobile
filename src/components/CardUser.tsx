@@ -11,9 +11,6 @@ interface Props {
 const Button: React.FC<Props> = ({ name, email, role, onPress }) => {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
-        <View>
-            <Image source={require("../assets/avatar.png")} style={styles.UserImage} />
-        </View>
         <View style={styles.textCardWrapperWithMargin}>
             <Text style={styles.Text}>Nome: {name}</Text>
             <Text style={styles.Text}>E-mail: {email}</Text>

@@ -103,10 +103,6 @@ export function Profile({navigation}: any){
         </View>
       </Modal>
       <View style={styles.containerHeaderUser}>
-        <Image
-          source={require("../../assets/avatar.png")}
-          style={styles.UserImage}
-        />
         <Text style={styles.UserName}>{userName}</Text>
         <View style={styles.Divider}></View>
       </View>

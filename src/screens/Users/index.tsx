@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import {ScrollView, Text, View } from "react-native";
 import styles from "./styled.tsx";
-import SearchBar from "../../components/SearchBar.tsx";
 import CardUser from "../../components/CardUser.tsx";
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 import { SessionController } from "../../session/SessionController.ts";
-import { DefaultButton } from "../../components/index.tsx";
+import { DefaultButton, SearchBar } from "../../components/index.tsx";
 
 export function Users ({ navigation }: any){
   const sessionController = new SessionController();
