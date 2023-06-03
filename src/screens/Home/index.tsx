@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView, Image, SafeAreaView } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
@@ -10,10 +11,17 @@ import {
 } from '../../components'
 
 import { SignOut } from "phosphor-react-native";
-import styles from "./styles.ts";
+import { 
+  HStack,
+  Heading,
+  Spinner
+} from "native-base";
+
+import { styles } from "./styles.ts";
 
 
 export function Home({ navigation }: any) {
+  const [isLoading, setIsLoading] = useState(true);
   const [buttonPressed, setButtonPressed] = useState<'status' | 'partner'>('status');
   const [pressedStatus, setPressedStatus] = useState(true);
   const [pressedPartner, setPressedPartner] = useState(false);
@@ -40,19 +48,31 @@ export function Home({ navigation }: any) {
 
   const sessionController = new SessionController()
 
-
-
   function handleButtonPressStatus(): void {
-    setPressedStatus(!pressedStatus);
-    setButtonPressed('status');
+    if (!pressedStatus) {
+      setPressedStatus(true);
+      setButtonPressed('status');
 
-    // desativa o botão "Parceiros/Membros" se estiver ativado
-    if (pressedPartner) {
-      setPressedPartner(false);
+      if (pressedPartner) {
+        setPressedPartner(false);
+      }
     }
   }
 
+  function handleButtonPressPartner(): void {
+    if (!pressedPartner) {
+      setPressedPartner(true);
+      setButtonPressed('partner');
+
+      if (pressedStatus) {
+        setPressedStatus(false);
+      }
+    }
+  }
+
+
   async function handlePartners() {
+    setIsLoading(true)
     const token = await sessionController.getToken()
     try {
       await api.get(URI.PARTNER, {
@@ -74,13 +94,16 @@ export function Home({ navigation }: any) {
         setPartners10(partner.filter((x: any) => x.status == 9).length)
         setPartners11(partner.filter((x: any) => x.status == 10).length)
         setPartners12(partner.filter((x: any) => x.status == 11).length)
+        setIsLoading(false)
       })
     } catch (error) {
       console.log(error)
+      setIsLoading(false)
     }
   }
 
   async function handleMembers() {
+    setIsLoading(true)
     const token = await sessionController.getToken()
     try {
       await api.get(URI.MEMBERS, {
@@ -90,9 +113,11 @@ export function Home({ navigation }: any) {
       }).then(response => {
         setMember(response.data)
         setMemberCount(member.length)
+        setIsLoading(false)
       })
     } catch (error) {
       console.log(error)
+      setIsLoading(false)
     }
   }
 
@@ -112,16 +137,6 @@ export function Home({ navigation }: any) {
     getName()
   }, [])
 
-  function handleButtonPressPartner(): void {
-    //função para filtrar Parceiros
-    setPressedPartner(!pressedPartner);
-    setButtonPressed('partner')
-
-    //desativa o botão "Status dos parceiros" se estiver ativado
-    if (pressedStatus) {
-      setPressedStatus(false);
-    }
-  }
 
   async function handleLogoffClick() {
     await sessionController.clearSession()
@@ -130,19 +145,27 @@ export function Home({ navigation }: any) {
 
 
   return (
-    <SafeAreaView style={styles.Container}>
-      <View style={styles.Text}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.headerContentWrapper}>
         <Text style={{ fontSize: 24 }}>
-          Bem vindo, <Text style={{ fontWeight: "bold" }}> {userName}</Text>
+          Bem vindo,{" "}
+          {isLoading ? (
+            <HStack justifyContent="center" alignItems="center">
+              <Spinner color="#29292e" />
+            </HStack>
+          ) : (
+            <Text style={{ fontWeight: "bold" }}>{userName}</Text>
+          )}
         </Text>
         <TouchableOpacity onPress={handleLogoffClick}>
           <SignOut size={32} />
         </TouchableOpacity>
       </View>
+
       <View style={styles.buttonWrapper}>
         <TouchableOpacity
           style={[
-            styles.Button,
+            styles.buttonOption,
             {
               backgroundColor: pressedStatus ? "#4C825C" : "transparent",
               borderWidth: pressedStatus ? 0 : 1,
@@ -165,7 +188,7 @@ export function Home({ navigation }: any) {
 
         <TouchableOpacity
           style={[
-            styles.Button,
+            styles.buttonOption,
             {
               backgroundColor: pressedPartner ? "#4C825C" : "transparent",
               borderWidth: pressedPartner ? 0 : 1,
@@ -187,133 +210,143 @@ export function Home({ navigation }: any) {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.Divider}></View>
+      <View style={styles.divider}></View>
 
       {buttonPressed === "status" ? (
         <ScrollView>
-          <View>
-            <DefaultCardPartner
-              title={"Em Prospecção"}
-              totalPartners={partnersEmProspec.toString()}
-              registeredArchived={"cadastrados"}
-              onPress={() => {
-                navigation.navigate("DetailStatus", {
-                  statusProp: partner.filter((x: any) => x.status == 0),
-                });
-                console.log(partner);
-              }}
-            />
-            <DefaultCardPartner
-              title={"Primeiro contato feito"}
-              totalPartners={partnersPrimeiroContato.toString()}
-              registeredArchived={"cadastrados"}
-              onPress={() => {
-                navigation.navigate("DetailStatus", {
-                  statusProp: partner.filter((x: any) => x.status == 1),
-                });
-              }}
-            />
-            <DefaultCardPartner
-              title={"Primeira reunião marcada/realizada"}
-              totalPartners={partnersPrimeiraReuniao.toString()}
-              registeredArchived={"cadastrados"}
-              onPress={() => {
-                navigation.navigate("DetailStatus", {
-                  statusProp: partner.filter((x: any) => x.status == 2),
-                });
-              }}
-            />
-            <DefaultCardPartner
-              title={"Documentação enviada/em análise (parceiro)"}
-              totalPartners={partners4.toString()}
-              registeredArchived={"cadastrados"}
-              onPress={() => {
-                navigation.navigate("DetailStatus", {
-                  statusProp: partner.filter((x: any) => x.status == 3),
-                });
-              }}
-            />
-            <DefaultCardPartner
-              title={"Documentação devolvida (Em análise Academy)"}
-              totalPartners={partners5.toString()}
-              registeredArchived={"cadastrados"}
-              onPress={() => {
-                navigation.navigate("DetailStatus", {
-                  statusProp: partner.filter((x: any) => x.status == 4),
-                });
-              }}
-            />
-            <DefaultCardPartner
-              title={"Documentação devolvida (Em análise legal)"}
-              totalPartners={partners6.toString()}
-              registeredArchived={"cadastrados"}
-              onPress={() => {
-                navigation.navigate("DetailStatus", {
-                  statusProp: partner.filter((x: any) => x.status == 5),
-                });
-              }}
-            />
-            <DefaultCardPartner
-    title={"Documentação análisada devolvida (Parceiro)"}
-              totalPartners={partners7.toString()}
-              registeredArchived={"cadastrados"}
-              onPress={() => {
-                navigation.navigate("DetailStatus", {
-                  statusProp: partner.filter((x: any) => x.status == 6),
-                });
-              }}
-            />
-            <DefaultCardPartner
-              title={"Em preparação de Executive Sumary (Academy)"}
-              totalPartners={partners8.toString()}
-              registeredArchived={"cadastrados"}
-              onPress={() => {
-                navigation.navigate("DetailStatus", {
-                  statusProp: partner.filter((x: any) => x.status == 7),
-                });
-              }}
-            />
-            <DefaultCardPartner
-              title={"ES em análise (Legal)"}
-              totalPartners={partners9.toString()}
-              registeredArchived={"cadastrados"}
-              onPress={() => {
-                navigation.navigate("DetailStatus", {
-                  statusProp: partner.filter((x: any) => x.status == 8),
-                });
-              }}
-            />
-            <DefaultCardPartner
-              title={"ES em análise (Academy Global)"}
-              totalPartners={partners10.toString()}
-              registeredArchived={"cadastrados"}
-              onPress={() => {
-                navigation.navigate("DetailStatus", {
-                  statusProp: partner.filter((x: any) => x.status == 9),
-                });
-              }}
-            />
-            <DefaultCardPartner
-              title={"Pronto para assinatura"}
-              totalPartners={partners11.toString()}
-              registeredArchived={"cadastrados"}
-              onPress={() => {
-                navigation.navigate("DetailStatus", {
-                  statusProp: partner.filter((x: any) => x.status == 10),
-                });
-              }}
-            />
-            <DefaultCardPartner
-              title={"Parceria Firmada"}
-              totalPartners={partners12.toString()}
-              registeredArchived={"cadastrados"}
-              onPress={() => {
-                navigation.navigate("DetailStatus", {
-                  statusProp: partner.filter((x: any) => x.status == 11),
-                });
-              }}
-            />
-          </View>
+          {isLoading ? (
+
+            <HStack space={2} justifyContent="center" alignItems="center">
+              <Heading color="#29292e" fontSize="md">
+                Carregando
+              </Heading>
+              <Spinner color="#29292e" />
+            </HStack>
+          ) : (
+            <View>
+              <DefaultCardPartner
+                title={"Em Prospecção"}
+                totalPartners={partnersEmProspec.toString()}
+                registeredArchived={"cadastrados"}
+                onPress={() => {
+                  navigation.navigate("DetailStatus", {
+                    statusProp: partner.filter((x: any) => x.status == 0),
+                  });
+                  console.log(partner);
+                }}
+              />
+              <DefaultCardPartner
+                title={"Primeiro contato feito"}
+                totalPartners={partnersPrimeiroContato.toString()}
+                registeredArchived={"cadastrados"}
+                onPress={() => {
+                  navigation.navigate("DetailStatus", {
+                    statusProp: partner.filter((x: any) => x.status == 1),
+                  });
+                }}
+              />
+              <DefaultCardPartner
+                title={"Primeira reunião marcada/realizada"}
+                totalPartners={partnersPrimeiraReuniao.toString()}
+                registeredArchived={"cadastrados"}
+                onPress={() => {
+                  navigation.navigate("DetailStatus", {
+                    statusProp: partner.filter((x: any) => x.status == 2),
+                  });
+                }}
+              />
+              <DefaultCardPartner
+                title={"Documentação enviada/em análise (parceiro)"}
+                totalPartners={partners4.toString()}
+                registeredArchived={"cadastrados"}
+                onPress={() => {
+                  navigation.navigate("DetailStatus", {
+                    statusProp: partner.filter((x: any) => x.status == 3),
+                  });
+                }}
+              />
+              <DefaultCardPartner
+                title={"Documentação devolvida (Em análise Academy)"}
+                totalPartners={partners5.toString()}
+                registeredArchived={"cadastrados"}
+                onPress={() => {
+                  navigation.navigate("DetailStatus", {
+                    statusProp: partner.filter((x: any) => x.status == 4),
+                  });
+                }}
+              />
+              <DefaultCardPartner
+                title={"Documentação devolvida (Em análise legal)"}
+                totalPartners={partners6.toString()}
+                registeredArchived={"cadastrados"}
+                onPress={() => {
+                  navigation.navigate("DetailStatus", {
+                    statusProp: partner.filter((x: any) => x.status == 5),
+                  });
+                }}
+              />
+              <DefaultCardPartner
+                title={"Documentação análisada devolvida (Parceiro)"}
+                totalPartners={partners7.toString()}
+                registeredArchived={"cadastrados"}
+                onPress={() => {
+                  navigation.navigate("DetailStatus", {
+                    statusProp: partner.filter((x: any) => x.status == 6),
+                  });
+                }}
+              />
+              <DefaultCardPartner
+                title={"Em preparação de Executive Sumary (Academy)"}
+                totalPartners={partners8.toString()}
+                registeredArchived={"cadastrados"}
+                onPress={() => {
+                  navigation.navigate("DetailStatus", {
+                    statusProp: partner.filter((x: any) => x.status == 7),
+                  });
+                }}
+              />
+              <DefaultCardPartner
+                title={"ES em análise (Legal)"}
+                totalPartners={partners9.toString()}
+                registeredArchived={"cadastrados"}
+                onPress={() => {
+                  navigation.navigate("DetailStatus", {
+                    statusProp: partner.filter((x: any) => x.status == 8),
+                  });
+                }}
+              />
+              <DefaultCardPartner
+                title={"ES em análise (Academy Global)"}
+                totalPartners={partners10.toString()}
+                registeredArchived={"cadastrados"}
+                onPress={() => {
+                  navigation.navigate("DetailStatus", {
+                    statusProp: partner.filter((x: any) => x.status == 9),
+                  });
+                }}
+              />
+              <DefaultCardPartner
+                title={"Pronto para assinatura"}
+                totalPartners={partners11.toString()}
+                registeredArchived={"cadastrados"}
+                onPress={() => {
+                  navigation.navigate("DetailStatus", {
+                    statusProp: partner.filter((x: any) => x.status == 10),
+                  });
+                }}
+              />
+              <DefaultCardPartner
+                title={"Parceria Firmada"}
+                totalPartners={partners12.toString()}
+                registeredArchived={"cadastrados"}
+                onPress={() => {
+                  navigation.navigate("DetailStatus", {
+                    statusProp: partner.filter((x: any) => x.status == 11),
+                  });
+                }}
+              />
+            </View>
+          )}
         </ScrollView>
       ) : (
         <ScrollView>

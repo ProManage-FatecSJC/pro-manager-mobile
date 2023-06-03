@@ -1,24 +1,21 @@
 import { StyleSheet } from "react-native";
 
-const styles = StyleSheet.create({
-  Container: {
+export const styles = StyleSheet.create({
+  container: {
     flex: 1,
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    padding: 24,
+    backgroundColor: "#f8f8f8",
+    paddingHorizontal: 24,
+  },
+  headerContentWrapper: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   buttonWrapper: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  Divider: {
-    marginTop: 16,
-    marginBottom: 32,
-    width: "100%",
-    height: 1,
-    backgroundColor: "#e0e0e0",
-  },
-  Button: {
+  buttonOption: {
     width: "45%",
     marginTop: 32,
     paddingVertical: 10,
@@ -33,26 +30,12 @@ const styles = StyleSheet.create({
     margin: "auto",
     fontSize: 12,
   },
-  Text: {
+  divider: {
+    marginTop: 16,
+    marginBottom: 32,
     width: "100%",
-    marginTop: 64,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  NoPartners: {
-    color: "#7C7C8A",
-    fontSize: 20,
-    padding: 5,
-    maxWidth: 200,
-    textAlign: "center",
-    marginTop: 10,
-    marginLeft: 60,
-  },
-  Image:{
-    alignItems: "center",
-    marginTop: 50,
+    height: 1,
+    backgroundColor: "#e0e0e0",
   }
 });
 
-export default styles;

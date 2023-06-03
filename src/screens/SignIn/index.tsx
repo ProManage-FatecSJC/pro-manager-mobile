@@ -4,9 +4,8 @@ import {
   Text,
   Modal,
   Pressable,
-  KeyboardAvoidingView,
-  Platform
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import api from '../../api/api';
 import { URI } from '../../api/uri';
@@ -19,7 +18,6 @@ import {
 } from '../../components';
 
 import { styles } from './styles'
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 export function SignIn({ navigation }: any) {
   const [isLoading, setIsLoading] = useState(false);
