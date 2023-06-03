@@ -1,23 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import { Image, ScrollView, Text, View } from "react-native";
-import styles from "./styles.ts";
+import React, {
+  useEffect,
+  useState
+} from 'react';
+
+import {
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 import { SessionController } from '../../session/SessionController.ts';
-import { DefaultButton } from '../../components/DefaultButton/index.tsx';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { ArrowRight, ListDashes } from 'phosphor-react-native';
+
+import {
+  DefaultButton
+} from '../../components/DefaultButton/index.tsx';
+
+import {
+  ArrowLeft,
+  ListDashes
+} from 'phosphor-react-native';
+import { Spinner, Heading, HStack } from 'native-base';
+
+import styles from "./styles.ts";
 
 export function InfPartner({ navigation, route }: any) {
 
   const { idProp } = route.params;
-
+  const [isLoading, setIsLoading] = useState(false);
   const [id, setId] = useState(idProp);
   const [data, setData] = useState();
   const [name, setName] = useState();
   const [status, setStatus] = useState(0);
-  const [privase, setPrivase] = useState(0);
+  const [privacy, setPrivacy] = useState(0);
   const [type, setType] = useState(0);
   const [members, setMembers] = useState();
   const [contacts, setContacts] = useState();
@@ -28,6 +45,7 @@ export function InfPartner({ navigation, route }: any) {
   const sessionController = new SessionController();
 
   async function handlePartner() {
+    setIsLoading(true);
     const token = await sessionController.getToken();
     try {
       await api.get(URI.PARTNER + `/${id}`, {
@@ -36,16 +54,17 @@ export function InfPartner({ navigation, route }: any) {
         setData(response.data);
         setName(response.data.name);
         setStatus(response.data.status);
-        setPrivase(response.data.privacy);
+        setPrivacy(response.data.privacy);
         setType(response.data.type);
         setMembers(response.data.membersQuantity);
         setContacts(response.data.telephone);
         setResponse(response.data.intermediateResponsible);
         setUf(response.data.state);
-
+        setIsLoading(false);
       })
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      setIsLoading(false);
     }
 
   };
@@ -57,7 +76,7 @@ export function InfPartner({ navigation, route }: any) {
         headers: { Authorization: token }
       }).then(response => {
         if (response.status == 200) {
-          navigation.navigate('Home')
+          navigation.goBack();
         }
       })
     } catch (error) {
@@ -90,6 +109,9 @@ export function InfPartner({ navigation, route }: any) {
     "Múltiplo"
   ]
 
+  function goBack() {
+    navigation.goBack();
+  }
 
   useEffect(() => {
     handlePartner()
@@ -97,59 +119,113 @@ export function InfPartner({ navigation, route }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-
       <View style={styles.headerTitleWrapper}>
-        <Text style={styles.titleText}>{name}</Text>
+        <TouchableOpacity onPress={goBack}>
+          <ArrowLeft size={30} color="#fff" />
+        </TouchableOpacity>
+        {isLoading ? (
+          <Spinner color="#fff" />
+        ) : (
+          <Text style={styles.headerTitleText}>{name}</Text>
+        )}
+
       </View>
 
       <View style={styles.divider} />
 
       <View style={styles.informationPartnerDataWrapper}>
-   
-          <Text style={styles.informationTextTitle}>
-            Nome: {' '}
+
+        <Text style={styles.informationTextTitle}>
+          Nome:{' '}
+          {isLoading ? (
+             <HStack space={2} alignItems="center">
+              <Spinner color="#29292e" />
+            </HStack>
+          ) : (
             <Text style={styles.informationTextData}>{name}</Text>
-          </Text>
-    
+          )}
+        </Text>
 
-        <View style={styles.informationTextWrapper}>
-          <Text style={styles.informationTextTitle}>Status:</Text>
-          <Text style={styles.informationTextData}>{optionsStatus[status]}</Text>
-        </View>
+        <Text style={styles.informationTextTitle}>
+          Status:{' '}
+          {isLoading ? (
+            <HStack space={2} alignItems="center">
+              <Spinner color="#29292e" />
+            </HStack>
+          ) : (
+            <Text style={styles.informationTextData}>{optionsStatus[status]}</Text>
+          )}
+        </Text>
 
-        <View style={styles.informationTextWrapper}>
-          <Text style={styles.informationTextTitle}>Privacidade:</Text>
-          <Text style={styles.informationTextData}>{optionsPrivace[privase]}</Text>
-        </View>
+        <Text style={styles.informationTextTitle}>
+          Privacidade:{' '}
+          {isLoading ? (
+             <HStack space={2} alignItems="center">
+              <Spinner color="#29292e" />
+            </HStack>
+          ) : (
+            <Text style={styles.informationTextData}>{optionsPrivace[privacy]}</Text>
+          )}
+        </Text>
 
-        <View style={styles.informationTextWrapper}>
-          <Text style={styles.informationTextTitle}>Tipo:</Text>
-          <Text style={styles.informationTextData}>{optionsType[type]}</Text>
-        </View>
+        <Text style={styles.informationTextTitle}>
+          Tipo:{' '}
+          {isLoading ? (
+             <HStack space={2} alignItems="center">
+              <Spinner color="#29292e" />
+            </HStack>
+          ) : (
+            <Text style={styles.informationTextData}>{optionsType[type]}</Text>
+          )}
+        </Text>
 
-        <View style={styles.informationTextWrapper}>
-          <Text style={styles.informationTextTitle}>Quantidade de membros: </Text>
-          <Text style={styles.informationTextData}>{members}</Text>
-        </View>
+        <Text style={styles.informationTextTitle}>
+          Quantidade de membros:{' '}
+          {isLoading ? (
+             <HStack space={2} alignItems="center">
+              <Spinner color="#29292e" />
+            </HStack>
+          ) : (
+            <Text style={styles.informationTextData}>{members}</Text>
+          )}
+        </Text>
 
-        <View style={styles.informationTextWrapper}>
-          <Text style={styles.informationTextTitle}>Contato:</Text>
-          <Text style={styles.informationTextData}>{contacts}</Text>
-        </View>
+        <Text style={styles.informationTextTitle}>
+          Contato:{' '}
+          {isLoading ? (
+             <HStack space={2} alignItems="center">
+              <Spinner color="#29292e" />
+            </HStack>
+          ) : (
+            <Text style={styles.informationTextData}>{contacts}</Text>
+          )}
+        </Text>
 
-        <View style={styles.informationTextWrapper}>
-          <Text style={styles.informationTextTitle}>Responsável:</Text>
-          <Text style={styles.informationTextData}>{response}</Text>
-        </View>
+        <Text style={styles.informationTextTitle}>
+          Responsável:{' '}
+          {isLoading ? (
+             <HStack space={2} alignItems="center">
+              <Spinner color="#29292e" />
+            </HStack>
+          ) : (
+            <Text style={styles.informationTextData}>{response}</Text>
+          )}
+        </Text>
 
-        <View style={styles.informationTextWrapper}>
-          <Text style={styles.informationTextTitle}>Estado:</Text>
-          <Text style={styles.informationTextData}>{uf}</Text>
-        </View>
+        <Text style={styles.informationTextTitle}>
+          Estado:{' '}
+          {isLoading ? (
+             <HStack space={2} alignItems="center">
+              <Spinner color="#29292e" />
+            </HStack>
+          ) : (
+            <Text style={styles.informationTextData}>{uf}</Text>
+          )}
+        </Text>
 
-        <View style={[styles.informationTextWrapper, { marginTop: 16}]}>
-          <ListDashes color='grey'/>
-          <Text style={[styles.informationTextData, {color: 'grey'}]}>Ver lista de membros</Text>
+        <View style={[styles.informationTextWrapper, { marginTop: 32 }]}>
+          <ListDashes color='grey' />
+          <Text style={[styles.informationTextData, { color: 'grey' }]}>Ver lista de membros</Text>
         </View>
       </View>
 
@@ -174,7 +250,7 @@ export function InfPartner({ navigation, route }: any) {
         <DefaultButton
           title="Arquivar Parceiro"
           bg={'transparent'}
-          textColor={'#DA4625'}  
+          textColor={'#DA4625'}
           onPress={() => {
             handleArchivePartner(idProp)
           }}

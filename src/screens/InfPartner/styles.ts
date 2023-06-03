@@ -8,16 +8,18 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
   headerTitleWrapper: {
-    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
 
     paddingVertical: 16,
+    paddingHorizontal: 24,
     width: '100%',
 
     backgroundColor: '#4994CE',
     borderRadius: 999,
   },
-  titleText: {
+  headerTitleText: {
     color: '#f8f8f8',
     fontSize: 18,
     fontWeight: '700',
@@ -30,7 +32,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e0e0e0'
   },
   informationPartnerDataWrapper: {
-    gap: 16,
+    gap: 14,
     flex: 1,
   },
   informationTextWrapper: {
