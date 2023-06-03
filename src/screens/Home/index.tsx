@@ -146,10 +146,10 @@ export function Home({ navigation }: any) {
           Bem vindo,{" "}
           {isLoading ? (
             <HStack justifyContent="center" alignItems="center">
-              <Spinner color="#29292e" />
+              <Spinner color="#4994CE" />
             </HStack>
           ) : (
-            <Text style={{ fontWeight: "bold"}}>{userName}</Text>
+            <Text style={{ fontWeight: "700"}}>{userName}</Text>
           )}
         </Text>
         <TouchableOpacity onPress={handleLogoffClick}>
@@ -207,10 +207,10 @@ export function Home({ navigation }: any) {
         <ScrollView>
           {isLoading ? (
             <HStack space={2} justifyContent="center" alignItems="center">
-              <Heading color="#29292e" fontSize="md">
+              <Heading color="#4994CE" fontSize="md">
                 Carregando
               </Heading>
-              <Spinner color="#29292e" />
+              <Spinner color="#4994CE" />
             </HStack>
           ) : (
             <View>

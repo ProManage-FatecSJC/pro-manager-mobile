@@ -123,12 +123,17 @@ export function InfPartner({ navigation, route }: any) {
         <TouchableOpacity onPress={goBack}>
           <ArrowLeft size={30} color="#fff" />
         </TouchableOpacity>
-        {isLoading ? (
-          <Spinner color="#fff" />
-        ) : (
-          <Text style={styles.headerTitleText}>{name}</Text>
-        )}
 
+        <Text style={styles.headerTitleTextPartner}>
+          Parceiro |{' '}
+          {isLoading ? (
+            <HStack alignItems="center">
+              <Spinner color="#f8f8f8" />
+            </HStack>
+          ) : (
+            <Text style={styles.headerTitleText}>{name}</Text>
+          )}
+        </Text>
       </View>
 
       <View style={styles.divider} />
@@ -139,7 +144,7 @@ export function InfPartner({ navigation, route }: any) {
           Nome:{' '}
           {isLoading ? (
             <HStack space={2} alignItems="center">
-              <Spinner color="#29292e" />
+              <Spinner color="#4994CE" />
             </HStack>
           ) : (
             <Text style={styles.informationTextData}>{name}</Text>
@@ -150,7 +155,7 @@ export function InfPartner({ navigation, route }: any) {
           Status:{' '}
           {isLoading ? (
             <HStack space={2} alignItems="center">
-              <Spinner color="#29292e" />
+              <Spinner color="#4994CE" />
             </HStack>
           ) : (
             <Text style={styles.informationTextData}>{optionsStatus[status]}</Text>
@@ -161,7 +166,7 @@ export function InfPartner({ navigation, route }: any) {
           Privacidade:{' '}
           {isLoading ? (
             <HStack space={2} alignItems="center">
-              <Spinner color="#29292e" />
+              <Spinner color="#4994CE" />
             </HStack>
           ) : (
             <Text style={styles.informationTextData}>{optionsPrivace[privacy]}</Text>
@@ -172,7 +177,7 @@ export function InfPartner({ navigation, route }: any) {
           Tipo:{' '}
           {isLoading ? (
             <HStack space={2} alignItems="center">
-              <Spinner color="#29292e" />
+              <Spinner color="#4994CE" />
             </HStack>
           ) : (
             <Text style={styles.informationTextData}>{optionsType[type]}</Text>
@@ -183,7 +188,7 @@ export function InfPartner({ navigation, route }: any) {
           Quantidade de membros:{' '}
           {isLoading ? (
             <HStack space={2} alignItems="center">
-              <Spinner color="#29292e" />
+              <Spinner color="#4994CE" />
             </HStack>
           ) : (
             <Text style={styles.informationTextData}>{members}</Text>
@@ -194,7 +199,7 @@ export function InfPartner({ navigation, route }: any) {
           Contato:{' '}
           {isLoading ? (
             <HStack space={2} alignItems="center">
-              <Spinner color="#29292e" />
+              <Spinner color="#4994CE" />
             </HStack>
           ) : (
             <Text style={styles.informationTextData}>{contacts}</Text>
@@ -205,7 +210,7 @@ export function InfPartner({ navigation, route }: any) {
           Responsável:{' '}
           {isLoading ? (
             <HStack space={2} alignItems="center">
-              <Spinner color="#29292e" />
+              <Spinner color="#4994CE" />
             </HStack>
           ) : (
             <Text style={styles.informationTextData}>{response}</Text>
@@ -216,7 +221,7 @@ export function InfPartner({ navigation, route }: any) {
           Estado:{' '}
           {isLoading ? (
             <HStack space={2} alignItems="center">
-              <Spinner color="#29292e" />
+              <Spinner color="#4994CE" />
             </HStack>
           ) : (
             <Text style={styles.informationTextData}>{uf}</Text>
@@ -224,11 +229,11 @@ export function InfPartner({ navigation, route }: any) {
         </Text>
 
         <TouchableOpacity onPress={() => {
-            console.log(idProp);
-            navigation.navigate("Members", {
-              idProp: id,
-            });
-          }}>
+          console.log(idProp);
+          navigation.navigate("Members", {
+            idProp: id,
+          });
+        }}>
           <View style={[styles.informationTextWrapper, { marginTop: 16 }]}>
             <ListDashes color='grey' />
             <Text style={[styles.informationTextData, { color: 'grey' }]}>Ver lista de membros</Text>
@@ -236,38 +241,42 @@ export function InfPartner({ navigation, route }: any) {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.buttonGap}>
-        <DefaultButton
-          title="Editar"
-          bg={'transparent'}
-          textColor={'#4994CE'}
-          borderColor={'#4994CE'}
-          borderWidth={1.5}
-          variant={'outline'}
-          _pressed={{
-            bg: "#f0f0f0",
-          }}
-          onPress={() => {
-            navigation.navigate("PartnerUpdate", {
-              idProp: id
-            });
-          }}
-        />
+      <View style={styles.buttonSectionWrapper}>
+        <View style={styles.buttonWrapper}>
+          <DefaultButton
+            title="Editar"
+            bg={'transparent'}
+            textColor={'#4994CE'}
+            borderColor={'#4994CE'}
+            borderWidth={1.5}
+            variant={'outline'}
+            _pressed={{
+              bg: "#f0f0f0",
+            }}
+            onPress={() => {
+              navigation.navigate("PartnerUpdate", {
+                idProp: id
+              });
+            }}
+          />
+        </View>
 
-        <DefaultButton
-          title="Arquivar Parceiro"
-          bg={'transparent'}
-          textColor={'#DA4625'}
-          borderColor={'#DA4625'}
-          borderWidth={1.5}
-          variant={'outline'}
-          _pressed={{
-            bg: "#f0f0f0",
-          }}
-          onPress={() => {
-            handleArchivePartner(idProp)
-          }}
-        />
+        <View style={styles.buttonWrapper}>
+          <DefaultButton
+            title="Arquivar Parceiro"
+            bg={'transparent'}
+            textColor={'#DA4625'}
+            borderColor={'#DA4625'}
+            borderWidth={1.5}
+            variant={'outline'}
+            _pressed={{
+              bg: "#f0f0f0",
+            }}
+            onPress={() => {
+              handleArchivePartner(idProp)
+            }}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );

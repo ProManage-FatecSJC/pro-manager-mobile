@@ -6,6 +6,7 @@ import { MaskedInput } from './MaskedInput';
 import { SearchBar } from './SearchBar';
 import { CardDetail } from './CardDetail';
 import { DefaultCardPartner } from './DefaultCardPartner';
+import { CardDetailMember } from './CardDetailMember';
 
 export {
     DefaultButton,
@@ -15,5 +16,6 @@ export {
     MaskedInput,
     SearchBar,
     CardDetail,
-    DefaultCardPartner
+    DefaultCardPartner,
+    CardDetailMember
 }

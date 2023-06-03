@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import styles from "./styles.ts";
 import { SessionController } from '../../session/SessionController.ts';
 import api from '../../api/api.ts';
 import { URI } from '../../api/uri.ts';
-import {DefaultButton} from '../../components/DefaultButton'
-import CardDetailMembers from '../../components/CardDetailMembers.tsx';
-import { SearchBar } from '../../components';
+import {
+  DefaultButton,
+  SearchBar,
+  CardDetailMember
+} from '../../components/';
+import { ArrowLeft } from 'phosphor-react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { HStack, Spinner, Heading } from 'native-base';
 
-export function Members ({ navigation, route }: any) {
-
+export function Members({ navigation, route }: any) {
   const { idProp } = route.params;
-
+  const [isLoading, setIsLoading] = useState(false);
   const [id, setId] = useState(idProp);
   const [membersData, setMembersData] = useState([]);
   const [members, setMembers] = useState([]);
   const [name, setName] = useState();
-  const [fantasyName, setFantasyName] = useState();
-  const [cnpj, setCnpj] = useState();
   const [count, setCount] = useState(0);
 
   const sessionController = new SessionController();
 
   async function handleMembers() {
+    setIsLoading(true)
     const token = await sessionController.getToken();
-
     try {
       await api
         .get(URI.MEMBERS + `/${id}`, {
@@ -36,9 +38,11 @@ export function Members ({ navigation, route }: any) {
           setMembersData(response.data);
           setMembers(membersData);
           console.log(members);
+          setIsLoading(false)
         });
     } catch (error) {
       console.log(error);
+      setIsLoading(false)
     }
   }
 
@@ -92,25 +96,61 @@ export function Members ({ navigation, route }: any) {
   };
 
   return (
-    <View style={styles.Container}>
-      <Text style={styles.Text1}> Membros de {name}</Text>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.headerWrapper}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <ArrowLeft size={24} />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Membros |
+          {' '}
+          {isLoading ? (
+            <Spinner size="sm" color="#4994CE" />
+          ) : (
+            <Text>{name}</Text>
+          )}
+
+        </Text>
+      </View>
       <SearchBar placeholder={"Pesquisa"} onChangeText={handleSearch} />
       <ScrollView>
-        <View>
-          {members.map((item: any) => (
-            <CardDetailMembers
-              key={item.id}
-              name={item.name}
-              nameFantasy={item.trade_name}
-              cnpj={item.CNPJ}
-              onPress={() => {}}
-            />
-          ))}
-        </View>
+        {isLoading ? (
+          <HStack space={2} justifyContent="center" alignItems="center">
+            <Heading
+              color="#4994CE"
+              fontWeight="500"
+              fontSize="lg"
+              textAlign="center"
+            >
+              Carregando
+            </Heading>
+            <Spinner size="sm" color="#4994CE" />
+          </HStack>
+        ) : (
+          <View>
+            {members.map((item: any) => (
+              <CardDetailMember
+                key={item.id}
+                name={item.name}
+                nameFantasy={item.trade_name}
+                cnpj={item.CNPJ}
+                onPress={() => { }}
+              />
+            ))}
+          </View>
+        )}
       </ScrollView>
+
       <DefaultButton
-      bg="green"
         title={"Cadastrar Membro"}
+        bg={'transparent'}
+        textColor={'#4994CE'}
+        borderColor={'#4994CE'}
+        borderWidth={1.5}
+        variant={'outline'}
+        _pressed={{
+          bg: "#f0f0f0",
+        }}
+
         onPress={() => {
           console.log(idProp);
           navigation.navigate("MemberRegister", {
@@ -118,6 +158,6 @@ export function Members ({ navigation, route }: any) {
           });
         }}
       />
-    </View>
+    </SafeAreaView>
   );
 };

@@ -4,8 +4,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f8f8f8',
-    padding: 24,
-    paddingTop: 16,
+    paddingHorizontal: 24,
+  },
+  headerTitleTextPartner: {
+    color: '#f8f8f8',
+    fontSize: 18,
+    fontWeight: '700',
+    alignSelf: 'center',
   },
   headerTitleWrapper: {
     flexDirection: 'row',
@@ -51,8 +56,13 @@ const styles = StyleSheet.create({
     color: '#29292e',
     fontWeight: '400'
   },
-  buttonGap: {
-    gap: 16,
+  buttonSectionWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 32,
+  },
+  buttonWrapper: {
+    width: '45%',
   }
 });
 
