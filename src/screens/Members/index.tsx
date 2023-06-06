@@ -155,7 +155,6 @@ export function Members({ navigation, route }: any) {
         _pressed={{
           bg: "#f0f0f0",
         }}
-
         onPress={() => {
           console.log(idProp);
           navigation.navigate("MemberRegister", {

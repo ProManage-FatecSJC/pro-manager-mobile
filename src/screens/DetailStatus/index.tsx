@@ -56,17 +56,18 @@ export function DetailStatus ({ navigation, route }: any){
       <ScrollView>
         <View>
           {partners.map((item: any) => (
+            item ?
             <CardDetail
               key={item.id}
               name={item.name}
-              status={optionsStatus[item.status]}
+              status={item ? optionsStatus[item.status] : ''}
               responsible={item.intermediateResponsible}
               onPress={() => {
                 console.log("ID AQUI: ", item.id)
                 navigation.navigate("InfPartner", {
                   idProp: item.id});
               }} 
-            /> ))
+            /> : null ))
           }
         </View>
       </ScrollView>

@@ -6,7 +6,7 @@ import api from "../../api/api.ts";
 import { URI } from "../../api/uri.ts";
 import { DefaultButton } from "../../components/DefaultButton/index.tsx";
 
-export function Profile({navigation}: any){
+export function Profile({ navigation }: any) {
 
   const [userName, setUserName] = useState('')
   const [userId, setUserId] = useState('')
@@ -65,10 +65,10 @@ export function Profile({navigation}: any){
         },
       })
       .then((response) => {
-        
+
         if (response.status == 200) {
           navigation.navigate("SignIn");
-        } 
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -102,6 +102,7 @@ export function Profile({navigation}: any){
           </View>
         </View>
       </Modal>
+      
       <View style={styles.containerHeaderUser}>
         <Text style={styles.UserName}>{userName}</Text>
         <View style={styles.Divider}></View>
@@ -125,20 +126,38 @@ export function Profile({navigation}: any){
             />
           </View>
 
-          <DefaultButton
-            title={"Editar Perfil"}
-            onPress={() => {
-              navigation.navigate("UserUpdate", { idProp: userId });
-            }}
-          />
-
-          <DefaultButton
-            title={"Excluir Perfil"}
-            onPress={function (): void {
-              setModalVisible(true);
-            }}
-          />
         </SafeAreaView>
+          <View style={styles.buttonWrapper}>
+            <DefaultButton
+              title={"Editar Perfil"}
+              bg={'transparent'}
+              textColor={'#4994CE'}
+              borderColor={'#4994CE'}
+              borderWidth={1.5}
+              variant={'outline'}
+              _pressed={{
+                bg: "#f0f0f0",
+              }}
+              onPress={() => {
+                navigation.navigate("UserUpdate", { idProp: userId });
+              }}
+            />
+
+            <DefaultButton
+              title={"Excluir Perfil"}
+              bg={'transparent'}
+              textColor={'#DA4625'}
+              borderColor={'#DA4625'}
+              borderWidth={1.5}
+              variant={'outline'}
+              _pressed={{
+                bg: "#f0f0f0",
+              }}
+              onPress={function (): void {
+                setModalVisible(true);
+              }}
+            />
+          </View>
       </View>
     </View>
   );

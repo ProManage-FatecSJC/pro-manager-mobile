@@ -5,13 +5,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     paddingHorizontal: 24,
-    backgroundColor: "#fff",
+    marginTop: 32,
+    backgroundColor: "#f8f8f8",
   },
   containerHeaderUser: {
     justifyContent: "center",
     alignItems: "center",
-    width: "100%",
-    marginTop: 40,
     marginBottom: 32,
   },
   UserImage: {
@@ -33,6 +32,7 @@ const styles = StyleSheet.create({
   },
   containerHeaderUserInfo: {
     flex: 1,
+    marginTop: 100,
   },
   labelInput: {
     color: "#29292e",
@@ -95,6 +95,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
   },
+  buttonWrapper: {
+    flex: 1,
+    marginTop: 150,
+    gap: 16,
+  }
 });
 
 export default styles;
