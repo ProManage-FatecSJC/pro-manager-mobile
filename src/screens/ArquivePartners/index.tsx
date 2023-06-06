@@ -3,7 +3,7 @@ import { View, ScrollView } from 'react-native';
 import { styles } from './styles';
 
 import { Header } from '../../components/Header';
-import SearchBar from '../../components/SearchBar'
+import { SearchBar } from '../../components';
 import { DisabledCardPartner } from '../../components/DisabledCardPartner';
 import { SessionController } from '../../session/SessionController';
 import api from '../../api/api';

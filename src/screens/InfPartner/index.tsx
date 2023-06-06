@@ -4,8 +4,7 @@ import React, {
 } from 'react';
 
 import {
-  Modal,
-  Pressable,
+  Alert,
   Text,
   TouchableOpacity,
   View
@@ -24,14 +23,13 @@ import {
   ArrowLeft,
   ListDashes
 } from 'phosphor-react-native';
-import { Spinner, Heading, HStack } from 'native-base';
+import { Spinner, HStack } from 'native-base';
 
 import styles from "./styles.ts";
 
 export function InfPartner({ navigation, route }: any) {
 
   const { idProp } = route.params;
-  const [modalVisible, setModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [id, setId] = useState(idProp);
   const [data, setData] = useState();
@@ -43,8 +41,6 @@ export function InfPartner({ navigation, route }: any) {
   const [contacts, setContacts] = useState();
   const [response, setResponse] = useState();
   const [uf, setUf] = useState();
-
-  const [inf, setInf] = useState(0);
   const sessionController = new SessionController();
 
   async function handlePartner() {
@@ -54,6 +50,7 @@ export function InfPartner({ navigation, route }: any) {
       await api.get(URI.PARTNER + `/${id}`, {
         headers: { Authorization: token }
       }).then(response => {
+        setIsLoading(false);
         setData(response.data);
         setName(response.data.name);
         setStatus(response.data.status);
@@ -63,28 +60,47 @@ export function InfPartner({ navigation, route }: any) {
         setContacts(response.data.telephone);
         setResponse(response.data.intermediateResponsible);
         setUf(response.data.state);
-        setIsLoading(false);
       })
     } catch (error) {
-      console.log(error);
+      console.log(error)
       setIsLoading(false);
     }
 
   };
 
   async function handleArchivePartner(partnerId: string) {
-    const token = await sessionController.getToken()
+    const token = await sessionController.getToken();
     try {
-      await api.put(URI.PARTNER + `/archive/${partnerId}`, {}, {
-        headers: { Authorization: token }
-      }).then(response => {
-        if (response.status == 200) {
-          navigation.goBack();
-          console.log(response.data)
-        }
-      })
+      Alert.alert(
+        'Confirmação',
+        'Tem certeza de que deseja arquivar o parceiro?',
+        [
+          {
+            text: 'Cancelar',
+            style: 'cancel',
+          },
+          {
+            text: 'Arquivar',
+            onPress: async () => {
+              try {
+                await api.put(
+                  `${URI.PARTNER}/archive/${partnerId}`,
+                  {},
+                  { headers: { Authorization: token } }
+                );
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'Home' }],
+                });
+              } catch (error) {
+                console.log(error);
+              }
+            },
+          },
+        ]
+      );
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -113,51 +129,16 @@ export function InfPartner({ navigation, route }: any) {
     "Múltiplo"
   ]
 
-  function goBack() {
+  function goBack(){
     navigation.goBack();
   }
 
   useEffect(() => {
     handlePartner()
   }, []);
-
-  useEffect(() => {
-    setId(idProp);
-  }, [idProp]);
   
   return (
     <SafeAreaView style={styles.container}>
-        <Modal 
-          animationType="fade"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible)
-          }}>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>Você tem certeza ?</Text>
-              <View style={styles.buttonModalWrapper}>
-                <View style={styles.buttonModalWrapperWidth}>
-                  <Pressable
-                    style={[styles.button]}
-                    onPress={() => (handleArchivePartner(idProp))}>
-                    <Text style={styles.textStyle}>Arquivar</Text>
-                  </Pressable>
-                </View>
-
-                <View style={styles.buttonModalWrapperWidth}>
-                  <Pressable
-                    style={[styles.button]}
-                    onPress={() => setModalVisible(!modalVisible)}>
-                    <Text style={styles.textStyle}>Cancelar</Text>
-                  </Pressable>
-                </View>
-              </View>
-            </View>
-          </View>
-        </Modal>
-        
       <View style={styles.headerTitleWrapper}>
         <TouchableOpacity onPress={goBack}>
           <ArrowLeft size={30} color="#fff" />
@@ -312,7 +293,7 @@ export function InfPartner({ navigation, route }: any) {
               bg: "#f0f0f0",
             }}
             onPress={() => {
-              setModalVisible(true);
+              handleArchivePartner(idProp);
             }}
           />
         </View>

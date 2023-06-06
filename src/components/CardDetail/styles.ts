@@ -47,6 +47,7 @@ export const styles = StyleSheet.create({
     partnerWrapper: {
         flexDirection: 'row',
         alignItems: 'center',
+        width: '90%',
     },
     partnerTitle: {
         fontWeight: '700',

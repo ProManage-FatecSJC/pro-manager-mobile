@@ -19,32 +19,31 @@ import {
 
 import { styles } from "./styles.ts";
 
-
 export function Home({ navigation }: any) {
+  const [count, setCount] = useState(0)
   const [isLoading, setIsLoading] = useState(false);
   const [buttonPressed, setButtonPressed] = useState<'status' | 'partner'>('status');
   const [pressedStatus, setPressedStatus] = useState(true);
   const [pressedPartner, setPressedPartner] = useState(false);
-  const [userName, setUserName] = useState('')
-  const [count, setCount] = useState(0)
-  const [partner, setPartner] = useState([])
-  const [partnerCount, setPartnerCount] = useState(0)
-  const [partnersEmProspec, setPartnersEmProspec] = useState(0)
-  const [partnersPrimeiroContato, setPartnersPrimeiroContato] = useState(0)
-  const [partnersPrimeiraReuniao, setPartnersPrimeiraReuniao] = useState(0)
-  const [partners4, setPartners4] = useState(0)
-  const [partners5, setPartners5] = useState(0)
-  const [partners6, setPartners6] = useState(0)
-  const [partners7, setPartners7] = useState(0)
-  const [partners8, setPartners8] = useState(0)
-  const [partners9, setPartners9] = useState(0)
-  const [partners10, setPartners10] = useState(0)
-  const [partners11, setPartners11] = useState(0)
-  const [partners12, setPartners12] = useState(0)
-  const [member, setMember] = useState([])
-  const [memberCount, setMemberCount] = useState(0)
+  const [userName, setUserName] = useState('');
+  const [partner, setPartner] = useState([]);
+  const [partnerCount, setPartnerCount] = useState(0);
+  const [partnersEmProspec, setPartnersEmProspec] = useState(0);
+  const [partnersPrimeiroContato, setPartnersPrimeiroContato] = useState(0);
+  const [partnersPrimeiraReuniao, setPartnersPrimeiraReuniao] = useState(0);
+  const [partners4, setPartners4] = useState(0);
+  const [partners5, setPartners5] = useState(0);
+  const [partners6, setPartners6] = useState(0);
+  const [partners7, setPartners7] = useState(0);
+  const [partners8, setPartners8] = useState(0);
+  const [partners9, setPartners9] = useState(0);
+  const [partners10, setPartners10] = useState(0);
+  const [partners11, setPartners11] = useState(0);
+  const [partners12, setPartners12] = useState(0);
+  const [member, setMember] = useState([]);
+  const [memberCount, setMemberCount] = useState(0);
 
-  const sessionController = new SessionController()
+  const sessionController = new SessionController();
 
   function handleButtonPressStatus(): void {
     if (!pressedStatus) {
@@ -79,19 +78,20 @@ export function Home({ navigation }: any) {
       }).then(response => {
         setPartner(response.data)
         setPartnerCount(partner.length)
-        setPartnersEmProspec(partner.filter((x: any) => x.status == 0).length);
-        setPartnersPrimeiroContato(partner.filter((x: any) => x.status == 1).length);
-        setPartnersPrimeiraReuniao(partner.filter((x: any) => x.status == 2).length);
-        setPartners4(partner.filter((x: any) => x.status == 3).length);
-        setPartners5(partner.filter((x: any) => x.status == 4).length);
-        setPartners6(partner.filter((x: any) => x.status == 5).length);
-        setPartners7(partner.filter((x: any) => x.status == 6).length);
-        setPartners8(partner.filter((x: any) => x.status == 7).length);
-        setPartners9(partner.filter((x: any) => x.status == 8).length);
-        setPartners10(partner.filter((x: any) => x.status == 9).length);
-        setPartners11(partner.filter((x: any) => x.status == 10).length);
-        setPartners12(partner.filter((x: any) => x.status == 11).length);
+        setPartnersEmProspec(partner.filter((x: any) => x.status == 0 && !x.isArchived).length);
+        setPartnersPrimeiroContato(partner.filter((x: any) => x.status == 1 && !x.isArchived).length);
+        setPartnersPrimeiraReuniao(partner.filter((x: any) => x.status == 2 && !x.isArchived).length);
+        setPartners4(partner.filter((x: any) => x.status == 3 && !x.isArchived).length);
+        setPartners5(partner.filter((x: any) => x.status == 4 && !x.isArchived).length);
+        setPartners6(partner.filter((x: any) => x.status == 5 && !x.isArchived).length);
+        setPartners7(partner.filter((x: any) => x.status == 6 && !x.isArchived).length);
+        setPartners8(partner.filter((x: any) => x.status == 7 && !x.isArchived).length);
+        setPartners9(partner.filter((x: any) => x.status == 8 && !x.isArchived).length);
+        setPartners10(partner.filter((x: any) => x.status == 9 && !x.isArchived).length);
+        setPartners11(partner.filter((x: any) => x.status == 10 && !x.isArchived).length);
+        setPartners12(partner.filter((x: any) => x.status == 11 && !x.isArchived).length);
         setIsLoading(false)
+        console.log(partner)
       })
     } catch (error) {
       console.log(error)
@@ -124,15 +124,13 @@ export function Home({ navigation }: any) {
   }
 
   useEffect(() => {
-    if (count < 10) {
+    if (count < 10){
       handlePartners()
       handleMembers()
-      setCount(count + 1)
+      getName()
+      setCount(count+1)
     }
   }, [partner])
-  useEffect(() => {
-    getName()
-  }, [])
 
   async function handleLogoffClick() {
     await sessionController.clearSession()
@@ -221,7 +219,7 @@ export function Home({ navigation }: any) {
                 registeredArchived={"cadastrados"}
                 onPress={() => {
                   navigation.navigate("DetailStatus", {
-                    statusProp: partner.filter((x: any) => x.status == 0),
+                    statusProp: partner.filter((x: any) => x.status == 0 && !x.isArchived),
                   });
                 }}
               />
@@ -232,7 +230,7 @@ export function Home({ navigation }: any) {
                 registeredArchived={"cadastrados"}
                 onPress={() => {
                   navigation.navigate("DetailStatus", {
-                    statusProp: partner.filter((x: any) => x.status == 1),
+                    statusProp: partner.filter((x: any) => x.status == 1 && !x.isArchived),
                   });
                 }}
               />
@@ -243,7 +241,7 @@ export function Home({ navigation }: any) {
                 registeredArchived={"cadastrados"}
                 onPress={() => {
                   navigation.navigate("DetailStatus", {
-                    statusProp: partner.filter((x: any) => x.status == 2),
+                    statusProp: partner.filter((x: any) => x.status == 2 && !x.isArchived),
                   });
                 }}
               />
@@ -254,7 +252,7 @@ export function Home({ navigation }: any) {
                 registeredArchived={"cadastrados"}
                 onPress={() => {
                   navigation.navigate("DetailStatus", {
-                    statusProp: partner.filter((x: any) => x.status == 3),
+                    statusProp: partner.filter((x: any) => x.status == 3 && !x.isArchived),
                   });
                 }}
               />
@@ -265,7 +263,7 @@ export function Home({ navigation }: any) {
                 registeredArchived={"cadastrados"}
                 onPress={() => {
                   navigation.navigate("DetailStatus", {
-                    statusProp: partner.filter((x: any) => x.status == 4),
+                    statusProp: partner.filter((x: any) => x.status == 4 && !x.isArchived),
                   });
                 }}
               />
@@ -276,7 +274,7 @@ export function Home({ navigation }: any) {
                 registeredArchived={"cadastrados"}
                 onPress={() => {
                   navigation.navigate("DetailStatus", {
-                    statusProp: partner.filter((x: any) => x.status == 5),
+                    statusProp: partner.filter((x: any) => x.status == 5 && !x.isArchived),
                   });
                 }}
               />
@@ -287,7 +285,7 @@ export function Home({ navigation }: any) {
                 registeredArchived={"cadastrados"}
                 onPress={() => {
                   navigation.navigate("DetailStatus", {
-                    statusProp: partner.filter((x: any) => x.status == 6),
+                    statusProp: partner.filter((x: any) => x.status == 6 && !x.isArchived),
                   });
                 }}
               />
@@ -298,7 +296,7 @@ export function Home({ navigation }: any) {
                 registeredArchived={"cadastrados"}
                 onPress={() => {
                   navigation.navigate("DetailStatus", {
-                    statusProp: partner.filter((x: any) => x.status == 7),
+                    statusProp: partner.filter((x: any) => x.status == 7 && !x.isArchived),
                   });
                 }}
               />
@@ -309,7 +307,7 @@ export function Home({ navigation }: any) {
                 registeredArchived={"cadastrados"}
                 onPress={() => {
                   navigation.navigate("DetailStatus", {
-                    statusProp: partner.filter((x: any) => x.status == 8),
+                    statusProp: partner.filter((x: any) => x.status == 8 && !x.isArchived),
                   });
                 }}
               />
@@ -320,7 +318,7 @@ export function Home({ navigation }: any) {
                 registeredArchived={"cadastrados"}
                 onPress={() => {
                   navigation.navigate("DetailStatus", {
-                    statusProp: partner.filter((x: any) => x.status == 9),
+                    statusProp: partner.filter((x: any) => x.status == 9 && !x.isArchived),
                   });
                 }}
               />
@@ -331,7 +329,7 @@ export function Home({ navigation }: any) {
                 registeredArchived={"cadastrados"}
                 onPress={() => {
                   navigation.navigate("DetailStatus", {
-                    statusProp: partner.filter((x: any) => x.status == 10),
+                    statusProp: partner.filter((x: any) => x.status == 10 && !x.isArchived),
                   });
                 }}
               />
@@ -342,7 +340,7 @@ export function Home({ navigation }: any) {
                 registeredArchived={"cadastrados"}
                 onPress={() => {
                   navigation.navigate("DetailStatus", {
-                    statusProp: partner.filter((x: any) => x.status == 11),
+                    statusProp: partner.filter((x: any) => x.status == 11 && !x.isArchived),
                   });
                 }}
               />
